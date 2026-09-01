@@ -1,0 +1,23 @@
+Project Name: Cyber Swarm Command Center (or Swarm Robotics Tactical Simulation)
+
+Tech Stack Used:
+- Frontend: HTML5, Vanilla JavaScript (ES6), CSS3 (Glassmorphism, Cyberpunk UI design)
+- Graphics & Audio: HTML5 Canvas API, WebAudio API (Procedural Synthesizer)
+- Hardware/Firmware (if applicable): C++, Arduino IDE (ESP32)
+- Deployment: Vercel, Git/GitHub
+
+What it does:
+A decentralized swarm robotics simulation and command center. It visualizes and manages autonomous robotic nodes operating in an arena. The system features a peer-to-peer task auctioning algorithm, priority-based task queueing, dynamic spatial obstacle avoidance, and battery lifecycle management. The interface is a highly interactive, modern Sci-Fi HUD providing real-time telemetry, visual radar sweeps, and audio feedback.
+
+My Contribution (How and what to add in a 1-page CV):
+
+* CV Bullet Points (Pick 2-3 depending on your focus - UI/UX vs Logic):
+- Engineered a real-time decentralized swarm robotics simulation using Vanilla JavaScript and HTML5 Canvas, implementing peer-to-peer task auctioning and priority queueing algorithms.
+- Designed and developed a modern, responsive Cyberpunk-themed Command Center UI utilizing CSS Glassmorphism and custom WebAudio synthesizer feedback for an immersive user experience.
+- Implemented robust spatial logic for dynamic obstacle avoidance (line-to-rectangle intersection) and task preemption to ensure continuous, collision-free node operations.
+- Deployed the responsive web application using Vercel and version control via Git/GitHub.
+
+* Tips for your CV:
+- Highlight the "Algorithms" (auctioning, queueing, intersection logic) if applying for Software Engineering roles.
+- Highlight the "Canvas API / UI/UX Design" if applying for Frontend Developer roles.
+- Mention the "ESP32 Firmware / C++" integration if applying for IoT/Hardware roles.
