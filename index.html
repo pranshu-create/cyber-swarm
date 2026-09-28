@@ -3,37 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CYBER-SWARM // P2P Autonomous Operations Command</title>
+  <title>CYBER-SWARM // Quantum Autonomous Operations Hub</title>
   
-  <!-- Cyberpunk Sci-Fi & Telemetry Google Fonts -->
+  <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-dark: #04060c;
-      --panel-bg: rgba(10, 16, 30, 0.75);
-      --panel-bg-hover: rgba(18, 26, 48, 0.85);
-      --panel-border: rgba(0, 242, 254, 0.15);
-      --panel-border-glow: rgba(0, 242, 254, 0.4);
+      /* Premium Light Studio Color System */
+      --bg-main: #f4f6fb;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-sidebar: #0f172a; /* Sleek dark contrast sidebar */
       
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #475569;
+      --panel-border: rgba(226, 232, 240, 0.8);
+      --panel-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      --panel-shadow-hover: 0 20px 35px -10px rgba(0, 0, 0, 0.08), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
       
-      /* Swarm Node Accent Colors */
-      --bot1-color: #00f2fe;
-      --bot1-glow: rgba(0, 242, 254, 0.4);
-      --bot2-color: #c084fc;
-      --bot2-glow: rgba(192, 132, 252, 0.4);
-      --bot3-color: #fbbf24;
-      --bot3-glow: rgba(251, 191, 36, 0.4);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      
+      /* Vibrant Swarm Node Color Tokens */
+      --bot1-color: #0284c7;
+      --bot1-glow: rgba(2, 132, 199, 0.15);
+      --bot1-bg: #e0f2fe;
 
-      --accent-green: #10b981;
-      --accent-red: #f43f5e;
-      --accent-purple: #a855f7;
-      --accent-amber: #f59e0b;
+      --bot2-color: #7c3aed;
+      --bot2-glow: rgba(124, 58, 237, 0.15);
+      --bot2-bg: #f3e8ff;
+
+      --bot3-color: #d97706;
+      --bot3-glow: rgba(217, 119, 6, 0.15);
+      --bot3-bg: #fef3c7;
+
+      --accent-green: #059669;
+      --accent-green-bg: #d1fae5;
+      --accent-red: #dc2626;
+      --accent-red-bg: #fee2e2;
+      --accent-purple: #9333ea;
+      --accent-amber: #d97706;
+      --accent-cyan: #0891b2;
+      --accent-cyan-bg: #cffafe;
     }
 
     * {
@@ -43,369 +56,330 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-main);
       background-image: 
-        linear-gradient(rgba(0, 242, 254, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 242, 254, 0.015) 1px, transparent 1px),
-        radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 85% 85%, rgba(192, 132, 252, 0.05) 0%, transparent 50%);
-      background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+        radial-gradient(circle at 10% 10%, rgba(2, 132, 199, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(124, 58, 237, 0.04) 0%, transparent 40%),
+        linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
       color: var(--text-main);
-      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      overflow: hidden;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-main); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Main App Viewport */
+    .app-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.4); }
-    ::-webkit-scrollbar-thumb { background: rgba(0, 242, 254, 0.25); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 242, 254, 0.5); }
-
-    /* HUD Corner Frame Brackets */
-    .cyber-hud-card {
-      position: relative;
-      background: var(--panel-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .cyber-hud-card::before, .cyber-hud-card::after {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-
-    .cyber-hud-card::before {
-      top: -1px; left: -1px;
-      border-top: 2px solid var(--bot1-color);
-      border-left: 2px solid var(--bot1-color);
-      border-top-left-radius: 4px;
-    }
-
-    .cyber-hud-card::after {
-      bottom: -1px; right: -1px;
-      border-bottom: 2px solid var(--bot1-color);
-      border-right: 2px solid var(--bot1-color);
-      border-bottom-right-radius: 4px;
-    }
-
-    .cyber-hud-card:hover {
-      border-color: rgba(0, 242, 254, 0.35);
-      box-shadow: 0 10px 35px rgba(0, 242, 254, 0.12);
+      height: 100vh;
+      overflow: hidden;
+      min-width: 0;
     }
 
     /* Top Navigation Header */
     header {
-      background: rgba(6, 10, 20, 0.9);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--panel-border);
-      padding: 0.75rem 1.5rem;
+      padding: 0.45rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
 
-    .brand-container {
+    .header-titles {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.8rem;
     }
 
-    .brand-logo-frame {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, rgba(0, 242, 254, 0.15), rgba(192, 132, 252, 0.15));
-      border: 1.5px solid var(--bot1-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-      position: relative;
-    }
-
-    .brand-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.15rem;
+    .app-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
       font-weight: 800;
-      letter-spacing: 0.05em;
-      background: linear-gradient(135deg, #00f2fe 0%, #ffffff 50%, #c084fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .brand-status-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.625rem;
-      padding: 2px 7px;
-      border-radius: 4px;
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-    }
-
-    .brand-subtitle {
-      font-size: 0.725rem;
-      color: var(--text-muted);
-      font-weight: 400;
-      letter-spacing: 0.02em;
-    }
-
-    /* Top HUD Metrics Counters */
-    .hud-metrics {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 0.45rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--panel-border);
-    }
-
-    .hud-metric-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 0.5rem;
-    }
-
-    .hud-metric-item:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .hud-metric-label {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.55rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 700;
-    }
-
-    .hud-metric-value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.95rem;
-      font-weight: 700;
+      letter-spacing: -0.01em;
       color: var(--text-main);
-    }
-
-    /* Action Buttons */
-    .header-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--panel-border);
-      color: var(--text-main);
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.775rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      user-select: none;
-    }
-
-    .btn:hover {
-      background: rgba(0, 242, 254, 0.12);
-      border-color: var(--bot1-color);
-      color: #ffffff;
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
-      transform: translateY(-1px);
-    }
-
-    .btn:active { transform: translateY(0); }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #00f2fe 0%, #0284c7 100%);
-      color: #040814;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 0 18px rgba(0, 242, 254, 0.4);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%);
-      box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
-      color: #000;
-    }
-
-    .btn-emergency {
-      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
-      color: #ffffff;
-      font-family: 'Orbitron', sans-serif;
-      font-weight: 700;
-      border: none;
-      box-shadow: 0 0 18px rgba(244, 63, 94, 0.4);
-      animation: emergencyPulse 2s infinite;
-    }
-
-    @keyframes emergencyPulse {
-      0% { box-shadow: 0 0 12px rgba(244, 63, 94, 0.4); }
-      50% { box-shadow: 0 0 22px rgba(244, 63, 94, 0.8); }
-      100% { box-shadow: 0 0 12px rgba(244, 63, 94, 0.4); }
-    }
-
-    .btn-emergency:hover {
-      background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
-    }
-
-    .btn-active {
-      background: rgba(16, 185, 129, 0.15) !important;
-      border-color: rgba(16, 185, 129, 0.5) !important;
-      color: #34d399 !important;
-    }
-
-    .btn-danger {
-      background: rgba(244, 63, 94, 0.12);
-      border-color: rgba(244, 63, 94, 0.3);
-      color: #fda4af;
-    }
-
-    .btn-danger:hover {
-      background: rgba(244, 63, 94, 0.25);
-      border-color: rgba(244, 63, 94, 0.5);
-    }
-
-    /* Main Grid Layout */
-    main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 430px;
-      gap: 1.25rem;
-      padding: 1.25rem;
-      max-width: 1860px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    /* Left Column */
-    .arena-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .arena-panel {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      flex: 1;
-      min-height: 590px;
-    }
-
-    .panel-header {
-      padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid var(--panel-border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .panel-title-group {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .panel-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 700;
-      color: var(--text-main);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* Canvas Tactical Control Tools Bar */
-    .tool-selector-bar {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 4px 8px;
+    }
+
+    .title-accent {
+      background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      border: 1px solid rgba(5, 150, 105, 0.25);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    /* Header Controls */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 0.35rem 0.75rem;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.725rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .btn:hover {
+      background: var(--bg-subtle);
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    }
+
+    .btn-emergency {
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      color: #ffffff;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+      animation: alertPulseLight 2s infinite;
+    }
+
+    @keyframes alertPulseLight {
+      0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+    }
+
+    .btn-active {
+      background: #e0f2fe !important;
+      border-color: #38bdf8 !important;
+      color: #0284c7 !important;
+    }
+
+    .btn-danger {
+      color: var(--accent-red);
+      border-color: rgba(220, 38, 38, 0.2);
+    }
+    .btn-danger:hover {
+      background: var(--accent-red-bg);
+    }
+
+    /* Executive Stat Cards Strip */
+    .stat-cards-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      padding: 0.6rem 1.25rem 0 1.25rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 0.5rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: var(--panel-shadow);
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--panel-shadow-hover);
+      border-color: #cbd5e1;
+    }
+
+    .stat-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bot1-bg);
+      color: var(--bot1-color);
+      flex-shrink: 0;
+    }
+
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--text-main);
+    }
+
+    .stat-lbl {
+      font-size: 0.625rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-top: 1px;
+    }
+
+    /* Workspace Grid */
+    .workspace-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 0.85rem;
+      padding: 0.6rem 1.25rem;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* White Studio Standard Cards */
+    .studio-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      box-shadow: var(--panel-shadow);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: box-shadow 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .card-header {
+      padding: 0.5rem 0.9rem;
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-subtle);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.775rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    /* Canvas Tactical Arena */
+    .arena-card {
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .tool-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-surface);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
     }
 
     .tool-btn {
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.725rem;
+      font-size: 0.7rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
 
-    .tool-btn:hover {
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.06);
-    }
-
+    .tool-btn:hover { color: var(--text-main); background: var(--bg-subtle); }
     .tool-btn.active {
-      background: rgba(0, 242, 254, 0.15);
-      border-color: var(--bot1-color);
+      background: var(--bot1-bg);
+      border-color: rgba(2, 132, 199, 0.3);
       color: var(--bot1-color);
       font-weight: 700;
-      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
     }
 
-    .priority-select {
-      background: rgba(8, 14, 28, 0.9);
+    .prio-select {
+      background: var(--bg-surface);
       border: 1px solid var(--panel-border);
-      color: var(--bot1-color);
-      padding: 3px 8px;
+      color: var(--text-main);
+      padding: 3px 6px;
       border-radius: 6px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
+      font-weight: 600;
       outline: none;
       cursor: pointer;
     }
 
-    .arena-canvas-container {
+    .canvas-container {
       flex: 1;
       position: relative;
-      min-height: 520px;
       width: 100%;
       height: 100%;
-      cursor: crosshair;
+      min-height: 0;
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='11' fill='rgba(2,132,199,0.15)' stroke='%230284c7' stroke-width='2'/><circle cx='14' cy='14' r='3' fill='%230284c7'/><line x1='14' y1='0' x2='14' y2='8' stroke='%230284c7' stroke-width='2'/><line x1='14' y1='20' x2='14' y2='28' stroke='%230284c7' stroke-width='2'/><line x1='0' y1='14' x2='8' y2='14' stroke='%230284c7' stroke-width='2'/><line x1='20' y1='14' x2='28' y2='14' stroke='%230284c7' stroke-width='2'/></svg>") 14 14, crosshair;
+      background: #fafcff;
+      perspective: 1000px;
+    }
+
+    .canvas-container.iso-mode canvas {
+      transform: rotateX(38deg) rotateZ(-20deg) scale(0.88);
+      transform-origin: center center;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -20px 30px 60px rgba(15, 23, 42, 0.2);
+      border-radius: 14px;
     }
 
     canvas {
@@ -414,612 +388,655 @@
       height: 100%;
     }
 
-    .arena-overlay-hint {
+    .arena-hint {
       position: absolute;
-      bottom: 14px;
-      left: 14px;
-      background: rgba(6, 10, 20, 0.9);
+      bottom: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(10px);
-      padding: 8px 15px;
+      padding: 5px 12px;
       border-radius: 8px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 600;
       color: var(--text-muted);
       pointer-events: none;
       border: 1px solid var(--panel-border);
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
 
     .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
+      width: 8px; height: 8px; border-radius: 50%;
       background: var(--bot1-color);
-      box-shadow: 0 0 10px var(--bot1-color);
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 8px var(--bot1-color);
+      animation: pulseLight 2s infinite;
     }
 
-    @keyframes pulse {
+    @keyframes pulseLight {
       0% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 15px var(--bot1-color); }
+      50% { transform: scale(1.3); opacity: 1; }
       100% { transform: scale(0.9); opacity: 0.7; }
     }
 
-    /* Right Sidebar Layout */
-    .sidebar {
+    /* Right Column Inspector */
+    .right-col {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1.15rem;
+      gap: 0.75rem;
+      overflow-y: auto;
+      min-height: 0;
+      padding-right: 6px;
+      padding-bottom: 1rem;
     }
 
-    /* SVG Network Topology Mesh Card */
-    .mesh-topology-card {
-      padding: 0.85rem 1.15rem;
-    }
-
-    .card-title-sm {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--bot1-color);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .topology-svg-container {
-      width: 100%;
-      height: 90px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Topology Card */
+    .topo-card { padding: 0.5rem 0.8rem; }
+    .topo-box {
+      width: 100%; height: 55px; background: #f8fafc;
+      border-radius: 8px; border: 1px solid var(--panel-border);
+      display: flex; align-items: center; justify-content: center;
     }
 
     /* Bot Dashboard Cards */
-    .bot-cards-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
+    .bot-cards-list { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .bot-card {
-      padding: 0.95rem 1.15rem;
+      padding: 0.45rem 0.75rem;
+      border-left: 4px solid transparent;
+      transition: transform 0.2s ease;
     }
 
-    .bot-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 4px; height: 100%;
-    }
+    .bot-card:hover { transform: translateX(2px); }
 
-    .bot-card[data-bot="1"]::before { background: var(--bot1-color); box-shadow: 0 0 12px var(--bot1-color); }
-    .bot-card[data-bot="2"]::before { background: var(--bot2-color); box-shadow: 0 0 12px var(--bot2-color); }
-    .bot-card[data-bot="3"]::before { background: var(--bot3-color); box-shadow: 0 0 12px var(--bot3-color); }
+    .bot-card[data-bot="1"] { border-left-color: var(--bot1-color); }
+    .bot-card[data-bot="2"] { border-left-color: var(--bot2-color); }
+    .bot-card[data-bot="3"] { border-left-color: var(--bot3-color); }
 
-    .bot-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.65rem;
-    }
-
-    .bot-title-group {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
+    .bot-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+    .bot-id-group { display: flex; align-items: center; gap: 0.5rem; }
 
     .bot-avatar {
-      width: 26px; height: 26px;
-      border-radius: 50%;
+      width: 24px; height: 24px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem; font-weight: 800;
-      color: #040814;
+      font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .bot-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.03em;
+    .bot-name { font-family: 'Outfit', sans-serif; font-size: 0.775rem; font-weight: 800; color: var(--text-main); }
+    .bot-mac { font-family: 'JetBrains Mono', monospace; font-size: 0.575rem; color: var(--text-dim); }
+
+    .bot-status {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.575rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 14px; text-transform: uppercase;
     }
 
-    .bot-mac {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.625rem;
-      color: var(--text-dim);
+    .status-idle { background: var(--accent-green-bg); color: var(--accent-green); border: 1px solid rgba(5, 150, 105, 0.3); }
+    .status-moving { background: #dbeafe; color: #1d4ed8; border: 1px solid rgba(29, 78, 216, 0.3); }
+    .status-critical { background: var(--accent-red-bg); color: var(--accent-red); border: 1px solid rgba(220, 38, 38, 0.3); }
+    .status-charging { background: #d1fae5; color: #059669; border: 1px solid rgba(5, 150, 105, 0.4);
+      animation: chargePulse 1.2s ease-in-out infinite; }
+    @keyframes chargePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+      50% { box-shadow: 0 0 0 4px rgba(5, 150, 105, 0); }
     }
 
-    .bot-status-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem; font-weight: 700;
-      padding: 3px 9px; border-radius: 20px;
-      text-transform: uppercase; letter-spacing: 0.05em;
+    .batt-section { margin-bottom: 0.4rem; }
+    .batt-header { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-muted); font-weight: 600; margin-bottom: 3px; }
+    .batt-bar-bg { height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; padding: 1px; }
+    .batt-bar-fill { height: 100%; width: 100%; border-radius: 2px; transition: width 0.4s ease, background-color 0.4s ease; }
+
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.35rem;
+      background: var(--bg-subtle); padding: 0.4rem 0.6rem; border-radius: 8px;
+      border: 1px solid var(--panel-border);
     }
 
-    .status-idle { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .status-moving { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-    .status-critical { background: rgba(244, 63, 94, 0.2); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.4); }
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-lbl-sm { color: var(--text-dim); font-size: 0.55rem; font-weight: 700; text-transform: uppercase; }
+    .stat-val-sm { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; color: var(--text-main); margin-top: 1px; }
 
-    .battery-section { margin-bottom: 0.65rem; }
+    .bot-actions { display: flex; gap: 0.4rem; margin-top: 0.45rem; }
+    .btn-xs { padding: 2px 7px; font-size: 0.625rem; border-radius: 5px; }
 
-    .battery-header {
-      display: flex; justify-content: space-between;
-      font-size: 0.725rem; color: var(--text-muted); margin-bottom: 4px;
-    }
-
-    .battery-bar-bg {
-      height: 7px; background: rgba(255, 255, 255, 0.06);
-      border-radius: 4px; overflow: hidden; padding: 1px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .battery-bar-fill {
-      height: 100%; width: 100%; border-radius: 3px;
-      transition: width 0.4s ease, background-color 0.4s ease;
-    }
-
-    .bid-info-grid {
-      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;
-      background: rgba(0, 0, 0, 0.3); padding: 0.55rem 0.75rem;
-      border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .bid-metric { display: flex; flex-direction: column; }
-    .bid-label { color: var(--text-dim); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-    .bid-value { font-family: 'JetBrains Mono', monospace; font-size: 0.775rem; font-weight: 700; color: #e2e8f0; margin-top: 2px; }
-
-    .bot-card-actions { display: flex; gap: 0.4rem; margin-top: 0.65rem; }
-    .btn-xs { padding: 4px 8px; font-size: 0.68rem; border-radius: 6px; }
-
-    /* Tuner Parameter Card */
-    .tuner-card { padding: 0.85rem 1.15rem; }
-    .tuner-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
-    .tuner-title { font-family: 'Orbitron', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em; }
-    .tuner-sliders { display: flex; flex-direction: column; gap: 0.6rem; }
-    .slider-row { display: flex; flex-direction: column; gap: 3px; }
-    .slider-label-group { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); }
+    /* Telemetry Chart & Weight Tuner */
+    .tuner-card { padding: 0.45rem 0.75rem; }
+    .tuner-sliders { display: flex; flex-direction: column; gap: 0.3rem; }
+    .slider-row { display: flex; flex-direction: column; gap: 2px; }
+    .slider-label { display: flex; justify-content: space-between; font-size: 0.625rem; color: var(--text-muted); font-weight: 600; }
     .slider-val { font-family: 'JetBrains Mono', monospace; color: var(--bot1-color); font-weight: 700; }
 
     input[type=range] {
-      -webkit-appearance: none; width: 100%; background: rgba(255, 255, 255, 0.08);
+      -webkit-appearance: none; width: 100%; background: #e2e8f0;
       height: 4px; border-radius: 2px; outline: none;
     }
 
     input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
-      background: var(--bot1-color); cursor: pointer; box-shadow: 0 0 10px var(--bot1-color);
-      transition: transform 0.1s ease;
+      -webkit-appearance: none; width: 11px; height: 11px; border-radius: 50%;
+      background: var(--bot1-color); cursor: pointer; box-shadow: 0 1px 3px rgba(2, 132, 199, 0.4);
     }
 
-    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+    /* Live Chart */
+    .chart-box {
+      width: 100%; height: 42px; background: #f8fafc;
+      border-radius: 6px; border: 1px solid var(--panel-border);
+      padding: 3px; display: flex; align-items: flex-end; gap: 2px;
+    }
+
+    .chart-bar {
+      flex: 1; background: linear-gradient(to top, rgba(2, 132, 199, 0.2), rgba(2, 132, 199, 0.85));
+      border-radius: 2px 2px 0 0; transition: height 0.3s ease;
+    }
 
     /* Event Console Panel */
-    .log-panel {
-      flex: 1; display: flex; flex-direction: column; min-height: 230px; overflow: hidden;
-    }
+    .log-panel { flex-shrink: 0; display: flex; flex-direction: column; min-height: 140px; overflow: hidden; }
 
     .log-filters {
-      display: flex; gap: 0.25rem; padding: 0.45rem 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05); background: rgba(0, 0, 0, 0.35);
+      display: flex; gap: 0.25rem; padding: 0.25rem 0.75rem;
+      border-bottom: 1px solid var(--panel-border); background: var(--bg-subtle);
     }
 
     .log-filter-btn {
-      background: transparent; border: none; color: var(--text-dim);
-      padding: 3px 8px; border-radius: 4px; font-size: 0.68rem; font-family: 'Orbitron', sans-serif;
+      background: transparent; border: none; color: var(--text-muted);
+      padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; font-family: 'Outfit', sans-serif;
       font-weight: 700; cursor: pointer; transition: all 0.2s ease;
     }
 
-    .log-filter-btn:hover { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
-    .log-filter-btn.active { color: var(--bot1-color); background: rgba(0, 242, 254, 0.12); }
+    .log-filter-btn:hover { color: var(--text-main); background: #e2e8f0; }
+    .log-filter-btn.active { color: var(--bot1-color); background: var(--bot1-bg); }
 
     .log-console {
-      flex: 1; padding: 0.75rem 1rem; font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem; overflow-y: auto; display: flex; flex-direction: column;
-      gap: 0.4rem; max-height: 210px;
+      height: 120px; padding: 0.4rem 0.75rem; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.625rem; overflow-y: auto; display: flex; flex-direction: column;
+      gap: 0.25rem; background: #ffffff;
     }
 
-    .log-entry { line-height: 1.45; word-break: break-word; display: flex; align-items: flex-start; gap: 0.5rem; }
-    .log-time { color: var(--text-dim); font-weight: 500; flex-shrink: 0; }
-    .log-auc { color: #38bdf8; }
-    .log-win { color: #4ade80; font-weight: 600; }
-    .log-warn { color: #f43f5e; font-weight: 600; }
-    .log-sys { color: #cbd5e1; }
+    .log-entry { line-height: 1.35; word-break: break-word; display: flex; align-items: flex-start; gap: 0.45rem; }
+    .log-time { color: var(--text-dim); flex-shrink: 0; font-weight: 500; }
+    .log-auc { color: #0284c7; font-weight: 600; }
+    .log-win { color: #059669; font-weight: 700; }
+    .log-warn { color: #dc2626; font-weight: 700; }
+    .log-sys { color: #334155; }
 
     /* Footer Banner */
     .formula-banner {
-      background: rgba(6, 10, 20, 0.9); backdrop-filter: blur(16px);
-      border: 1px solid var(--panel-border); padding: 0.75rem 1.5rem;
-      border-radius: 12px; margin-top: 0.5rem; display: flex;
-      align-items: center; justify-content: space-between; font-size: 0.775rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--panel-border); padding: 0.45rem 1.25rem;
+      border-radius: 10px; margin: 0 1.25rem 0.6rem 1.25rem; display: flex;
+      align-items: center; justify-content: space-between; font-size: 0.7rem;
+      box-shadow: var(--panel-shadow);
     }
 
-    .formula-title {
-      font-family: 'Orbitron', sans-serif; font-weight: 700;
-      color: var(--bot1-color); display: flex; align-items: center; gap: 0.5rem;
-    }
-
-    .formula-code {
-      font-family: 'JetBrains Mono', monospace; background: rgba(0, 0, 0, 0.5);
-      padding: 5px 12px; border-radius: 6px; color: #e2e8f0;
-      border: 1px solid rgba(0, 242, 254, 0.15);
-    }
+    .formula-title { font-family: 'Outfit', sans-serif; font-weight: 800; color: var(--bot1-color); display: flex; align-items: center; gap: 0.4rem; }
+    .formula-code { font-family: 'JetBrains Mono', monospace; background: var(--bg-subtle); padding: 3px 10px; border-radius: 6px; color: var(--text-main); border: 1px solid var(--panel-border); font-weight: 600; }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation Header & HUD Controls -->
-  <header>
-    <div class="brand-container">
-      <div class="brand-logo-frame">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.2">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M3 7V5a2 2 0 0 1 2-2h2"></path>
-          <path d="M17 3h2a2 2 0 0 1 2 2v2"></path>
-          <path d="M21 17v2a2 2 0 0 1-2 2h-2"></path>
-          <path d="M7 21H5a2 2 0 0 1-2-2v-2"></path>
-        </svg>
+  <!-- Main App Viewport -->
+  <div class="app-container">
+    <!-- Top Header -->
+    <header>
+      <div class="header-titles">
+        <h1 class="app-title">
+          CYBER-SWARM // <span class="title-accent">QUANTUM HUB</span>
+          <span class="status-badge">ESP-NOW ONLINE</span>
+        </h1>
       </div>
-      <div>
-        <div class="brand-title">
-          CYBER-SWARM // P2P OPS
-          <span class="brand-status-tag">ESP-NOW ONLINE</span>
+
+      <!-- Action Controls Header Buttons -->
+      <div class="header-actions">
+        <button id="btnToggleRL" class="btn btn-active" onclick="toggleRL()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Q-Learning: ON
+        </button>
+
+        <button id="btnAudioToggle" class="btn btn-active" onclick="toggleAudio()">
+          <svg id="audioIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          Audio: ON
+        </button>
+
+        <button id="btnSpawnTask" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Spawn Task
+        </button>
+
+        <button id="btnEmergencyDispatch" class="btn btn-emergency">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          EMERGENCY DISPATCH
+        </button>
+
+        <button id="btnAutoSpawn" class="btn">Auto-Spawn: OFF</button>
+        <button id="btnRechargeAll" class="btn">Recharge All</button>
+        <button id="btnResetSim" class="btn btn-danger">Reset</button>
+      </div>
+    </header>
+
+    <!-- Executive SI Metric Cards Strip -->
+    <div class="stat-cards-strip">
+      <div class="stat-card">
+        <div class="stat-icon-wrap" style="color: var(--bot1-color); background: var(--bot1-bg);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
         </div>
-        <div class="brand-subtitle">Masterless Peer-to-Peer Swarm Robotics Auction Matrix</div>
+        <div>
+          <div id="hudActiveTasks" class="stat-num">0</div>
+          <div class="stat-lbl">Active / Queued Tasks</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap" style="color: var(--accent-amber); background: #fef3c7;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <div id="hudAvgTime" class="stat-num">0.0 s</div>
+          <div class="stat-lbl">Avg Completion Time</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap" style="color: var(--bot2-color); background: var(--bot2-bg);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div>
+          <div id="hudEnergyPerTask" class="stat-num">0.00 Wh</div>
+          <div class="stat-lbl">Energy / Task</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap" style="color: var(--accent-green); background: var(--accent-green-bg);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <div id="hudSuccessRate" class="stat-num">100%</div>
+          <div class="stat-lbl">Success Rate</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap" style="color: var(--accent-cyan); background: var(--accent-cyan-bg);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <div id="hudThroughput" class="stat-num">0.0 /m</div>
+          <div class="stat-lbl">Throughput</div>
+        </div>
       </div>
     </div>
 
-    <!-- HUD Metrics Counters -->
-    <div class="hud-metrics">
-      <div class="hud-metric-item">
-        <span class="hud-metric-label">Active Tasks</span>
-        <span id="hudActiveTasks" class="hud-metric-value" style="color: var(--bot1-color);">0</span>
-      </div>
-      <div class="hud-metric-item">
-        <span class="hud-metric-label">Pending Queue</span>
-        <span id="hudPendingTasks" class="hud-metric-value" style="color: var(--accent-amber);">0</span>
-      </div>
-      <div class="hud-metric-item">
-        <span class="hud-metric-label">Obstacles</span>
-        <span id="hudObstacles" class="hud-metric-value" style="color: var(--accent-red);">0</span>
-      </div>
-      <div class="hud-metric-item">
-        <span class="hud-metric-label">Completed</span>
-        <span id="hudCompletedTasks" class="hud-metric-value" style="color: var(--accent-green);">0</span>
-      </div>
-    </div>
-
-    <!-- Action Controls -->
-    <div class="header-controls">
-      <button id="btnAudioToggle" class="btn" onclick="toggleAudio()">
-        <svg id="audioIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-        Audio: ON
-      </button>
-
-      <button id="btnSpawnTask" class="btn btn-primary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        Spawn Task
-      </button>
-
-      <button id="btnEmergencyDispatch" class="btn btn-emergency">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-        EMERGENCY DISPATCH
-      </button>
-
-      <button id="btnAutoSpawn" class="btn">
-        Auto-Spawn: OFF
-      </button>
-
-      <button id="btnRechargeAll" class="btn">
-        Recharge All
-      </button>
-
-      <button id="btnResetSim" class="btn btn-danger">
-        Reset
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Workspace -->
-  <main>
-    <!-- Left Column: Arena Canvas -->
-    <div class="arena-section">
-      <div class="cyber-hud-card arena-panel">
-        <div class="panel-header">
-          <div class="panel-title-group">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 12l4.5-4.5"></path></svg>
-            <span class="panel-title">2D Tactical Radar Arena</span>
+    <!-- Workspace Grid -->
+    <div class="workspace-grid">
+      <!-- Left Column: Arena Canvas -->
+      <div class="studio-card arena-card">
+        <div class="card-header">
+          <div class="card-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12l4.5-4.5"/></svg>
+            Spatial Tactical Radar Arena
           </div>
 
-          <!-- Interactive Tool Selector Bar -->
-          <div class="tool-selector-bar">
+          <!-- Tool Selector & Next-Level Controls -->
+          <div class="tool-bar">
+            <select id="scenarioSelect" class="prio-select" style="background: #e0f2fe; color: #0284c7; border-color: rgba(2, 132, 199, 0.3);" onchange="loadScenario(this.value)">
+              <option value="default">Preset: Clean Arena</option>
+              <option value="maze">Preset: Maze Runner Challenge</option>
+              <option value="overload">Preset: Swarm Overload (5 Tasks)</option>
+              <option value="failover">Preset: Low-Batt Crisis & Failover</option>
+            </select>
+
             <button id="toolTask" class="tool-btn active" onclick="setMode('task')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
               Spawn Task
             </button>
             
-            <select id="taskPrioritySelect" class="priority-select">
+            <select id="taskPrioritySelect" class="prio-select">
               <option value="normal">Priority: Normal (1x)</option>
               <option value="high">Priority: High (1.5x)</option>
               <option value="emergency">Priority: Emergency (2x)</option>
+              <option value="cooperative">🤝 Cooperative (2 Bots Required)</option>
             </select>
 
             <button id="toolObstacle" class="tool-btn" onclick="setMode('obstacle')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-              Place Wall Hazard
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              Place Hazard
             </button>
 
             <button id="toolEraser" class="tool-btn" onclick="setMode('eraser')">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2C14 1 16 1 17 2L21 6C22 7 22 9 21 10L14 17"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2C14 1 16 1 17 2L21 6C22 7 22 9 21 10L14 17"/></svg>
               Eraser
             </button>
 
-            <button class="btn btn-xs btn-danger" style="margin-left: 6px;" onclick="clearCanvasItems()">Clear Arena</button>
+            <button id="btnToggleHeatmap" class="tool-btn" onclick="toggleHeatmap()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="6"/></svg>
+              Heatmap: OFF
+            </button>
+
+            <button id="btnToggle3D" class="tool-btn" onclick="toggle3DView()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              3D View: OFF
+            </button>
+
+            <button class="btn btn-xs btn-danger" style="margin-left: 4px;" onclick="clearCanvasItems()">Clear</button>
           </div>
         </div>
 
-        <div class="arena-canvas-container" id="canvasContainer">
+        <div class="canvas-container" id="canvasContainer">
           <canvas id="simCanvas"></canvas>
-          <div class="arena-overlay-hint">
+          <div class="arena-hint">
             <div class="pulse-dot"></div>
-            <span id="arenaHintText">Click arena floor to place Task target coordinates</span>
+            <span id="arenaHintText">Click anywhere on floor to place Task target coordinates</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Telemetry & Inspector -->
+      <div class="right-col">
+        <!-- Topology Mesh Card -->
+        <div class="studio-card topo-card">
+          <div class="card-title" style="font-size: 0.85rem; justify-content: space-between;">
+            <span>P2P ESP-NOW Mesh Topology</span>
+            <span style="color: var(--accent-green); font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; font-weight: 700;">3 NODES PEERED</span>
+          </div>
+          <div class="topo-box" style="margin-top: 0.6rem;">
+            <svg width="100%" height="95" viewBox="0 0 350 95">
+              <line x1="65" y1="48" x2="175" y2="22" stroke="rgba(2, 132, 199, 0.4)" stroke-width="2" stroke-dasharray="5 5"/>
+              <line x1="175" y1="22" x2="285" y2="48" stroke="rgba(124, 58, 237, 0.4)" stroke-width="2" stroke-dasharray="5 5"/>
+              <line x1="65" y1="48" x2="285" y2="48" stroke="rgba(217, 119, 6, 0.4)" stroke-width="2" stroke-dasharray="5 5"/>
+
+              <circle cx="65" cy="48" r="18" fill="#ffffff" stroke="#0284c7" stroke-width="3"/>
+              <text x="65" y="52" fill="#0284c7" font-family="Outfit" font-size="11" font-weight="800" text-anchor="middle">N1</text>
+
+              <circle cx="175" cy="22" r="18" fill="#ffffff" stroke="#7c3aed" stroke-width="3"/>
+              <text x="175" y="26" fill="#7c3aed" font-family="Outfit" font-size="11" font-weight="800" text-anchor="middle">N2</text>
+
+              <circle cx="285" cy="48" r="18" fill="#ffffff" stroke="#d97706" stroke-width="3"/>
+              <text x="285" y="52" fill="#d97706" font-family="Outfit" font-size="11" font-weight="800" text-anchor="middle">N3</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Bot Dashboard Cards -->
+        <div class="bot-cards-list">
+          <!-- Bot 1 -->
+          <div class="studio-card bot-card" data-bot="1">
+            <div class="bot-card-head">
+              <div class="bot-id-group">
+                <div class="bot-avatar" style="background: var(--bot1-color);">B1</div>
+                <div>
+                  <div class="bot-name">Bot 1 (Node 0x01)</div>
+                  <div class="bot-mac">MAC: 24:6F:28:B1:01:A0</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span id="bot1CoordBadge" class="bot-status" style="display: none; background: #fef3c7; color: #d97706; border: 1px solid rgba(217, 119, 6, 0.4);">COORDINATOR</span>
+                <span id="bot1Status" class="bot-status status-idle">IDLE</span>
+              </div>
+            </div>
+
+            <div class="batt-section">
+              <div class="batt-header">
+                <span>Battery Level</span>
+                <span id="bot1BattText">100%</span>
+              </div>
+              <div class="batt-bar-bg">
+                <div id="bot1BattBar" class="batt-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="stat-lbl-sm">POS (m)</span>
+                <span id="bot1Pos" class="stat-val-sm">3.5, 4.0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">LAST BID</span>
+                <span id="bot1LastBid" class="stat-val-sm">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">TARGET</span>
+                <span id="bot1Target" class="stat-val-sm">None</span>
+              </div>
+            </div>
+
+            <div class="bot-actions">
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(1)">Drain to 10%</button>
+              <button class="btn btn-xs" onclick="rechargeBot(1)">Recharge</button>
+            </div>
+          </div>
+
+          <!-- Bot 2 -->
+          <div class="studio-card bot-card" data-bot="2">
+            <div class="bot-card-head">
+              <div class="bot-id-group">
+                <div class="bot-avatar" style="background: var(--bot2-color);">B2</div>
+                <div>
+                  <div class="bot-name">Bot 2 (Node 0x02)</div>
+                  <div class="bot-mac">MAC: 24:6F:28:B2:02:B1</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span id="bot2CoordBadge" class="bot-status" style="display: none; background: #fef3c7; color: #d97706; border: 1px solid rgba(217, 119, 6, 0.4);">COORDINATOR</span>
+                <span id="bot2Status" class="bot-status status-idle">IDLE</span>
+              </div>
+            </div>
+
+            <div class="batt-section">
+              <div class="batt-header">
+                <span>Battery Level</span>
+                <span id="bot2BattText">100%</span>
+              </div>
+              <div class="batt-bar-bg">
+                <div id="bot2BattBar" class="batt-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="stat-lbl-sm">POS (m)</span>
+                <span id="bot2Pos" class="stat-val-sm">3.5, 10.0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">LAST BID</span>
+                <span id="bot2LastBid" class="stat-val-sm">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">TARGET</span>
+                <span id="bot2Target" class="stat-val-sm">None</span>
+              </div>
+            </div>
+
+            <div class="bot-actions">
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(2)">Drain to 10%</button>
+              <button class="btn btn-xs" onclick="rechargeBot(2)">Recharge</button>
+            </div>
+          </div>
+
+          <!-- Bot 3 -->
+          <div class="studio-card bot-card" data-bot="3">
+            <div class="bot-card-head">
+              <div class="bot-id-group">
+                <div class="bot-avatar" style="background: var(--bot3-color);">B3</div>
+                <div>
+                  <div class="bot-name">Bot 3 (Node 0x03)</div>
+                  <div class="bot-mac">MAC: 24:6F:28:B3:03:C2</div>
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <span id="bot3CoordBadge" class="bot-status" style="display: none; background: #fef3c7; color: #d97706; border: 1px solid rgba(217, 119, 6, 0.4);">COORDINATOR</span>
+                <span id="bot3Status" class="bot-status status-idle">IDLE</span>
+              </div>
+            </div>
+
+            <div class="batt-section">
+              <div class="batt-header">
+                <span>Battery Level</span>
+                <span id="bot3BattText">100%</span>
+              </div>
+              <div class="batt-bar-bg">
+                <div id="bot3BattBar" class="batt-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
+              </div>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-item">
+                <span class="stat-lbl-sm">POS (m)</span>
+                <span id="bot3Pos" class="stat-val-sm">3.5, 16.0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">LAST BID</span>
+                <span id="bot3LastBid" class="stat-val-sm">--</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-lbl-sm">TARGET</span>
+                <span id="bot3Target" class="stat-val-sm">None</span>
+              </div>
+            </div>
+
+            <div class="bot-actions">
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(3)">Drain to 10%</button>
+              <button class="btn btn-xs" onclick="rechargeBot(3)">Recharge</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Algorithm Weight Tuner -->
+        <div class="studio-card tuner-card">
+          <div class="card-header" style="padding: 0 0 0.6rem 0; background: transparent; border: none;">
+            <span class="card-title" style="font-size: 0.85rem;">Algorithm Weight Tuner</span>
+            <button class="btn btn-xs" onclick="resetWeights()">Reset</button>
+          </div>
+
+          <div class="tuner-sliders">
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>Distance Weight (W<sub>distance</sub>)</span>
+                <span id="valWDist" class="slider-val">0.50</span>
+              </div>
+              <input type="range" id="sliderWDist" min="0" max="1" step="0.05" value="0.5">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>Battery Loss Weight (W<sub>battery</sub>)</span>
+                <span id="valWBatt" class="slider-val">0.30</span>
+              </div>
+              <input type="range" id="sliderWBatt" min="0" max="1" step="0.05" value="0.3">
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">
+                <span>Status Penalty Weight (W<sub>status</sub>)</span>
+                <span id="valWStat" class="slider-val">0.20</span>
+              </div>
+              <input type="range" id="sliderWStat" min="0" max="1" step="0.05" value="0.2">
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Bid Telemetry Graph -->
+        <div class="studio-card tuner-card">
+          <div class="card-header" style="padding: 0 0 0.6rem 0; background: transparent; border: none;">
+            <span class="card-title" style="font-size: 0.85rem;">Live Auction Bid Graph</span>
+          </div>
+          <div id="chartBox" class="chart-box">
+            <div class="chart-bar" style="height: 40%;"></div>
+            <div class="chart-bar" style="height: 65%;"></div>
+            <div class="chart-bar" style="height: 30%;"></div>
+            <div class="chart-bar" style="height: 85%;"></div>
+            <div class="chart-bar" style="height: 50%;"></div>
+            <div class="chart-bar" style="height: 90%;"></div>
+            <div class="chart-bar" style="height: 75%;"></div>
+            <div class="chart-bar" style="height: 45%;"></div>
+          </div>
+        </div>
+
+        <!-- Auction Event Stream -->
+        <div class="studio-card log-panel">
+          <div class="card-header">
+            <div class="card-title" style="font-size: 0.85rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2"><polyline points="4 17 10 11 14 15 20 9"/><polyline points="14 9 20 9 20 15"/></svg>
+              Auction Event Log Stream
+            </div>
+            <button class="btn btn-xs" onclick="clearLog()">Clear</button>
+          </div>
+
+          <div class="log-filters">
+            <button class="log-filter-btn active" onclick="filterLogs('all', this)">ALL</button>
+            <button class="log-filter-btn" onclick="filterLogs('auc', this)">AUCTIONS</button>
+            <button class="log-filter-btn" onclick="filterLogs('win', this)">WINNERS</button>
+            <button class="log-filter-btn" onclick="filterLogs('warn', this)">ALERTS</button>
+          </div>
+
+          <div id="logConsole" class="log-console">
+            <div class="log-entry log-sys" data-category="sys">
+              <span class="log-time">[00:00:00]</span> Quantum Swarm mesh matrix operational. Ready for P2P auctions.
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Right Sidebar -->
-    <div class="sidebar">
-      <!-- P2P Mesh Network Topology Card -->
-      <div class="cyber-hud-card mesh-topology-card">
-        <div class="card-title-sm">
-          <span>P2P ESP-NOW Mesh Topology</span>
-          <span style="color: #34d399; font-size: 0.65rem;">3 NODES ACTIVE</span>
-        </div>
-        <div class="topology-svg-container">
-          <svg width="100%" height="90" viewBox="0 0 340 90">
-            <line x1="60" y1="45" x2="170" y2="20" stroke="rgba(0, 242, 254, 0.4)" stroke-width="1.5" stroke-dasharray="4 4"/>
-            <line x1="170" y1="20" x2="280" y2="45" stroke="rgba(192, 132, 252, 0.4)" stroke-width="1.5" stroke-dasharray="4 4"/>
-            <line x1="60" y1="45" x2="280" y2="45" stroke="rgba(251, 191, 36, 0.4)" stroke-width="1.5" stroke-dasharray="4 4"/>
-
-            <circle cx="60" cy="45" r="16" fill="#040814" stroke="#00f2fe" stroke-width="2.5"/>
-            <text x="60" y="49" fill="#00f2fe" font-family="Orbitron" font-size="10" font-weight="700" text-anchor="middle">N1</text>
-
-            <circle cx="170" cy="20" r="16" fill="#040814" stroke="#c084fc" stroke-width="2.5"/>
-            <text x="170" y="24" fill="#c084fc" font-family="Orbitron" font-size="10" font-weight="700" text-anchor="middle">N2</text>
-
-            <circle cx="280" cy="45" r="16" fill="#040814" stroke="#fbbf24" stroke-width="2.5"/>
-            <text x="280" y="49" fill="#fbbf24" font-family="Orbitron" font-size="10" font-weight="700" text-anchor="middle">N3</text>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Bot Dashboards -->
-      <div class="bot-cards-container">
-        <!-- Bot 1 Card -->
-        <div class="cyber-hud-card bot-card" data-bot="1">
-          <div class="bot-card-header">
-            <div class="bot-title-group">
-              <div class="bot-avatar" style="background: var(--bot1-color);">B1</div>
-              <div>
-                <div class="bot-name" style="color: var(--bot1-color);">Bot 1 (Node 0x01)</div>
-                <div class="bot-mac">MAC: 24:6F:28:B1:01:A0</div>
-              </div>
-            </div>
-            <span id="bot1Status" class="bot-status-badge status-idle">IDLE</span>
-          </div>
-
-          <div class="battery-section">
-            <div class="battery-header">
-              <span>Battery Level</span>
-              <span id="bot1BattText">100%</span>
-            </div>
-            <div class="battery-bar-bg">
-              <div id="bot1BattBar" class="battery-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
-            </div>
-          </div>
-
-          <div class="bid-info-grid">
-            <div class="bid-metric">
-              <span class="bid-label">POS</span>
-              <span id="bot1Pos" class="bid-value">140, 160</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">LAST BID</span>
-              <span id="bot1LastBid" class="bid-value">--</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">TARGET</span>
-              <span id="bot1Target" class="bid-value">None</span>
-            </div>
-          </div>
-
-          <div class="bot-card-actions">
-            <button class="btn btn-xs btn-danger" onclick="triggerDrain(1)">Drain to 10%</button>
-            <button class="btn btn-xs" onclick="rechargeBot(1)">Recharge</button>
-          </div>
-        </div>
-
-        <!-- Bot 2 Card -->
-        <div class="cyber-hud-card bot-card" data-bot="2">
-          <div class="bot-card-header">
-            <div class="bot-title-group">
-              <div class="bot-avatar" style="background: var(--bot2-color);">B2</div>
-              <div>
-                <div class="bot-name" style="color: var(--bot2-color);">Bot 2 (Node 0x02)</div>
-                <div class="bot-mac">MAC: 24:6F:28:B2:02:B1</div>
-              </div>
-            </div>
-            <span id="bot2Status" class="bot-status-badge status-idle">IDLE</span>
-          </div>
-
-          <div class="battery-section">
-            <div class="battery-header">
-              <span>Battery Level</span>
-              <span id="bot2BattText">100%</span>
-            </div>
-            <div class="battery-bar-bg">
-              <div id="bot2BattBar" class="battery-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
-            </div>
-          </div>
-
-          <div class="bid-info-grid">
-            <div class="bid-metric">
-              <span class="bid-label">POS</span>
-              <span id="bot2Pos" class="bid-value">140, 350</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">LAST BID</span>
-              <span id="bot2LastBid" class="bid-value">--</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">TARGET</span>
-              <span id="bot2Target" class="bid-value">None</span>
-            </div>
-          </div>
-
-          <div class="bot-card-actions">
-            <button class="btn btn-xs btn-danger" onclick="triggerDrain(2)">Drain to 10%</button>
-            <button class="btn btn-xs" onclick="rechargeBot(2)">Recharge</button>
-          </div>
-        </div>
-
-        <!-- Bot 3 Card -->
-        <div class="cyber-hud-card bot-card" data-bot="3">
-          <div class="bot-card-header">
-            <div class="bot-title-group">
-              <div class="bot-avatar" style="background: var(--bot3-color);">B3</div>
-              <div>
-                <div class="bot-name" style="color: var(--bot3-color);">Bot 3 (Node 0x03)</div>
-                <div class="bot-mac">MAC: 24:6F:28:B3:03:C2</div>
-              </div>
-            </div>
-            <span id="bot3Status" class="bot-status-badge status-idle">IDLE</span>
-          </div>
-
-          <div class="battery-section">
-            <div class="battery-header">
-              <span>Battery Level</span>
-              <span id="bot3BattText">100%</span>
-            </div>
-            <div class="battery-bar-bg">
-              <div id="bot3BattBar" class="battery-bar-fill" style="width: 100%; background: var(--accent-green);"></div>
-            </div>
-          </div>
-
-          <div class="bid-info-grid">
-            <div class="bid-metric">
-              <span class="bid-label">POS</span>
-              <span id="bot3Pos" class="bid-value">140, 540</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">LAST BID</span>
-              <span id="bot3LastBid" class="bid-value">--</span>
-            </div>
-            <div class="bid-metric">
-              <span class="bid-label">TARGET</span>
-              <span id="bot3Target" class="bid-value">None</span>
-            </div>
-          </div>
-
-          <div class="bot-card-actions">
-            <button class="btn btn-xs btn-danger" onclick="triggerDrain(3)">Drain to 10%</button>
-            <button class="btn btn-xs" onclick="rechargeBot(3)">Recharge</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live Weight Tuner -->
-      <div class="cyber-hud-card tuner-card">
-        <div class="tuner-header">
-          <span class="tuner-title">Algorithm Weight Tuner</span>
-          <button class="btn btn-xs" onclick="resetWeights()">Reset</button>
-        </div>
-
-        <div class="tuner-sliders">
-          <div class="slider-row">
-            <div class="slider-label-group">
-              <span>Distance Weight (W<sub>distance</sub>)</span>
-              <span id="valWDist" class="slider-val">0.50</span>
-            </div>
-            <input type="range" id="sliderWDist" min="0" max="1" step="0.05" value="0.5">
-          </div>
-
-          <div class="slider-row">
-            <div class="slider-label-group">
-              <span>Battery Loss Weight (W<sub>battery</sub>)</span>
-              <span id="valWBatt" class="slider-val">0.30</span>
-            </div>
-            <input type="range" id="sliderWBatt" min="0" max="1" step="0.05" value="0.3">
-          </div>
-
-          <div class="slider-row">
-            <div class="slider-label-group">
-              <span>Status Penalty Weight (W<sub>status</sub>)</span>
-              <span id="valWStat" class="slider-val">0.20</span>
-            </div>
-            <input type="range" id="sliderWStat" min="0" max="1" step="0.05" value="0.2">
-          </div>
-        </div>
-      </div>
-
-      <!-- Event Stream Log Console -->
-      <div class="cyber-hud-card log-panel">
-        <div class="panel-header">
-          <div class="panel-title-group">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2"><polyline points="4 17 10 11 14 15 20 9"></polyline><polyline points="14 9 20 9 20 15"></polyline></svg>
-            <span class="panel-title">Auction Event Stream</span>
-          </div>
-          <button class="btn btn-xs" onclick="clearLog()">Clear</button>
-        </div>
-
-        <div class="log-filters">
-          <button class="log-filter-btn active" onclick="filterLogs('all', this)">ALL</button>
-          <button class="log-filter-btn" onclick="filterLogs('auc', this)">AUCTIONS</button>
-          <button class="log-filter-btn" onclick="filterLogs('win', this)">WINNERS</button>
-          <button class="log-filter-btn" onclick="filterLogs('warn', this)">ALERTS</button>
-        </div>
-
-        <div id="logConsole" class="log-console">
-          <div class="log-entry log-sys" data-category="sys">
-            <span class="log-time">[00:00:00]</span> Cyber-Swarm mesh matrix operational. Ready for P2P auctions.
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer Banner -->
-  <div style="padding: 0 1.25rem 1.25rem 1.25rem; max-width: 1860px; margin: 0 auto; width: 100%;">
+    <!-- Footer Banner -->
     <div class="formula-banner">
       <span class="formula-title">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
         ESP32 Shared Firmware Formula
       </span>
       <span class="formula-code">Cost = (W<sub>d</sub> × NormDistance) + (W<sub>b</sub> × (1 - Battery%)) + (W<sub>s</sub> × StatusPenalty)</span>
-      <span style="color: var(--text-muted); font-size: 0.725rem;">Lowest Cost Wins | Path Obstruction or Battery &lt; 15% Triggers Re-Auction</span>
+      <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 500;">Lowest Cost Wins | Path Obstruction or Battery &lt; 15% Triggers Re-Auction</span>
     </div>
   </div>
 
   <script>
-    /* ==========================================================================
-       WEBAUDIO SYNTHESIZER SOUND ENGINE
-       ========================================================================== */
+    /* =========================================================================
+     * REINFORCEMENT LEARNING HYPERPARAMETERS (Q-LEARNING)
+     * ========================================================================= */
+    const Q_ALPHA           = 0.20;   // Learning Rate
+    const Q_GAMMA           = 0.90;   // Discount Factor
+    const Q_EPSILON_INITIAL = 0.30;   // Initial Exploration Rate
+    const Q_EPSILON_DECAY   = 0.995;  // Epsilon Decay multiplier per episode
+    const Q_EPSILON_MIN     = 0.05;   // Minimum Exploration floor
+    
+    let Q_EPSILON           = Q_EPSILON_INITIAL;
+    let isQlearningEnabled  = true;
+
+    const Q_ACTION_MULTIPLIERS = [0.92, 1.00, 1.08];
+    const Q_ACTION_NAMES       = ['AGGRESSIVE', 'MODERATE', 'CONSERVATIVE'];
+
+    /* =========================================================================
+     * LOGISTICS SI UNITS CALIBRATION REFERENCE CONSTANTS
+     * ========================================================================= */
+    const ARENA_WIDTH_M        = 20.0;    // 20m x 20m
+    const ARENA_HEIGHT_M       = 20.0;
+    const COMM_RANGE_M         = 30.0;
+    const LOW_BATTERY_THRESHOLD= 20.0;
+
+    const BOT_MAX_SPEED_MPS    = 1.2;     // 1.2 m/s
+    const BOT_ACCEL_MPS2       = 0.5;
+    const BATTERY_CAPACITY_WH  = 100.0;
+
+    // Power Draws (Watts)
+    const POWER_IDLE_W         = 0.5;     // 0.5 W subtle idle standby
+    const POWER_MOVING_W       = 35.0;    // 35 W active motion power
+    const POWER_SERVICE_W      = 18.0;    // 18 W task servicing power
+    const POWER_CHARGING_W     = 8.0;     // 8 W charging state draw
+
+    // Charging Station Configuration
+    const CHARGER_X_M          = 17.5;    // Dock X position (bottom-right area)
+    const CHARGER_Y_M          = 17.5;    // Dock Y position
+    const CHARGER_RADIUS_M     = 1.0;     // Docking radius
+    const CHARGE_RATE_PCT_S    = 35.0;    // Sim-scaled charge rate %/sec
+    const CHARGE_TO_PCT        = 90.0;    // Charge up to 90% then resume
+
+    /* Sound Synth Engine */
     let audioEnabled = true;
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
-    function initAudio() {
-      if (!audioCtx) audioCtx = new AudioContext();
-    }
+    function initAudio() { if (!audioCtx) audioCtx = new AudioContext(); }
 
     function playSynthBeep(freq = 440, type = 'sine', duration = 0.1, gainVal = 0.08) {
       if (!audioEnabled) return;
@@ -1054,15 +1071,72 @@
       btn.classList.toggle('btn-active', audioEnabled);
     }
 
-    /* ==========================================================================
-       DYNAMIC ALGORITHM PARAMETERS & STATE
-       ========================================================================== */
+    function toggleRL() {
+      isQlearningEnabled = !isQlearningEnabled;
+      const btn = document.getElementById('btnToggleRL');
+      btn.innerText = isQlearningEnabled ? 'Q-Learning: ON' : 'Q-Learning: OFF (Fixed Weights)';
+      btn.classList.toggle('btn-active', isQlearningEnabled);
+      logEvent(`[ALGORITHM TOGGLE] Reinforcement Learning turned ${isQlearningEnabled ? 'ON (Q-Learning Active)' : 'OFF (Fixed Weights Baseline)'}`, 'log-sys', 'sys');
+    }
+
+    /* Simulation Parameters & State */
     let WEIGHT_DISTANCE = 0.5;
     let WEIGHT_BATTERY  = 0.3;
     let WEIGHT_STATUS   = 0.2;
 
-    const CRITICAL_BATTERY_THRESHOLD = 15.0;
-    const MAX_ARENA_DIAGONAL = 900.0;
+    let isHeatmapEnabled = false;
+    let is3DModeEnabled  = false;
+    let heatPoints = [];
+
+    function toggleHeatmap() {
+      isHeatmapEnabled = !isHeatmapEnabled;
+      const btn = document.getElementById('btnToggleHeatmap');
+      btn.innerText = isHeatmapEnabled ? 'Heatmap: ON' : 'Heatmap: OFF';
+      btn.classList.toggle('btn-active', isHeatmapEnabled);
+      logEvent(`[VISUALIZATION] Swarm Density Heatmap turned ${isHeatmapEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
+    }
+
+    function toggle3DView() {
+      is3DModeEnabled = !is3DModeEnabled;
+      const container = document.getElementById('canvasContainer');
+      const btn = document.getElementById('btnToggle3D');
+      container.classList.toggle('iso-mode', is3DModeEnabled);
+      btn.innerText = is3DModeEnabled ? '3D View: ON' : '3D View: OFF';
+      btn.classList.toggle('btn-active', is3DModeEnabled);
+      logEvent(`[VIEWPORT] Holographic Isometric 3D Perspective Mode turned ${is3DModeEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
+    }
+
+    function loadScenario(preset) {
+      clearCanvasItems();
+      if (preset === 'maze') {
+        obstacles.push({ x: 2.0, y: 5.0, width: 12.0, height: 0.8 });
+        obstacles.push({ x: 6.0, y: 11.0, width: 12.0, height: 0.8 });
+        obstacles.push({ x: 10.0, y: 1.0, width: 0.8, height: 8.0 });
+        
+        spawnTask(mToPxX(4.0), mToPxY(2.5), 'normal');
+        spawnTask(mToPxX(15.0), mToPxY(8.0), 'high');
+        spawnTask(mToPxX(3.0), mToPxY(16.0), 'emergency');
+        spawnTask(mToPxX(16.0), mToPxY(16.0), 'normal');
+        logEvent('[PRESET SCENARIO] Loaded Scenario: Maze Runner Challenge with 4 Corridor Tasks!', 'log-win', 'sys');
+      } else if (preset === 'overload') {
+        spawnTask(mToPxX(5.0), mToPxY(5.0), 'emergency');
+        spawnTask(mToPxX(15.0), mToPxY(5.0), 'high');
+        spawnTask(mToPxX(10.0), mToPxY(10.0), 'emergency');
+        spawnTask(mToPxX(5.0), mToPxY(15.0), 'high');
+        spawnTask(mToPxX(15.0), mToPxY(15.0), 'emergency');
+        logEvent('[PRESET SCENARIO] Loaded Scenario: Swarm Overload (5 Simultaneous High/Emergency Tasks)!', 'log-warn', 'sys');
+      } else if (preset === 'failover') {
+        bots[0].battery = 12.0; bots[0].status = 'CRITICAL';
+        bots[1].battery = 18.0; bots[1].status = 'CRITICAL';
+        bots[2].battery = 98.0; bots[2].status = 'IDLE';
+        electLeader();
+        spawnTask(mToPxX(12.0), mToPxY(8.0), 'emergency');
+        logEvent('[PRESET SCENARIO] Loaded Scenario: Low-Battery Crisis! B1 & B2 Critical (12%, 18%). Coordinator Failover to B3!', 'log-warn', 'warn');
+      } else {
+        logEvent('[PRESET SCENARIO] Reset to Clean Arena floor.', 'log-sys', 'sys');
+      }
+      updateDashboards();
+    }
 
     let currentTool = 'task';
     let isDrawingObstacle = false;
@@ -1073,38 +1147,65 @@
 
     let autoSpawnInterval = null;
     let taskIdCounter = 1;
+    let coordinatorId = null;
+    let leaderElectionTimer = 0;
+
     let totalCompletedTasks = 0;
+    let totalFailedTasks    = 0;
+    let totalEnergyConsumedWh = 0;
+    let totalCompletionTimeSec = 0;
+    let simStartTimeSec     = Date.now() / 1000;
+    let completionTimeHistory = [];
 
     let broadcastLines = [];
     let particles = [];
     let radarAngle = 0;
 
+    // Coordinate Transform Utilities (Metres <-> Pixels Rendering Layer Only)
+    function getPxPerMeterX() { return canvas.clientWidth / ARENA_WIDTH_M; }
+    function getPxPerMeterY() { return canvas.clientHeight / ARENA_HEIGHT_M; }
+    function mToPxX(mX) { return mX * getPxPerMeterX(); }
+    function mToPxY(mY) { return mY * getPxPerMeterY(); }
+    function pxToMX(pX) { return pX / getPxPerMeterX(); }
+    function pxToMY(pY) { return pY / getPxPerMeterY(); }
+
+    /* Swarm Bots (Positions in Meters, Speed in m/s, Battery in Wh/%) */
     const bots = [
-      { id: 1, name: 'Bot 1', x: 140, y: 160, angle: 0, speed: 2.5, battery: 100, status: 'IDLE', assignedTask: null, color: '#00f2fe', glowColor: 'rgba(0, 242, 254, 0.4)', lastBidCost: null },
-      { id: 2, name: 'Bot 2', x: 140, y: 350, angle: 0, speed: 2.5, battery: 100, status: 'IDLE', assignedTask: null, color: '#c084fc', glowColor: 'rgba(192, 132, 252, 0.4)', lastBidCost: null },
-      { id: 3, name: 'Bot 3', x: 140, y: 540, angle: 0, speed: 2.5, battery: 100, status: 'IDLE', assignedTask: null, color: '#fbbf24', glowColor: 'rgba(251, 191, 36, 0.4)', lastBidCost: null }
+      { id: 1, name: 'Bot 1', x: 3.5, y: 4.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#0284c7', glowColor: 'rgba(2, 132, 199, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 99.0, chargingWaypoints: null },
+      { id: 2, name: 'Bot 2', x: 3.5, y: 10.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#7c3aed', glowColor: 'rgba(124, 58, 237, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 97.0, chargingWaypoints: null },
+      { id: 3, name: 'Bot 3', x: 3.5, y: 16.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#d97706', glowColor: 'rgba(217, 119, 6, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 98.5, chargingWaypoints: null }
     ];
 
+    let cooperativeTasks = []; // Tracks co-op tasks needing 2 bots
+
     let tasks = [];
-    let pendingQueue = []; // Continuous Task Queue
+    let pendingQueue = [];
     let obstacles = [];
 
-    /* ==========================================================================
-       LINE-OF-SIGHT PATH OBSTRUCTION INTERSECTION TESTING
-       ========================================================================== */
+    /* High-Precision Path Testing & A* Detour Pathfinding System */
     function lineIntersectsLine(x1, y1, x2, y2, x3, y3, x4, y4) {
       const denom = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
       if (Math.abs(denom) < 0.0001) return false;
-
       const uA = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denom;
       const uB = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denom;
-
       return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
     }
 
-    function isPathBlocked(x1, y1, x2, y2) {
+    function isPointInObstacle(px, py, buf = 0.0) {
       for (const obs of obstacles) {
-        const left = obs.x, right = obs.x + obs.width, top = obs.y, bottom = obs.y + obs.height;
+        if (px >= obs.x - buf && px <= obs.x + obs.width + buf &&
+            py >= obs.y - buf && py <= obs.y + obs.height + buf) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function isPathBlocked(x1, y1, x2, y2, buf = 0.0) {
+      for (const obs of obstacles) {
+        // Test intersection against exact obstacle bounds
+        const left = obs.x, right = obs.x + obs.width;
+        const top = obs.y, bottom = obs.y + obs.height;
         if (lineIntersectsLine(x1, y1, x2, y2, left, top, right, top) ||
             lineIntersectsLine(x1, y1, x2, y2, right, top, right, bottom) ||
             lineIntersectsLine(x1, y1, x2, y2, right, bottom, left, bottom) ||
@@ -1112,88 +1213,514 @@
           return true;
         }
       }
+
+      // Intermediate segment sampling check
+      const dist = Math.hypot(x2 - x1, y2 - y1);
+      if (dist > 0.4) {
+        const steps = Math.ceil(dist / 0.3);
+        for (let i = 1; i < steps - 1; i++) {
+          const sampleX = x1 + (x2 - x1) * (i / steps);
+          const sampleY = y1 + (y2 - y1) * (i / steps);
+          if (isPointInObstacle(sampleX, sampleY, buf)) return true;
+        }
+      }
       return false;
     }
 
-    /* ==========================================================================
-       CORE ALGORITHM: calculateBid()
-       ========================================================================== */
-    function calculateBid(bot, task) {
-      if (isPathBlocked(bot.x, bot.y, task.x, task.y)) {
-        return 999.0;
+    // High-Resolution A* Grid Pathfinding with Raycast String-Pulling Path Smoothing
+    function findPathAStar(startX, startY, targetX, targetY) {
+      // Direct Unobstructed Line of Sight Check
+      if (!isPathBlocked(startX, startY, targetX, targetY, 0.0)) {
+        return [{ x: targetX, y: targetY }];
       }
 
-      const dx = task.x - bot.x;
-      const dy = task.y - bot.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const normDistance = Math.min(distance / MAX_ARENA_DIAGONAL, 1.0);
+      const gridResM = 0.3; // 0.3m fine resolution grid
+      const cols = Math.floor(ARENA_WIDTH_M / gridResM);
+      const rows = Math.floor(ARENA_HEIGHT_M / gridResM);
 
+      const startCol = Math.min(Math.max(0, Math.floor(startX / gridResM)), cols - 1);
+      const startRow = Math.min(Math.max(0, Math.floor(startY / gridResM)), rows - 1);
+      const targetCol = Math.min(Math.max(0, Math.floor(targetX / gridResM)), cols - 1);
+      const targetRow = Math.min(Math.max(0, Math.floor(targetY / gridResM)), rows - 1);
+
+      function isCellBlocked(c, r) {
+        if ((c === startCol && r === startRow) || (c === targetCol && r === targetRow)) return false;
+        const cx = (c + 0.5) * gridResM;
+        const cy = (r + 0.5) * gridResM;
+        return isPointInObstacle(cx, cy, 0.0);
+      }
+
+      const openSetMap = new Map();
+      const closedSet = new Set();
+      const cameFrom = new Map();
+      const gScore = new Map();
+
+      const startKey = `${startCol},${startRow}`;
+      gScore.set(startKey, 0);
+      const initialF = Math.hypot(startCol - targetCol, startRow - targetRow);
+      openSetMap.set(startKey, { col: startCol, row: startRow, f: initialF });
+
+      const neighbors = [
+        { dc: 0, dr: -1, cost: 1.0 }, { dc: 0, dr: 1, cost: 1.0 },
+        { dc: -1, dr: 0, cost: 1.0 }, { dc: 1, dr: 0, cost: 1.0 },
+        { dc: -1, dr: -1, cost: 1.414 }, { dc: 1, dr: -1, cost: 1.414 },
+        { dc: -1, dr: 1, cost: 1.414 }, { dc: 1, dr: 1, cost: 1.414 }
+      ];
+
+      let foundKey = null;
+      let iterations = 0;
+      const maxIterations = 15000;
+
+      while (openSetMap.size > 0 && iterations++ < maxIterations) {
+        let currentKey = null;
+        let lowestF = Infinity;
+        for (const [key, node] of openSetMap.entries()) {
+          if (node.f < lowestF) {
+            lowestF = node.f;
+            currentKey = key;
+          }
+        }
+
+        if (!currentKey) break;
+        const current = openSetMap.get(currentKey);
+        openSetMap.delete(currentKey);
+
+        if (current.col === targetCol && current.row === targetRow) {
+          foundKey = currentKey;
+          break;
+        }
+
+        closedSet.add(currentKey);
+
+        for (const n of neighbors) {
+          const nc = current.col + n.dc;
+          const nr = current.row + n.dr;
+          if (nc < 0 || nc >= cols || nr < 0 || nr >= rows) continue;
+          if (isCellBlocked(nc, nr)) continue;
+
+          // Corner-cutting prevention for diagonal movement
+          if (n.dc !== 0 && n.dr !== 0) {
+            if (isCellBlocked(current.col + n.dc, current.row) || isCellBlocked(current.col, current.row + n.dr)) {
+              continue;
+            }
+          }
+
+          const nKey = `${nc},${nr}`;
+          if (closedSet.has(nKey)) continue;
+
+          const tentativeG = (gScore.get(currentKey) || Infinity) + n.cost;
+
+          if (tentativeG < (gScore.get(nKey) || Infinity)) {
+            cameFrom.set(nKey, currentKey);
+            gScore.set(nKey, tentativeG);
+            const h = Math.hypot(nc - targetCol, nr - targetRow);
+            const f = tentativeG + h;
+            openSetMap.set(nKey, { col: nc, row: nr, f: f });
+          }
+        }
+      }
+
+      if (!foundKey) return null; // Unreachable
+
+      // Reconstruct raw grid path
+      const rawPath = [];
+      let curr = foundKey;
+      while (curr) {
+        const [c, r] = curr.split(',').map(Number);
+        rawPath.unshift({ x: (c + 0.5) * gridResM, y: (r + 0.5) * gridResM });
+        curr = cameFrom.get(curr);
+      }
+      rawPath.push({ x: targetX, y: targetY });
+
+      // Raycast String-Pulling Path Smoothing
+      const smoothedPath = [];
+      let currentPos = { x: startX, y: startY };
+      let rawIdx = 0;
+
+      while (rawIdx < rawPath.length - 1) {
+        let furthestIdx = rawPath.length - 1;
+        for (; furthestIdx > rawIdx; furthestIdx--) {
+          const candidate = rawPath[furthestIdx];
+          if (!isPathBlocked(currentPos.x, currentPos.y, candidate.x, candidate.y, 0.25)) {
+            break;
+          }
+        }
+
+        if (furthestIdx === rawIdx) furthestIdx = rawIdx + 1;
+
+        const nextPoint = rawPath[furthestIdx];
+        smoothedPath.push(nextPoint);
+        currentPos = nextPoint;
+        rawIdx = furthestIdx;
+      }
+
+      return smoothedPath.length > 0 ? smoothedPath : [{ x: targetX, y: targetY }];
+    }
+
+    /* Dynamic Leader Election */
+    function computeFitnessScore(bot) {
+      const battScore = Math.max(0.0, bot.battery / 100.0);
+      let meanDistM = 0;
+      if (tasks.length > 0) {
+        let sumDist = 0;
+        tasks.forEach(t => sumDist += Math.hypot(t.x - bot.x, t.y - bot.y));
+        meanDistM = sumDist / tasks.length;
+      } else {
+        meanDistM = Math.hypot(10.0 - bot.x, 10.0 - bot.y);
+      }
+      const maxDiagonalM = Math.hypot(ARENA_WIDTH_M, ARENA_HEIGHT_M);
+      const centralityScore = 1.0 - Math.min(meanDistM / maxDiagonalM, 1.0);
+      const loadScore = (bot.status === 'IDLE') ? 1.0 : 0.5;
+      const commScore = (bot.commReliability || 98.0) / 100.0;
+
+      const fitness = (battScore * 0.35) + (centralityScore * 0.30) + (loadScore * 0.20) + (commScore * 0.15);
+      return Number(fitness.toFixed(4));
+    }
+
+    function electLeader() {
+      let bestBot = null;
+      let highestFitness = -1.0;
+      let summaryStr = [];
+
+      bots.forEach(b => {
+        if (b.battery < LOW_BATTERY_THRESHOLD) {
+          summaryStr.push(`B${b.id}: INELIGIBLE (<20%)`);
+          return;
+        }
+        const fit = computeFitnessScore(b);
+        summaryStr.push(`B${b.id}: ${fit}`);
+        if (fit > highestFitness) {
+          highestFitness = fit;
+          bestBot = b;
+        }
+      });
+
+      const oldLeaderId = coordinatorId;
+      if (bestBot) {
+        coordinatorId = bestBot.id;
+        if (oldLeaderId !== coordinatorId) {
+          logEvent(`[LEADER ELECTION] Node 0x0${coordinatorId} elected as Swarm Coordinator (Fitness: ${highestFitness}). [Bids: ${summaryStr.join(' | ')}]`, 'log-auc', 'auc');
+          triggerBroadcastAnimation('#d97706');
+        }
+      } else {
+        coordinatorId = null;
+        logEvent(`[LEADER ELECTION ALERT] No eligible node for Coordinator! All nodes battery < 20%`, 'log-warn', 'warn');
+      }
+
+      bots.forEach(b => {
+        const badge = document.getElementById(`bot${b.id}CoordBadge`);
+        if (badge) badge.style.display = (b.id === coordinatorId) ? 'inline-block' : 'none';
+      });
+    }
+
+    /* Q-Learning Discretization */
+    function getDiscreteStateKey(bot, task) {
+      let battBucket = 'HIGH';
+      if (bot.battery < 35.0) battBucket = 'LOW';
+      else if (bot.battery < 70.0) battBucket = 'MED';
+
+      const distM = Math.hypot(task.x - bot.x, task.y - bot.y);
+      let distBucket = 'NEAR';
+      if (distM > 12.0) distBucket = 'FAR';
+      else if (distM > 5.0) distBucket = 'MED';
+
+      let queueBucket = 'EMPTY';
+      if (bot.taskQueue.length >= 2) queueBucket = 'HEAVY';
+      else if (bot.taskQueue.length === 1) queueBucket = 'LIGHT';
+
+      return `B_${battBucket}|D_${distBucket}|Q_${queueBucket}`;
+    }
+
+    function initQTableState(qTable, stateKey) {
+      if (!qTable[stateKey]) {
+        qTable[stateKey] = [0.0, 0.0, 0.0];
+      }
+    }
+
+    function findNearestSafePoint(targetX, targetY) {
+      if (!isPointInObstacle(targetX, targetY, 0.0)) {
+        return { x: targetX, y: targetY };
+      }
+      for (let r = 0.3; r <= 4.0; r += 0.3) {
+        for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
+          const testX = Math.min(Math.max(0.5, targetX + Math.cos(angle) * r), ARENA_WIDTH_M - 0.5);
+          const testY = Math.min(Math.max(0.5, targetY + Math.sin(angle) * r), ARENA_HEIGHT_M - 0.5);
+          if (!isPointInObstacle(testX, testY, 0.0)) {
+            return { x: testX, y: testY };
+          }
+        }
+      }
+      return { x: targetX, y: targetY };
+    }
+
+    function calculateBid(bot, task) {
+      let targetCoord = { x: task.x, y: task.y };
+      let pathWaypoints = findPathAStar(bot.x, bot.y, targetCoord.x, targetCoord.y);
+
+      // Smart Goal Projection: If direct target coordinate is inside/behind wall, project to nearest safe approach floor point
+      if (!pathWaypoints) {
+        const safePoint = findNearestSafePoint(task.x, task.y);
+        pathWaypoints = findPathAStar(bot.x, bot.y, safePoint.x, safePoint.y);
+        if (pathWaypoints) {
+          targetCoord = safePoint;
+        }
+      }
+
+      if (!pathWaypoints) {
+        return { cost: 999.0, stateKey: null, actionIdx: 0, isEnRoute: false };
+      }
+      
+      // Calculate actual total path distance along A* waypoints
+      let totalPathDistM = 0;
+      let currX = bot.x, currY = bot.y;
+      pathWaypoints.forEach(wp => {
+        totalPathDistM += Math.hypot(wp.x - currX, wp.y - currY);
+        currX = wp.x;
+        currY = wp.y;
+      });
+
+      const maxDiagonalM = Math.hypot(ARENA_WIDTH_M, ARENA_HEIGHT_M);
+      
+      let effectiveDistM = totalPathDistM;
+      let statusPenalty = 0.0;
+      let isEnRoute = false;
+
+      if (bot.assignedTask && bot.assignedTask.id !== task.id) {
+        const distToCurrentM = Math.hypot(bot.assignedTask.x - bot.x, bot.assignedTask.y - bot.y);
+        
+        if (totalPathDistM < distToCurrentM) {
+          isEnRoute = true;
+          effectiveDistM = totalPathDistM;
+          statusPenalty = 0.0;
+        } else {
+          statusPenalty = 0.25 * bot.taskQueue.length;
+        }
+      }
+
+      const normDistance = Math.min(effectiveDistM / maxDiagonalM, 1.0);
       const normBatteryPenalty = 1.0 - (bot.battery / 100.0);
-      const statusPenalty = (bot.status !== 'IDLE') ? 1.0 : 0.0;
 
       let priorityMult = 1.0;
       if (task.priority === 'high') priorityMult = 0.8;
       if (task.priority === 'emergency') priorityMult = 0.4;
 
-      const cost = ((WEIGHT_DISTANCE * normDistance) +
-                    (WEIGHT_BATTERY  * normBatteryPenalty) +
-                    (WEIGHT_STATUS   * statusPenalty)) * priorityMult;
+      const baseCost = ((WEIGHT_DISTANCE * normDistance) +
+                        (WEIGHT_BATTERY  * normBatteryPenalty) +
+                        (WEIGHT_STATUS   * statusPenalty)) * priorityMult;
 
-      return Number(cost.toFixed(4));
+      if (!isQlearningEnabled) {
+        return { cost: Number(baseCost.toFixed(4)), stateKey: null, actionIdx: 0, isEnRoute: isEnRoute, waypoints: pathWaypoints };
+      }
+
+      const stateKey = getDiscreteStateKey(bot, task);
+      initQTableState(bot.qTable, stateKey);
+
+      let actionIdx = 0;
+      if (Math.random() < Q_EPSILON) {
+        actionIdx = Math.floor(Math.random() * 3);
+      } else {
+        const qVals = bot.qTable[stateKey];
+        actionIdx = qVals.indexOf(Math.max(...qVals));
+      }
+
+      const actionMult = Q_ACTION_MULTIPLIERS[actionIdx];
+      const finalCost = baseCost * actionMult;
+
+      return {
+        cost: Number(finalCost.toFixed(4)),
+        stateKey: stateKey,
+        actionIdx: actionIdx,
+        distM: effectiveDistM,
+        isEnRoute: isEnRoute,
+        waypoints: pathWaypoints
+      };
     }
 
-    /* ==========================================================================
-       P2P AUCTION ALLOCATION & SAFE PREEMPTION QUEUE MANAGEMENT
-       ========================================================================== */
+    function updateQTable(bot, outcome, taskDurationSec, energyWh) {
+      if (!isQlearningEnabled || !bot.currentActionState) return;
+
+      const { stateKey, actionIdx, distM } = bot.currentActionState;
+      initQTableState(bot.qTable, stateKey);
+
+      let reward = 0.0;
+      const estimatedTimeSec = (distM / BOT_MAX_SPEED_MPS) + 5.0;
+
+      if (outcome === 'COMPLETE') {
+        if (taskDurationSec <= estimatedTimeSec + 4.0 && energyWh < 2.5) {
+          reward = 10.0;
+        } else {
+          reward = -2.0;
+        }
+      } else if (outcome === 'ABANDONED') {
+        reward = -10.0;
+      }
+
+      const oldQ = bot.qTable[stateKey][actionIdx];
+      const maxNextQ = Math.max(...bot.qTable[stateKey]);
+      const newQ = oldQ + Q_ALPHA * (reward + (Q_GAMMA * maxNextQ) - oldQ);
+      bot.qTable[stateKey][actionIdx] = Number(newQ.toFixed(4));
+
+      Q_EPSILON = Math.max(Q_EPSILON_MIN, Q_EPSILON * Q_EPSILON_DECAY);
+
+      bot.currentActionState = null;
+    }
+
+    function pushChartBar(val) {
+      const chartBox = document.getElementById('chartBox');
+      if (!chartBox) return;
+      
+      let barPct = 50;
+      if (isQlearningEnabled && completionTimeHistory.length > 0) {
+        const recentAvg = completionTimeHistory.slice(-5).reduce((a, b) => a + b, 0) / Math.min(5, completionTimeHistory.length);
+        barPct = Math.min(Math.max((30.0 - recentAvg) / 30.0 * 100, 15), 95);
+      } else {
+        barPct = Math.min(Math.max(val * 100, 15), 95);
+      }
+
+      const col = document.createElement('div');
+      col.className = 'chart-bar';
+      col.style.height = `${barPct}%`;
+      chartBox.appendChild(col);
+      if (chartBox.children.length > 18) chartBox.removeChild(chartBox.firstChild);
+    }
+
+    /* Auction Execution */
     function runAuction(task) {
-      logEvent(`[AUCTION] P2P Bidding for Task #${task.id} (${task.priority.toUpperCase()}) at (${Math.round(task.x)}, ${Math.round(task.y)})`, 'log-auc', 'auc');
-      triggerBroadcastAnimation();
+      if (!coordinatorId) electLeader();
+      const leaderBot = bots.find(b => b.id === coordinatorId);
+      const leaderName = leaderBot ? leaderBot.name : 'Swarm';
+
+      logEvent(`[AUCTION] ${leaderName} (Coordinator) conducting P2P Bidding for Task #${task.id} (${task.priority.toUpperCase()}) at SI Pos (${task.x.toFixed(1)}m, ${task.y.toFixed(1)}m)`, 'log-auc', 'auc');
+      triggerBroadcastAnimation('#0284c7');
       soundSpawn();
+
+      // COOPERATIVE TASK AUCTION: Select TOP 2 lowest-cost eligible bots
+      if (task.priority === 'cooperative') {
+        const eligibleBids = [];
+        bots.forEach(bot => {
+          if (bot.battery < LOW_BATTERY_THRESHOLD) {
+            bot.lastBidCost = 'LOW_BATT';
+            return;
+          }
+          const bidRes = calculateBid(bot, task);
+          const cost = typeof bidRes === 'object' ? bidRes.cost : bidRes;
+          if (cost >= 999.0) {
+            bot.lastBidCost = 'OBSTRUCTED';
+            return;
+          }
+          bot.lastBidCost = `${cost} (COOP)`;
+          eligibleBids.push({ bot, cost, bidRes });
+        });
+
+        eligibleBids.sort((a, b) => a.cost - b.cost);
+
+        if (eligibleBids.length >= 2) {
+          const winners = [eligibleBids[0], eligibleBids[1]];
+          task.assignedBotIds = winners.map(w => w.bot.id);
+          task.arrivedBotIds = [];
+          task.startTimeSec = Date.now() / 1000;
+
+          winners.forEach(w => {
+            const bot = w.bot;
+            bot.taskQueue = [task];
+            bot.assignedTask = task;
+            bot.waypoints = (w.bidRes && w.bidRes.waypoints) ? [...w.bidRes.waypoints] : [{ x: task.x, y: task.y }];
+            bot.status = 'MOVING';
+            bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+          });
+
+          logEvent(`[🤝 COOP WINNERS] ${winners[0].bot.name} & ${winners[1].bot.name} WON Cooperative Task #${task.id}!`, 'log-win', 'win');
+          soundWin();
+          pendingQueue = pendingQueue.filter(t => t.id !== task.id);
+          updateDashboards();
+          return true;
+        } else {
+          logEvent(`[WARN] Task #${task.id} (COOP) requires 2 available bots — Saved to Pending Queue.`, 'log-warn', 'warn');
+          soundAlert();
+          if (!pendingQueue.some(t => t.id === task.id)) pendingQueue.push(task);
+          updateDashboards();
+          return false;
+        }
+      }
 
       let bestBot = null;
       let lowestCost = Infinity;
+      let bestBidInfo = null;
       let bidSummary = [];
 
       bots.forEach(bot => {
-        if (bot.battery < CRITICAL_BATTERY_THRESHOLD) {
+        if (bot.battery < LOW_BATTERY_THRESHOLD) {
           bot.lastBidCost = 'LOW_BATT';
-          bidSummary.push(`${bot.name}: INELIGIBLE (<15%)`);
+          bidSummary.push(`${bot.name}: INELIGIBLE (<20%)`);
           return;
         }
 
-        const cost = calculateBid(bot, task);
+        const bidRes = calculateBid(bot, task);
+        const cost = typeof bidRes === 'object' ? bidRes.cost : bidRes;
+        
         if (cost >= 999.0) {
           bot.lastBidCost = 'OBSTRUCTED';
           bidSummary.push(`${bot.name}: OBSTRUCTED (Wall)`);
           return;
         }
 
-        bot.lastBidCost = cost;
-        bidSummary.push(`${bot.name}: ${cost}`);
+        const actionTag = (isQlearningEnabled && bidRes.stateKey) ? ` [${Q_ACTION_NAMES[bidRes.actionIdx]}]` : '';
+        const enRouteTag = bidRes.isEnRoute ? ' (EN-ROUTE)' : '';
+        bot.lastBidCost = `${cost}${actionTag}${enRouteTag}`;
+        bidSummary.push(`${bot.name}: ${cost}${actionTag}${enRouteTag}`);
 
         if (cost < lowestCost) {
           lowestCost = cost;
           bestBot = bot;
+          bestBidInfo = bidRes;
         }
       });
 
       logEvent(`Bids Received -> ${bidSummary.join(' | ')}`, 'log-sys', 'auc');
 
       if (bestBot && lowestCost < 999.0) {
-        // Safe Task Preemption Logic: If bestBot is already assigned an older task, save it to pendingQueue!
+        pushChartBar(lowestCost);
+
         if (bestBot.assignedTask && bestBot.assignedTask.id !== task.id) {
-          const oldTask = bestBot.assignedTask;
-          oldTask.assignedBotId = null;
-          if (!pendingQueue.some(t => t.id === oldTask.id)) {
-            pendingQueue.push(oldTask);
+          const distToNewM = Math.hypot(task.x - bestBot.x, task.y - bestBot.y);
+          const distToCurrentM = Math.hypot(bestBot.assignedTask.x - bestBot.x, bestBot.assignedTask.y - bestBot.y);
+
+          if (distToNewM < distToCurrentM) {
+            bestBot.taskQueue.unshift(task);
+            bestBot.assignedTask = task;
+            bestBot.waypoints = (bestBidInfo && bestBidInfo.waypoints) ? [...bestBidInfo.waypoints] : [{ x: task.x, y: task.y }];
+            logEvent(`[EN-ROUTE OPTIMIZATION] ${bestBot.name} inserted Task #${task.id} (${distToNewM.toFixed(1)}m) EN-ROUTE before further Task #${bestBot.taskQueue[1].id} (${distToCurrentM.toFixed(1)}m)!`, 'log-win', 'win');
+          } else {
+            bestBot.taskQueue.push(task);
+            logEvent(`[ROUTE QUEUED] ${bestBot.name} queued Task #${task.id} into route queue after Task #${bestBot.assignedTask.id}.`, 'log-win', 'win');
           }
-          logEvent(`[PREEMPTION] ${bestBot.name} paused Task #${oldTask.id} to execute higher-priority Task #${task.id}. Task #${oldTask.id} saved to Queue.`, 'log-warn', 'warn');
+        } else {
+          bestBot.taskQueue = [task];
+          bestBot.assignedTask = task;
+          bestBot.waypoints = (bestBidInfo && bestBidInfo.waypoints) ? [...bestBidInfo.waypoints] : [{ x: task.x, y: task.y }];
         }
 
-        bestBot.assignedTask = task;
         bestBot.status = 'MOVING';
+        bestBot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+        
+        if (isQlearningEnabled && typeof bestBidInfo === 'object' && bestBidInfo.stateKey) {
+          bestBot.currentActionState = {
+            stateKey: bestBidInfo.stateKey,
+            actionIdx: bestBidInfo.actionIdx,
+            startBatt: bestBot.battery,
+            startTimeSec: Date.now() / 1000,
+            distM: bestBidInfo.distM,
+            task: task
+          };
+        } else {
+          bestBot.currentActionState = null;
+        }
+
         task.assignedBotId = bestBot.id;
-        logEvent(`[WINNER] ${bestBot.name} (0x0${bestBot.id}) WON Task #${task.id} with cost ${lowestCost}`, 'log-win', 'win');
+        task.startTimeSec = Date.now() / 1000;
+        task.startBattWh = bestBot.battery;
+
+        logEvent(`[WINNER] ${bestBot.name} WON Task #${task.id} with cost ${lowestCost}`, 'log-win', 'win');
         soundWin();
 
         pendingQueue = pendingQueue.filter(t => t.id !== task.id);
@@ -1202,10 +1729,7 @@
       } else {
         logEvent(`[WARN] Task #${task.id} UNASSIGNED — Saved to Pending Queue.`, 'log-warn', 'warn');
         soundAlert();
-        
-        if (!pendingQueue.some(t => t.id === task.id)) {
-          pendingQueue.push(task);
-        }
+        if (!pendingQueue.some(t => t.id === task.id)) pendingQueue.push(task);
         updateDashboards();
         return false;
       }
@@ -1213,201 +1737,391 @@
 
     function handleTaskDrop(bot) {
       if (!bot.assignedTask) return;
+      
+      const droppedTasks = [...(bot.taskQueue || [bot.assignedTask])];
+      updateQTable(bot, 'ABANDONED', 0, 0);
 
-      const droppedTask = bot.assignedTask;
+      bot.taskQueue = [];
+      bot.waypoints = [];
       bot.assignedTask = null;
-      bot.status = (bot.battery < CRITICAL_BATTERY_THRESHOLD) ? 'CRITICAL' : 'IDLE';
-      droppedTask.assignedBotId = null;
+      bot.status = (bot.battery < LOW_BATTERY_THRESHOLD) ? 'CRITICAL' : 'IDLE';
 
-      if (!pendingQueue.some(t => t.id === droppedTask.id)) {
-        pendingQueue.push(droppedTask);
-      }
+      droppedTasks.forEach(droppedTask => {
+        droppedTask.assignedBotId = null;
+        totalFailedTasks++;
+        if (!pendingQueue.some(t => t.id === droppedTask.id)) pendingQueue.push(droppedTask);
+      });
 
-      if (bot.battery < CRITICAL_BATTERY_THRESHOLD) {
-        logEvent(`[ALERT] ${bot.name} battery dropped below 15%! DROPPED Task #${droppedTask.id}`, 'log-warn', 'warn');
-      } else {
-        logEvent(`[ALERT] ${bot.name} path blocked by wall placement! DROPPED Task #${droppedTask.id}`, 'log-warn', 'warn');
-      }
-
+      logEvent(`[ALERT] ${bot.name} dropped ${droppedTasks.length} queued task(s)`, 'log-warn', 'warn');
       soundAlert();
-      triggerBroadcastAnimation('#f43f5e');
+      triggerBroadcastAnimation('#dc2626');
+
+      if (bot.id === coordinatorId) electLeader();
 
       setTimeout(() => {
-        logEvent(`[RE-AUCTION] Re-auctioning dropped Task #${droppedTask.id}...`, 'log-auc', 'auc');
-        runAuction(droppedTask);
+        processPendingQueue();
       }, 400);
     }
 
-    /* Continuous Queue Processing: Runs on task completion & recharge */
     function processPendingQueue() {
       if (pendingQueue.length === 0) return;
-
-      // Sort pending queue by priority rank: emergency (1) -> high (2) -> normal (3)
-      const prioRank = { emergency: 1, high: 2, normal: 3 };
-      pendingQueue.sort((a, b) => (prioRank[a.priority] || 3) - (prioRank[b.priority] || 3));
-
+      const prioRank = { emergency: 1, cooperative: 2, high: 3, normal: 4 };
+      pendingQueue.sort((a, b) => (prioRank[a.priority] || 4) - (prioRank[b.priority] || 4));
       const queueCopy = [...pendingQueue];
       for (const task of queueCopy) {
-        if (!task.assignedBotId) {
-          const assigned = runAuction(task);
-          if (!assigned) break; // Stop if no eligible bot currently available
+        if (!task.assignedBotId && (!task.assignedBotIds || task.assignedBotIds.length < 2)) {
+          runAuction(task);
         }
       }
     }
 
-    /* ==========================================================================
-       CANVAS ENGINE & HIGH-DPI RENDERER
-       ========================================================================== */
+    // Background Rescue Dispatcher: Automatically re-evaluates queued tasks every 2.5s
+    setInterval(processPendingQueue, 2500);
+
+    /* Canvas Renderer */
     function resizeCanvas() {
       const container = document.getElementById('canvasContainer');
       const dpr = window.devicePixelRatio || 1;
-      
       canvas.width = container.clientWidth * dpr;
       canvas.height = container.clientHeight * dpr;
-      
       ctx.scale(dpr, dpr);
       canvas.style.width = `${container.clientWidth}px`;
       canvas.style.height = `${container.clientHeight}px`;
     }
 
     window.addEventListener('resize', resizeCanvas);
+    const resizeObs = new ResizeObserver(() => resizeCanvas());
+    const containerElem = document.getElementById('canvasContainer');
+    if (containerElem) resizeObs.observe(containerElem);
     setTimeout(resizeCanvas, 50);
 
-    function triggerBroadcastAnimation(color = '#00f2fe') {
+    function triggerBroadcastAnimation(color = '#0284c7') {
       for (let i = 0; i < bots.length; i++) {
         for (let j = i + 1; j < bots.length; j++) {
           broadcastLines.push({
-            x1: bots[i].x, y1: bots[i].y,
-            x2: bots[j].x, y2: bots[j].y,
+            x1: mToPxX(bots[i].x), y1: mToPxY(bots[i].y),
+            x2: mToPxX(bots[j].x), y2: mToPxY(bots[j].y),
             color: color, life: 1.0
           });
         }
       }
     }
 
+    /* Simulation Loop */
+    let lastFrameTimeMs = Date.now();
+
     function updateSimulation() {
+      const nowMs = Date.now();
+      const dt = Math.min((nowMs - lastFrameTimeMs) / 1000.0, 0.1);
+      lastFrameTimeMs = nowMs;
+
       const displayWidth = canvas.clientWidth;
       const displayHeight = canvas.clientHeight;
-
       radarAngle = (radarAngle + 0.015) % (Math.PI * 2);
 
-      // 1. Update Bots
+      leaderElectionTimer += dt;
+      if (leaderElectionTimer >= 10.0 || coordinatorId === null) {
+        electLeader();
+        leaderElectionTimer = 0.0;
+      }
+
       bots.forEach(bot => {
-        if (bot.assignedTask) {
-          const task = bot.assignedTask;
+        let currentPowerW = POWER_IDLE_W;
 
-          if (isPathBlocked(bot.x, bot.y, task.x, task.y)) {
-            logEvent(`[PATH BLOCKED] ${bot.name} path to Task #${task.id} obstructed by wall! Re-auctioning...`, 'log-warn', 'warn');
-            handleTaskDrop(bot);
-            return;
+        // ── CHARGING STATION AUTO-DOCK SYSTEM ────────────────────────────────
+        // Any bot below LOW_BATTERY_THRESHOLD automatically navigates to the charger
+        if (bot.status === 'CHARGING') {
+          currentPowerW = POWER_CHARGING_W;
+          const distToCharger = Math.hypot(CHARGER_X_M - bot.x, CHARGER_Y_M - bot.y);
+
+          if (distToCharger > CHARGER_RADIUS_M) {
+            // Navigate to charger using A* if needed
+            if (!bot.chargingWaypoints || bot.chargingWaypoints.length === 0) {
+              bot.chargingWaypoints = findPathAStar(bot.x, bot.y, CHARGER_X_M, CHARGER_Y_M) || [{ x: CHARGER_X_M, y: CHARGER_Y_M }];
+            }
+            const cwp = bot.chargingWaypoints[0];
+            const dxC = cwp.x - bot.x, dyC = cwp.y - bot.y;
+            const distWp = Math.hypot(dxC, dyC);
+            bot.angle = Math.atan2(dyC, dxC);
+            if (distWp > 0.25) {
+              bot.x += Math.cos(bot.angle) * bot.speed * dt * 3.2;
+              bot.y += Math.sin(bot.angle) * bot.speed * dt * 3.2;
+            } else {
+              bot.chargingWaypoints.shift();
+            }
+          } else {
+            // At charger — recharge battery
+            bot.battery = Math.min(CHARGE_TO_PCT, bot.battery + CHARGE_RATE_PCT_S * dt);
+            if (bot.battery >= CHARGE_TO_PCT) {
+              bot.status = 'IDLE';
+              bot.chargingWaypoints = null;
+              logEvent(`[⚡ CHARGED] ${bot.name} fully recharged to ${bot.battery.toFixed(0)}% — returning to swarm.`, 'log-win', 'win');
+              soundWin();
+              processPendingQueue();
+            }
           }
+        } else if (bot.battery < LOW_BATTERY_THRESHOLD && bot.status !== 'CRITICAL') {
+          // Trigger auto-dock: drop current task, head to charger
+          if (bot.assignedTask) handleTaskDrop(bot);
+          bot.status = 'CHARGING';
+          bot.chargingWaypoints = null;
+          logEvent(`[⚡ LOW BATTERY] ${bot.name} battery at ${bot.battery.toFixed(0)}% — auto-docking to Charging Station!`, 'log-warn', 'warn');
+          soundAlert();
+        } else if (bot.assignedTask) {
+          const task = bot.assignedTask;
+          
+          if (bot.status === 'SERVICING') {
+            currentPowerW = POWER_SERVICE_W;
+            bot.serviceTimer -= dt;
 
-          const dx = task.x - bot.x;
-          const dy = task.y - bot.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+            if (bot.serviceTimer <= 0) {
+              totalCompletedTasks++;
+              const durationSec = (Date.now() / 1000) - (task.startTimeSec || Date.now() / 1000);
+              const energyWh = Math.max(0.01, (task.startBattWh || bot.battery) - bot.battery);
 
-          bot.angle = Math.atan2(dy, dx);
+              totalCompletionTimeSec += durationSec;
+              totalEnergyConsumedWh += energyWh;
+              completionTimeHistory.push(durationSec);
 
-          if (dist > 6) {
-            bot.x += Math.cos(bot.angle) * bot.speed;
-            bot.y += Math.sin(bot.angle) * bot.speed;
+              updateQTable(bot, 'COMPLETE', durationSec, energyWh);
 
-            if (Math.random() < 0.6) {
-              particles.push({
-                x: bot.x - Math.cos(bot.angle) * 12,
-                y: bot.y - Math.sin(bot.angle) * 12,
-                color: bot.color, size: Math.random() * 3 + 1, life: 1.0
-              });
+              logEvent(`[COMPLETE] ${bot.name} finished Task #${task.id} in ${durationSec.toFixed(1)}s (Energy: ${energyWh.toFixed(2)} Wh)`, 'log-win', 'win');
+              soundWin();
+
+              tasks = tasks.filter(t => t.id !== task.id);
+              pendingQueue = pendingQueue.filter(t => t.id !== task.id);
+
+              if (bot.taskQueue && bot.taskQueue.length > 0) {
+                bot.taskQueue.shift();
+              }
+
+              if (bot.taskQueue && bot.taskQueue.length > 0) {
+                bot.assignedTask = bot.taskQueue[0];
+                bot.waypoints = findPathAStar(bot.x, bot.y, bot.assignedTask.x, bot.assignedTask.y) || [{ x: bot.assignedTask.x, y: bot.assignedTask.y }];
+                bot.status = 'MOVING';
+                bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+                logEvent(`[NEXT ROUTE TARGET] ${bot.name} advancing to next queued Task #${bot.assignedTask.id}!`, 'log-sys', 'sys');
+              } else {
+                bot.assignedTask = null;
+                bot.waypoints = [];
+                bot.status = 'IDLE';
+              }
+
+              processPendingQueue();
+            }
+          } else {
+            // Check if current waypoints path is valid or needs recalculation around new walls
+            if (!bot.waypoints || bot.waypoints.length === 0 || isPathBlocked(bot.x, bot.y, bot.waypoints[0].x, bot.waypoints[0].y)) {
+              const newPath = findPathAStar(bot.x, bot.y, task.x, task.y);
+              if (newPath) {
+                bot.waypoints = newPath;
+                logEvent(`[DETOUR] ${bot.name} computed A* detour path around hazard wall to Task #${task.id}!`, 'log-sys', 'sys');
+              } else {
+                handleTaskDrop(bot);
+                return;
+              }
             }
 
-            bot.battery = Math.max(0, bot.battery - 0.035);
-          } else {
-            // Task Completed!
-            totalCompletedTasks++;
-            document.getElementById('hudCompletedTasks').innerText = totalCompletedTasks;
-            logEvent(`[COMPLETE] ${bot.name} completed Task #${task.id}!`, 'log-win', 'win');
-            soundWin();
+            const targetWp = bot.waypoints[0];
+            const dxM = targetWp.x - bot.x;
+            const dyM = targetWp.y - bot.y;
+            const distM = Math.hypot(dxM, dyM);
+            bot.angle = Math.atan2(dyM, dxM);
 
-            tasks = tasks.filter(t => t.id !== task.id);
-            pendingQueue = pendingQueue.filter(t => t.id !== task.id);
-            bot.assignedTask = null;
-            bot.status = 'IDLE';
+            if (distM > 0.25) {
+              bot.status = 'MOVING';
+              currentPowerW = POWER_MOVING_W;
+              const moveStepM = bot.speed * dt * 3.2;
+              bot.x += Math.cos(bot.angle) * moveStepM;
+              bot.y += Math.sin(bot.angle) * moveStepM;
 
-            // Continuous Queue Execution: process remaining queued tasks
-            processPendingQueue();
-          }
+              if (Math.random() < 0.65) {
+                particles.push({
+                  x: mToPxX(bot.x) - Math.cos(bot.angle) * 12,
+                  y: mToPxY(bot.y) - Math.sin(bot.angle) * 12,
+                  color: bot.color, size: Math.random() * 3.5 + 1, life: 1.0
+                });
+              }
+            } else {
+              // Reached current waypoint
+              bot.waypoints.shift(); // Remove reached waypoint
 
-          if (bot.battery < CRITICAL_BATTERY_THRESHOLD && bot.status !== 'CRITICAL') {
-            handleTaskDrop(bot);
+              if (bot.waypoints.length === 0) {
+                // Reached final task target! Servicing Task dwell time (2-4s)
+                bot.status = 'SERVICING';
+                currentPowerW = POWER_SERVICE_W;
+                bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+              }
+            }
           }
         }
-        updateDashboards();
+
+        // Battery drain calibrated for responsive simulation feedback & live auction re-bidding
+        const drainWh = (currentPowerW * dt) / 3600.0;
+        const SIM_DRAIN_SCALE = (bot.status === 'IDLE') ? 30.0 : 120.0;
+        bot.battery = Math.max(0.0, bot.battery - (drainWh * SIM_DRAIN_SCALE));
+
+        // Track heatmap density points for moving/servicing bots
+        if (isHeatmapEnabled && (bot.status === 'MOVING' || bot.status === 'SERVICING')) {
+          heatPoints.push({ px: mToPxX(bot.x), py: mToPxY(bot.y), life: 1.0 });
+          if (heatPoints.length > 400) heatPoints.splice(0, 40);
+        }
+
+        // ── SMART PRIORITY COLLISION AVOIDANCE ──────────────────────────────
+        // Rule: Bot nearest its task target = highest priority → IMMUNE to repulsion.
+        // Yielding bots deflect PERPENDICULAR to the priority bot's heading,
+        // so neither bot loses forward progress toward its own target.
+        if (bot.status === 'MOVING' || bot.status === 'SERVICING') {
+          // Compute this bot's proximity score (lower = closer to target = higher priority)
+          const botDistToTarget = bot.assignedTask
+            ? Math.hypot(bot.assignedTask.x - bot.x, bot.assignedTask.y - bot.y)
+            : Infinity;
+
+          // Immunity zone: bot is very close to its task — NEVER get pushed off course
+          const isImmune = botDistToTarget < 1.8 || bot.status === 'SERVICING';
+
+          if (!isImmune) {
+            bots.forEach(other => {
+              if (other.id === bot.id) return;
+              const dxB = bot.x - other.x;
+              const dyB = bot.y - other.y;
+              const distB = Math.hypot(dxB, dyB);
+              if (distB >= 1.2 || distB < 0.01) return;
+
+              // Priority comparison: does the other bot outrank this one?
+              const otherDistToTarget = other.assignedTask
+                ? Math.hypot(other.assignedTask.x - other.x, other.assignedTask.y - other.y)
+                : Infinity;
+              const otherIsHigherPriority = otherDistToTarget < botDistToTarget || other.status === 'SERVICING';
+
+              if (otherIsHigherPriority) {
+                // This bot YIELDS — steer perpendicular to the other bot's heading
+                // so we arc around them instead of shoving them sideways
+                const otherAngle = other.angle || 0;
+                // Perpendicular direction (choose side that moves us away from the other bot)
+                const perpX = -Math.sin(otherAngle);
+                const perpY =  Math.cos(otherAngle);
+                const dot = perpX * dxB + perpY * dyB;
+                const sideSign = dot >= 0 ? 1 : -1;
+                const yieldStrength = (1.2 - distB) * 0.14;
+                bot.x += perpX * sideSign * yieldStrength;
+                bot.y += perpY * sideSign * yieldStrength;
+              } else {
+                // Equal or lower priority other bot — gentle symmetric nudge only
+                const repel = (1.2 - distB) * 0.06;
+                bot.x += (dxB / distB) * repel;
+                bot.y += (dyB / distB) * repel;
+              }
+            });
+          }
+        }
       });
 
-      // 2. Render Arena
+      updateDashboards();
       drawArena(displayWidth, displayHeight);
       requestAnimationFrame(updateSimulation);
     }
 
+    /* Light Canvas Drawing */
     function drawArena(w, h) {
       ctx.clearRect(0, 0, w, h);
 
-      // Grid
-      ctx.strokeStyle = 'rgba(0, 242, 254, 0.035)';
+      // Light Floor Blueprint Grid Lines
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.45)';
       ctx.lineWidth = 1;
-      const gridSize = 45;
+      const gridSize = mToPxX(2.0);
+      for (let x = 0; x < w; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+      for (let y = 0; y < h; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
 
-      for (let x = 0; x < w; x += gridSize) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      // Swarm Density Heatmap Overlay
+      if (isHeatmapEnabled && heatPoints.length > 0) {
+        heatPoints.forEach((hp, i) => {
+          const hRadius = 45;
+          const grad = ctx.createRadialGradient(hp.px, hp.py, 0, hp.px, hp.py, hRadius);
+          grad.addColorStop(0, `rgba(220, 38, 38, ${0.22 * hp.life})`);
+          grad.addColorStop(0.4, `rgba(234, 88, 12, ${0.1 * hp.life})`);
+          grad.addColorStop(1, 'rgba(250, 204, 21, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(hp.px, hp.py, hRadius, 0, Math.PI * 2);
+          ctx.fill();
+          hp.life -= 0.008;
+          if (hp.life <= 0) heatPoints.splice(i, 1);
+        });
       }
-      for (let y = 0; y < h; y += gridSize) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-      }
 
-      // Radar Sweep Beam
-      const cx = w / 2;
-      const cy = h / 2;
-      const radarRadius = Math.max(w, h);
-
+      // Subtle Radar Sweep
+      const cx = w / 2, cy = h / 2, radarRadius = Math.max(w, h);
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(radarAngle);
       const gradient = ctx.createConicGradient(0, 0, 0);
-      gradient.addColorStop(0, 'rgba(0, 242, 254, 0.12)');
-      gradient.addColorStop(0.1, 'rgba(0, 242, 254, 0.02)');
+      gradient.addColorStop(0, 'rgba(2, 132, 199, 0.08)');
+      gradient.addColorStop(0.1, 'rgba(2, 132, 199, 0.01)');
       gradient.addColorStop(0.2, 'transparent');
       gradient.addColorStop(1, 'transparent');
-
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(0, 0, radarRadius, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // Obstacles
+      // Obstacles (Hazard Walls)
       obstacles.forEach(obs => {
+        const px = mToPxX(obs.x), py = mToPxY(obs.y);
+        const pw = mToPxX(obs.width), ph = mToPxY(obs.height);
         ctx.save();
-        ctx.fillStyle = 'rgba(244, 63, 94, 0.25)';
-        ctx.strokeStyle = '#f43f5e';
+        ctx.fillStyle = 'rgba(254, 226, 226, 0.85)';
+        ctx.strokeStyle = '#dc2626';
         ctx.lineWidth = 2;
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-        ctx.strokeRect(obs.x, obs.y, obs.width, obs.height);
-        
-        ctx.fillStyle = '#f43f5e';
-        ctx.font = '700 9px Orbitron, sans-serif';
+        ctx.fillRect(px, py, pw, ph);
+        ctx.strokeRect(px, py, pw, ph);
+        ctx.fillStyle = '#dc2626';
+        ctx.font = '700 10px Plus Jakarta Sans, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('HAZARD WALL', obs.x + obs.width / 2, obs.y + obs.height / 2 + 3);
+        ctx.fillText('HAZARD WALL', px + pw / 2, py + ph / 2 + 3);
         ctx.restore();
       });
 
+      // Charging Station Dock
+      const dockPx = mToPxX(CHARGER_X_M), dockPy = mToPxY(CHARGER_Y_M);
+      const dockRadiusPx = mToPxX(CHARGER_RADIUS_M);
+      ctx.save();
+      const chargeTime = Date.now() * 0.005;
+      const glowR = dockRadiusPx + 4 + Math.sin(chargeTime) * 3;
+      // Green charging glow ring
+      ctx.beginPath();
+      ctx.arc(dockPx, dockPy, glowR, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+      ctx.fill();
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Dock center pad
+      ctx.beginPath();
+      ctx.arc(dockPx, dockPy, dockRadiusPx * 0.6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.25)';
+      ctx.fill();
+      ctx.strokeStyle = '#059669';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // Label & Icon
+      ctx.fillStyle = '#047857';
+      ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('⚡ CHARGE DOCK', dockPx, dockPy + 4);
+      ctx.restore();
+
       if (isDrawingObstacle && obstacleStart) {
         ctx.save();
-        ctx.fillStyle = 'rgba(244, 63, 94, 0.15)';
-        ctx.strokeStyle = '#f43f5e';
+        ctx.fillStyle = 'rgba(254, 226, 226, 0.6)';
+        ctx.strokeStyle = '#dc2626';
         ctx.setLineDash([4, 4]);
         ctx.lineWidth = 2;
-        ctx.fillRect(obstacleStart.x, obstacleStart.y, obstacleStart.w, obstacleStart.h);
-        ctx.strokeRect(obstacleStart.x, obstacleStart.y, obstacleStart.w, obstacleStart.h);
+        ctx.fillRect(obstacleStart.px, obstacleStart.py, obstacleStart.pw, obstacleStart.ph);
+        ctx.strokeRect(obstacleStart.px, obstacleStart.py, obstacleStart.pw, obstacleStart.ph);
         ctx.restore();
       }
 
@@ -1421,7 +2135,6 @@
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
-
         p.life -= 0.03;
         if (p.life <= 0) particles.splice(i, 1);
       }
@@ -1431,7 +2144,7 @@
         const line = broadcastLines[i];
         ctx.save();
         ctx.strokeStyle = line.color;
-        ctx.globalAlpha = line.life;
+        ctx.globalAlpha = line.life * 0.85;
         ctx.lineWidth = 2;
         ctx.setLineDash([6, 6]);
         ctx.beginPath();
@@ -1439,150 +2152,195 @@
         ctx.lineTo(line.x2, line.y2);
         ctx.stroke();
         ctx.restore();
-
         line.life -= 0.025;
         if (line.life <= 0) broadcastLines.splice(i, 1);
       }
 
       // Tasks
       tasks.forEach(task => {
+        const px = mToPxX(task.x);
+        const py = mToPxY(task.y);
         ctx.save();
         const time = Date.now() * 0.006;
-        const pulseRadius = 14 + Math.sin(time) * 4;
-
-        let taskColor = '#3b82f6';
-        if (task.priority === 'high') taskColor = '#f59e0b';
-        if (task.priority === 'emergency') taskColor = '#f43f5e';
+        const pulseRadius = 15 + Math.sin(time) * 4;
+        let taskColor = '#0284c7';
+        if (task.priority === 'high') taskColor = '#d97706';
+        if (task.priority === 'emergency') taskColor = '#dc2626';
+        if (task.priority === 'cooperative') taskColor = '#8b5cf6'; // Purple for Coop
 
         const isPending = pendingQueue.some(pt => pt.id === task.id);
+        
+        // Outer pulsing ring
+        ctx.beginPath(); ctx.arc(px, py, pulseRadius, 0, Math.PI * 2);
+        ctx.fillStyle = `${taskColor}18`; ctx.fill();
+        ctx.strokeStyle = taskColor; ctx.lineWidth = 2; ctx.stroke();
 
-        ctx.beginPath();
-        ctx.arc(task.x, task.y, pulseRadius, 0, Math.PI * 2);
-        ctx.fillStyle = `${taskColor}22`;
-        ctx.fill();
-        ctx.strokeStyle = taskColor;
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        // Extra outer dashed ring for Cooperative Tasks (2-bot requirement indicator)
+        if (task.priority === 'cooperative') {
+          ctx.beginPath(); ctx.arc(px, py, pulseRadius + 6, 0, Math.PI * 2);
+          ctx.strokeStyle = '#a855f7'; ctx.lineWidth = 1.5;
+          ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+        }
 
-        ctx.beginPath();
-        ctx.arc(task.x, task.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = taskColor;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2);
+        ctx.fillStyle = taskColor; ctx.fill();
 
-        ctx.fillStyle = '#f8fafc';
-        ctx.font = '700 10px Orbitron, sans-serif';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(`T#${task.id} ${isPending ? '(QUEUED)' : `(${task.priority.toUpperCase()})`}`, task.x, task.y - 20);
+        const coopTag = task.priority === 'cooperative' ? ' 🤝 2-BOT' : '';
+        ctx.fillText(`T#${task.id}${coopTag} ${isPending ? '(QUEUED)' : `(${task.priority.toUpperCase()})`}`, px, py - 22);
         ctx.restore();
       });
 
       // Swarm Bots
       bots.forEach(bot => {
-        ctx.save();
-        ctx.translate(bot.x, bot.y);
+        const px = mToPxX(bot.x);
+        const py = mToPxY(bot.y);
+        const isLeader = (bot.id === coordinatorId);
 
+        ctx.save();
+        ctx.translate(px, py);
+
+        // Multi-Task & A* Detour Waypoint Route Lines
         if (bot.assignedTask) {
           ctx.save();
-          ctx.translate(-bot.x, -bot.y);
+          ctx.translate(-px, -py);
           ctx.strokeStyle = bot.color;
-          ctx.lineWidth = 1.5;
-          ctx.setLineDash([4, 4]);
+          ctx.lineWidth = 2;
+          ctx.setLineDash([5, 4]);
+          
           ctx.beginPath();
-          ctx.moveTo(bot.x, bot.y);
-          ctx.lineTo(bot.assignedTask.x, bot.assignedTask.y);
-          ctx.stroke();
+          ctx.moveTo(px, py);
+          if (bot.waypoints && bot.waypoints.length > 0) {
+            bot.waypoints.forEach(wp => {
+              ctx.lineTo(mToPxX(wp.x), mToPxY(wp.y));
+            });
+            ctx.stroke();
+
+            // Draw clean waypoint node dots
+            bot.waypoints.forEach(wp => {
+              const wpx = mToPxX(wp.x);
+              const wpy = mToPxY(wp.y);
+              ctx.beginPath();
+              ctx.arc(wpx, wpy, 3.5, 0, Math.PI * 2);
+              ctx.fillStyle = bot.color;
+              ctx.fill();
+            });
+          } else if (bot.taskQueue && bot.taskQueue.length > 0) {
+            bot.taskQueue.forEach(t => {
+              ctx.lineTo(mToPxX(t.x), mToPxY(t.y));
+            });
+            ctx.stroke();
+          }
           ctx.restore();
         }
 
-        ctx.beginPath();
-        ctx.arc(0, 0, 20, 0, Math.PI * 2);
-        ctx.fillStyle = bot.glowColor;
-        ctx.fill();
+        // Leader Ring Indicator (Golden Coordinator Ring)
+        if (isLeader) {
+          ctx.beginPath(); ctx.arc(0, 0, 30, 0, Math.PI * 2);
+          ctx.strokeStyle = '#d97706'; ctx.lineWidth = 2.5;
+          ctx.setLineDash([6, 4]); ctx.stroke(); ctx.setLineDash([]);
+        }
 
-        ctx.beginPath();
-        ctx.arc(0, 0, 14, 0, Math.PI * 2);
-        ctx.fillStyle = '#040814';
-        ctx.strokeStyle = bot.color;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.fill();
+        // Collision Zone Ring — Green solid = IMMUNE (finishing task), Dashed = yielding mode
+        const distToTaskPx = bot.assignedTask
+          ? Math.hypot(bot.assignedTask.x - bot.x, bot.assignedTask.y - bot.y)
+          : Infinity;
+        const isBotImmune = distToTaskPx < 1.8 || bot.status === 'SERVICING';
+        const ringRadius = mToPxX(1.2) / 2;
+        ctx.beginPath(); ctx.arc(0, 0, ringRadius, 0, Math.PI * 2);
+        if (isBotImmune) {
+          // Solid green glow ring = priority bot, will not be diverted
+          ctx.strokeStyle = 'rgba(5, 150, 105, 0.65)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([]);
+          ctx.stroke();
+          // Inner fill glow
+          ctx.beginPath(); ctx.arc(0, 0, ringRadius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(5, 150, 105, 0.06)';
+          ctx.fill();
+        } else {
+          ctx.strokeStyle = `${bot.color}30`;
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3, 5]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2);
+        ctx.fillStyle = bot.glowColor; ctx.fill();
+
+        ctx.beginPath(); ctx.arc(0, 0, 15, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff'; ctx.strokeStyle = isLeader ? '#d97706' : bot.color; ctx.lineWidth = 3.5; ctx.stroke(); ctx.fill();
 
         ctx.rotate(bot.angle);
-        ctx.beginPath();
-        ctx.moveTo(15, 0);
-        ctx.lineTo(7, -6);
-        ctx.lineTo(7, 6);
-        ctx.closePath();
-        ctx.fillStyle = bot.color;
-        ctx.fill();
+        ctx.beginPath(); ctx.moveTo(17, 0); ctx.lineTo(9, -6); ctx.lineTo(9, 6); ctx.closePath();
+        ctx.fillStyle = isLeader ? '#d97706' : bot.color; ctx.fill();
         ctx.rotate(-bot.angle);
 
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '800 10px Orbitron, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '800 11px Outfit, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(`B${bot.id}`, 0, 0);
-
         ctx.restore();
       });
-
-      document.getElementById('hudActiveTasks').innerText = tasks.length;
-      document.getElementById('hudPendingTasks').innerText = pendingQueue.length;
-      document.getElementById('hudObstacles').innerText = obstacles.length;
     }
 
-    /* ==========================================================================
-       USER INTERACTION & TOOL HANDLERS
-       ========================================================================== */
+    /* Tool Handlers */
+    const CURSOR_TASK = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='11' fill='rgba(2,132,199,0.15)' stroke='%230284c7' stroke-width='2'/><circle cx='14' cy='14' r='3' fill='%230284c7'/><line x1='14' y1='0' x2='14' y2='8' stroke='%230284c7' stroke-width='2'/><line x1='14' y1='20' x2='14' y2='28' stroke='%230284c7' stroke-width='2'/><line x1='0' y1='14' x2='8' y2='14' stroke='%230284c7' stroke-width='2'/><line x1='20' y1='14' x2='28' y2='14' stroke='%230284c7' stroke-width='2'/></svg>") 14 14, crosshair`;
+    const CURSOR_OBSTACLE = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><rect x='5' y='5' width='18' height='18' rx='3' fill='rgba(220,38,38,0.2)' stroke='%23dc2626' stroke-width='2'/><line x1='14' y1='0' x2='14' y2='7' stroke='%23dc2626' stroke-width='2'/><line x1='14' y1='21' x2='14' y2='28' stroke='%23dc2626' stroke-width='2'/><line x1='0' y1='14' x2='7' y2='14' stroke='%23dc2626' stroke-width='2'/><line x1='21' y1='14' x2='28' y2='14' stroke='%23dc2626' stroke-width='2'/></svg>") 14 14, crosshair`;
+    const CURSOR_ERASER = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><circle cx='14' cy='14' r='9' fill='rgba(220,38,38,0.25)' stroke='%23dc2626' stroke-width='2'/><line x1='8' y1='8' x2='20' y2='20' stroke='%23dc2626' stroke-width='2.5'/><line x1='20' y1='8' x2='8' y2='20' stroke='%23dc2626' stroke-width='2.5'/></svg>") 14 14, pointer`;
+
     function setMode(mode) {
       currentTool = mode;
       document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
       const hint = document.getElementById('arenaHintText');
+      const container = document.getElementById('canvasContainer');
 
       if (mode === 'task') {
         document.getElementById('toolTask').classList.add('active');
-        hint.innerText = 'Click arena floor to place Task target coordinates';
+        hint.innerText = 'Click anywhere on floor to place Task target coordinates';
+        container.style.cursor = CURSOR_TASK;
       } else if (mode === 'obstacle') {
         document.getElementById('toolObstacle').classList.add('active');
         hint.innerText = 'Click and drag on arena floor to draw a Red Hazard Wall';
+        container.style.cursor = CURSOR_OBSTACLE;
       } else if (mode === 'eraser') {
         document.getElementById('toolEraser').classList.add('active');
         hint.innerText = 'Click on any Task or Obstacle wall to erase it';
+        container.style.cursor = CURSOR_ERASER;
       }
     }
 
-    function spawnTask(x, y, priority) {
+    function spawnTask(pxX, pxY, priority) {
       const container = document.getElementById('canvasContainer');
-      const targetX = x !== undefined ? x : Math.floor(Math.random() * (container.clientWidth - 120)) + 60;
-      const targetY = y !== undefined ? y : Math.floor(Math.random() * (container.clientHeight - 120)) + 60;
+      const targetPxX = pxX !== undefined ? pxX : Math.floor(Math.random() * (container.clientWidth - 120)) + 60;
+      const targetPxY = pxY !== undefined ? pxY : Math.floor(Math.random() * (container.clientHeight - 120)) + 60;
       const prio = priority || document.getElementById('taskPrioritySelect').value;
 
-      const newTask = {
-        id: taskIdCounter++,
-        x: targetX,
-        y: targetY,
-        priority: prio,
-        assignedBotId: null
-      };
+      const mX = pxToMX(targetPxX);
+      const mY = pxToMY(targetPxY);
 
+      const newTask = { id: taskIdCounter++, x: mX, y: mY, priority: prio, assignedBotId: null };
       tasks.push(newTask);
       runAuction(newTask);
     }
 
     canvas.addEventListener('mousedown', (e) => {
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const pxX = e.clientX - rect.left;
+      const pxY = e.clientY - rect.top;
 
-      if (currentTool === 'task') {
-        spawnTask(x, y);
-      } else if (currentTool === 'obstacle') {
+      if (currentTool === 'task') spawnTask(pxX, pxY);
+      else if (currentTool === 'obstacle') {
         isDrawingObstacle = true;
-        obstacleStart = { startX: x, startY: y, x: x, y: y, w: 0, h: 0 };
+        obstacleStart = { startPxX: pxX, startPxY: pxY, px: pxX, py: pxY, pw: 0, ph: 0 };
       } else if (currentTool === 'eraser') {
-        tasks = tasks.filter(t => Math.hypot(t.x - x, t.y - y) > 20);
-        pendingQueue = pendingQueue.filter(t => Math.hypot(t.x - x, t.y - y) > 20);
-        obstacles = obstacles.filter(o => !(x >= o.x && x <= o.x + o.width && y >= o.y && y <= o.y + o.height));
+        const clickMX = pxToMX(pxX), clickMY = pxToMY(pxY);
+        tasks = tasks.filter(t => Math.hypot(t.x - clickMX, t.y - clickMY) > 1.0);
+        pendingQueue = pendingQueue.filter(t => Math.hypot(t.x - clickMX, t.y - clickMY) > 1.0);
+        obstacles = obstacles.filter(o => !(clickMX >= o.x && clickMX <= o.x + o.width && clickMY >= o.y && clickMY <= o.y + o.height));
         updateDashboards();
       }
     });
@@ -1590,32 +2348,35 @@
     canvas.addEventListener('mousemove', (e) => {
       if (isDrawingObstacle && obstacleStart) {
         const rect = canvas.getBoundingClientRect();
-        const curX = e.clientX - rect.left;
-        const curY = e.clientY - rect.top;
-
-        obstacleStart.x = Math.min(obstacleStart.startX, curX);
-        obstacleStart.y = Math.min(obstacleStart.startY, curY);
-        obstacleStart.w = Math.abs(curX - obstacleStart.startX);
-        obstacleStart.h = Math.abs(curY - obstacleStart.startY);
+        const curPxX = e.clientX - rect.left;
+        const curPxY = e.clientY - rect.top;
+        obstacleStart.px = Math.min(obstacleStart.startPxX, curPxX);
+        obstacleStart.py = Math.min(obstacleStart.startPxY, curPxY);
+        obstacleStart.pw = Math.abs(curPxX - obstacleStart.startPxX);
+        obstacleStart.ph = Math.abs(curPxY - obstacleStart.startPxY);
       }
     });
 
     canvas.addEventListener('mouseup', () => {
       if (isDrawingObstacle && obstacleStart) {
-        if (obstacleStart.w > 10 && obstacleStart.h > 10) {
-          const newObs = {
-            x: obstacleStart.x,
-            y: obstacleStart.y,
-            width: obstacleStart.w,
-            height: obstacleStart.h
-          };
-          obstacles.push(newObs);
-          logEvent(`[HAZARD] Placed Obstacle Wall (${Math.round(obstacleStart.w)}x${Math.round(obstacleStart.h)})`, 'log-sys', 'sys');
+        if (obstacleStart.pw > 10 && obstacleStart.ph > 10) {
+          const obsMX = pxToMX(obstacleStart.px);
+          const obsMY = pxToMY(obstacleStart.py);
+          const obsMW = pxToMX(obstacleStart.pw);
+          const obsMH = pxToMY(obstacleStart.ph);
 
+          obstacles.push({ x: obsMX, y: obsMY, width: obsMW, height: obsMH });
+          logEvent(`[HAZARD] Placed Obstacle Wall (${obsMW.toFixed(1)}m x ${obsMH.toFixed(1)}m)`, 'log-sys', 'sys');
+          
           bots.forEach(bot => {
-            if (bot.assignedTask && isPathBlocked(bot.x, bot.y, bot.assignedTask.x, bot.assignedTask.y)) {
-              logEvent(`[PATH BLOCKED] Wall placed in ${bot.name} trajectory! Re-auctioning Task #${bot.assignedTask.id}`, 'log-warn', 'warn');
-              handleTaskDrop(bot);
+            if (bot.assignedTask) {
+              const detourPath = findPathAStar(bot.x, bot.y, bot.assignedTask.x, bot.assignedTask.y);
+              if (detourPath) {
+                bot.waypoints = detourPath;
+                logEvent(`[DETOUR ROUTE] ${bot.name} re-routed around new hazard wall to Task #${bot.assignedTask.id}!`, 'log-win', 'win');
+              } else {
+                handleTaskDrop(bot);
+              }
             }
           });
         }
@@ -1625,70 +2386,52 @@
     });
 
     function clearCanvasItems() {
-      tasks = [];
-      pendingQueue = [];
-      obstacles = [];
+      tasks = []; pendingQueue = []; obstacles = [];
       bots.forEach(b => { b.assignedTask = null; if (b.status === 'MOVING') b.status = 'IDLE'; });
       logEvent('[SYS] Cleared all arena tasks, queues, and obstacle walls.', 'log-sys', 'sys');
       updateDashboards();
     }
 
     document.getElementById('btnSpawnTask').addEventListener('click', () => spawnTask());
-
     document.getElementById('btnEmergencyDispatch').addEventListener('click', () => {
       const container = document.getElementById('canvasContainer');
-      const cx = container.clientWidth / 2;
-      const cy = container.clientHeight / 2;
-
       logEvent('[EMERGENCY] OVERRIDE: Deploying Priority 1 Emergency Dispatch!', 'log-warn', 'warn');
       soundAlert();
-      spawnTask(cx, cy, 'emergency');
+      spawnTask(container.clientWidth / 2, container.clientHeight / 2, 'emergency');
     });
 
     const btnAutoSpawn = document.getElementById('btnAutoSpawn');
     btnAutoSpawn.addEventListener('click', () => {
       if (autoSpawnInterval) {
-        clearInterval(autoSpawnInterval);
-        autoSpawnInterval = null;
-        btnAutoSpawn.innerText = 'Auto-Spawn: OFF';
-        btnAutoSpawn.classList.remove('btn-active');
+        clearInterval(autoSpawnInterval); autoSpawnInterval = null;
+        btnAutoSpawn.innerText = 'Auto-Spawn: OFF'; btnAutoSpawn.classList.remove('btn-active');
       } else {
         spawnTask();
-        autoSpawnInterval = setInterval(() => spawnTask(), 5000);
-        btnAutoSpawn.innerText = 'Auto-Spawn: ON (5s)';
-        btnAutoSpawn.classList.add('btn-active');
+        autoSpawnInterval = setInterval(() => spawnTask(), Math.floor(Math.random() * 10000) + 10000);
+        btnAutoSpawn.innerText = 'Auto-Spawn: ON (Poisson 10-20s)'; btnAutoSpawn.classList.add('btn-active');
       }
     });
 
     document.getElementById('btnRechargeAll').addEventListener('click', () => {
-      bots.forEach(b => {
-        b.battery = 100;
-        if (b.status === 'CRITICAL') b.status = 'IDLE';
-      });
-      logEvent('[SYS] All swarm nodes fully recharged to 100%', 'log-sys', 'sys');
-      updateDashboards();
-      processPendingQueue();
+      bots.forEach(b => { b.battery = 100.0; if (b.status === 'CRITICAL') b.status = 'IDLE'; });
+      logEvent('[SYS] All swarm nodes fully recharged to 100 Wh (100%)', 'log-sys', 'sys');
+      updateDashboards(); electLeader(); processPendingQueue();
     });
 
     document.getElementById('btnResetSim').addEventListener('click', () => {
-      tasks = [];
-      pendingQueue = [];
-      obstacles = [];
-      totalCompletedTasks = 0;
-      document.getElementById('hudCompletedTasks').innerText = '0';
+      tasks = []; pendingQueue = []; obstacles = []; totalCompletedTasks = 0;
+      totalFailedTasks = 0; totalEnergyConsumedWh = 0; totalCompletionTimeSec = 0;
+      simStartTimeSec = Date.now() / 1000; completionTimeHistory = [];
 
-      const container = document.getElementById('canvasContainer');
-      const h = container.clientHeight || 500;
+      bots[0].x = 3.5; bots[0].y = 4.0; bots[0].battery = 100.0; bots[0].status = 'IDLE'; bots[0].assignedTask = null; bots[0].taskQueue = [];
+      bots[1].x = 3.5; bots[1].y = 10.0; bots[1].battery = 100.0; bots[1].status = 'IDLE'; bots[1].assignedTask = null; bots[1].taskQueue = [];
+      bots[2].x = 3.5; bots[2].y = 16.0; bots[2].battery = 100.0; bots[2].status = 'IDLE'; bots[2].assignedTask = null; bots[2].taskQueue = [];
 
-      bots[0].x = 140; bots[0].y = h * 0.25; bots[0].battery = 100; bots[0].status = 'IDLE'; bots[0].assignedTask = null;
-      bots[1].x = 140; bots[1].y = h * 0.50; bots[1].battery = 100; bots[1].status = 'IDLE'; bots[1].assignedTask = null;
-      bots[2].x = 140; bots[2].y = h * 0.75; bots[2].battery = 100; bots[2].status = 'IDLE'; bots[2].assignedTask = null;
-
-      logEvent('[RESET] Simulation state reset.', 'log-warn', 'sys');
-      updateDashboards();
+      logEvent('[RESET] Simulation state and SI metrics reset.', 'log-warn', 'sys');
+      electLeader(); updateDashboards();
     });
 
-    /* Live Weight Sliders */
+    /* Weight Sliders */
     const sliderWDist = document.getElementById('sliderWDist');
     const sliderWBatt = document.getElementById('sliderWBatt');
     const sliderWStat = document.getElementById('sliderWStat');
@@ -1697,7 +2440,6 @@
       WEIGHT_DISTANCE = parseFloat(sliderWDist.value);
       WEIGHT_BATTERY  = parseFloat(sliderWBatt.value);
       WEIGHT_STATUS   = parseFloat(sliderWStat.value);
-
       document.getElementById('valWDist').innerText = WEIGHT_DISTANCE.toFixed(2);
       document.getElementById('valWBatt').innerText = WEIGHT_BATTERY.toFixed(2);
       document.getElementById('valWStat').innerText = WEIGHT_STATUS.toFixed(2);
@@ -1716,10 +2458,10 @@
     function triggerDrain(botId) {
       const bot = bots.find(b => b.id === botId);
       if (bot) {
-        bot.battery = 10;
-        logEvent(`[MANUAL DRAIN] Bot ${botId} battery forced to 10%`, 'log-warn', 'warn');
-        if (bot.assignedTask) handleTaskDrop(bot);
-        else bot.status = 'CRITICAL';
+        bot.battery = 10.0;
+        logEvent(`[MANUAL DRAIN] Bot ${botId} battery forced to 10 Wh (10%)`, 'log-warn', 'warn');
+        if (bot.assignedTask) handleTaskDrop(bot); else bot.status = 'CRITICAL';
+        if (botId === coordinatorId) electLeader();
         updateDashboards();
       }
     }
@@ -1727,15 +2469,27 @@
     function rechargeBot(botId) {
       const bot = bots.find(b => b.id === botId);
       if (bot) {
-        bot.battery = 100;
+        bot.battery = 100.0;
         if (bot.status === 'CRITICAL') bot.status = 'IDLE';
-        logEvent(`[MANUAL RECHARGE] Bot ${botId} recharged to 100%`, 'log-sys', 'sys');
-        updateDashboards();
-        processPendingQueue();
+        logEvent(`[MANUAL RECHARGE] Bot ${botId} recharged to 100 Wh (100%)`, 'log-sys', 'sys');
+        electLeader(); updateDashboards(); processPendingQueue();
       }
     }
 
+    /* Dashboard UI Updates */
     function updateDashboards() {
+      const elapsedSec = Math.max(1, (Date.now() / 1000) - simStartTimeSec);
+      const avgTimeSec = totalCompletedTasks > 0 ? (totalCompletionTimeSec / totalCompletedTasks).toFixed(1) : '0.0';
+      const energyPerTaskWh = totalCompletedTasks > 0 ? (totalEnergyConsumedWh / totalCompletedTasks).toFixed(2) : '0.00';
+      const successPct = Math.round((totalCompletedTasks / (totalCompletedTasks + totalFailedTasks || 1)) * 100);
+      const throughputPerMin = ((totalCompletedTasks / elapsedSec) * 60).toFixed(1);
+
+      document.getElementById('hudActiveTasks').innerText = tasks.length;
+      document.getElementById('hudAvgTime').innerText = `${avgTimeSec} s`;
+      document.getElementById('hudEnergyPerTask').innerText = `${energyPerTaskWh} Wh`;
+      document.getElementById('hudSuccessRate').innerText = `${successPct}%`;
+      document.getElementById('hudThroughput').innerText = `${throughputPerMin} /m`;
+
       bots.forEach(bot => {
         const id = bot.id;
         const statusElem = document.getElementById(`bot${id}Status`);
@@ -1745,20 +2499,21 @@
         const lastBid = document.getElementById(`bot${id}LastBid`);
         const target = document.getElementById(`bot${id}Target`);
 
-        statusElem.innerText = bot.status;
-        statusElem.className = 'bot-status-badge ';
+        statusElem.innerText = bot.status === 'CHARGING' ? 'CHARGING ⚡' : bot.status;
+        statusElem.className = 'bot-status ';
         if (bot.status === 'IDLE') statusElem.classList.add('status-idle');
-        else if (bot.status === 'MOVING') statusElem.classList.add('status-moving');
+        else if (bot.status === 'MOVING' || bot.status === 'SERVICING') statusElem.classList.add('status-moving');
+        else if (bot.status === 'CHARGING') statusElem.classList.add('status-charging');
         else statusElem.classList.add('status-critical');
 
         const battPct = Math.round(bot.battery);
-        battText.innerText = `${battPct}%`;
+        battText.innerText = `${battPct}% (${battPct} Wh)`;
         battBar.style.width = `${battPct}%`;
         if (battPct > 50) battBar.style.background = 'var(--accent-green)';
-        else if (battPct > 20) battBar.style.background = 'var(--bot3-color)';
+        else if (battPct > 20) battBar.style.background = 'var(--accent-amber)';
         else battBar.style.background = 'var(--accent-red)';
 
-        posElem.innerText = `${Math.round(bot.x)}, ${Math.round(bot.y)}`;
+        posElem.innerText = `${bot.x.toFixed(1)}m, ${bot.y.toFixed(1)}m`;
         lastBid.innerText = bot.lastBidCost !== null ? bot.lastBidCost : '--';
         target.innerText = bot.assignedTask ? `T#${bot.assignedTask.id}` : 'None';
       });
@@ -1768,40 +2523,52 @@
       const consoleElem = document.getElementById('logConsole');
       const now = new Date();
       const timeStr = now.toTimeString().split(' ')[0];
-
       const entry = document.createElement('div');
       entry.className = `log-entry ${styleClass}`;
       entry.setAttribute('data-category', category);
       entry.innerHTML = `<span class="log-time">[${timeStr}]</span> <span>${message}</span>`;
-
       consoleElem.appendChild(entry);
       consoleElem.scrollTop = consoleElem.scrollHeight;
     }
 
     function clearLog() { document.getElementById('logConsole').innerHTML = ''; }
-
     function filterLogs(cat, btn) {
       document.querySelectorAll('.log-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       document.querySelectorAll('.log-entry').forEach(entry => {
-        if (cat === 'all' || entry.getAttribute('data-category') === cat) {
-          entry.style.display = 'flex';
-        } else {
-          entry.style.display = 'none';
-        }
+        entry.style.display = (cat === 'all' || entry.getAttribute('data-category') === cat) ? 'flex' : 'none';
       });
     }
 
-    // Start Simulation Loop
-    requestAnimationFrame(updateSimulation);
+    /* Sidebar Navigation Switching */
+    function switchNavTab(tabName, btnElem) {
+      document.querySelectorAll('.left-nav-dock .nav-btn').forEach(b => b.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
 
-    setTimeout(() => {
-      const container = document.getElementById('canvasContainer');
-      const w = container.clientWidth || 800;
-      const h = container.clientHeight || 500;
-      spawnTask(w * 0.65, h * 0.5, 'normal');
-    }, 300);
+      let targetCard = null;
+      if (tabName === 'arena') targetCard = document.querySelector('.arena-card');
+      else if (tabName === 'mesh') targetCard = document.querySelector('.topo-card');
+      else if (tabName === 'analytics') targetCard = document.querySelector('.tuner-card');
+      else if (tabName === 'tuner') targetCard = document.querySelector('.tuner-card');
+
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetCard.style.transition = 'box-shadow 0.4s ease, border-color 0.4s ease';
+        const originalShadow = targetCard.style.boxShadow;
+        targetCard.style.boxShadow = '0 0 25px rgba(2, 132, 199, 0.45)';
+        targetCard.style.borderColor = '#0284c7';
+        setTimeout(() => {
+          targetCard.style.boxShadow = originalShadow;
+          targetCard.style.borderColor = '';
+        }, 1200);
+      }
+
+      logEvent(`[NAVIGATION] Switched view focus to ${tabName.toUpperCase()}`, 'log-sys', 'sys');
+    }
+
+    // Initialize Simulation
+    electLeader();
+    requestAnimationFrame(updateSimulation);
   </script>
 </body>
 </html>
