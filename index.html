@@ -802,7 +802,8 @@
             </div>
 
             <div class="bot-actions">
-              <button class="btn btn-xs btn-danger" onclick="triggerDrain(1)">Drain to 10%</button>
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(1)">Drain 10%</button>
+              <button class="btn btn-xs" style="background: rgba(16, 185, 129, 0.15); color: #047857; border: 1px solid rgba(16, 185, 129, 0.4);" onclick="sendToDock(1)">⚡ Dock</button>
               <button class="btn btn-xs" onclick="rechargeBot(1)">Recharge</button>
             </div>
           </div>
@@ -849,7 +850,8 @@
             </div>
 
             <div class="bot-actions">
-              <button class="btn btn-xs btn-danger" onclick="triggerDrain(2)">Drain to 10%</button>
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(2)">Drain 10%</button>
+              <button class="btn btn-xs" style="background: rgba(16, 185, 129, 0.15); color: #047857; border: 1px solid rgba(16, 185, 129, 0.4);" onclick="sendToDock(2)">⚡ Dock</button>
               <button class="btn btn-xs" onclick="rechargeBot(2)">Recharge</button>
             </div>
           </div>
@@ -896,7 +898,8 @@
             </div>
 
             <div class="bot-actions">
-              <button class="btn btn-xs btn-danger" onclick="triggerDrain(3)">Drain to 10%</button>
+              <button class="btn btn-xs btn-danger" onclick="triggerDrain(3)">Drain 10%</button>
+              <button class="btn btn-xs" style="background: rgba(16, 185, 129, 0.15); color: #047857; border: 1px solid rgba(16, 185, 129, 0.4);" onclick="sendToDock(3)">⚡ Dock</button>
               <button class="btn btn-xs" onclick="rechargeBot(3)">Recharge</button>
             </div>
           </div>
@@ -1770,7 +1773,44 @@
       const queueCopy = [...pendingQueue];
       for (const task of queueCopy) {
         if (!task.assignedBotId && (!task.assignedBotIds || task.assignedBotIds.length < 2)) {
-          runAuction(task);
+          const assigned = runAuction(task);
+
+          // ── AUTONOMOUS RESCUE PROBE SYSTEM ──────────────────────────────────
+          // If a task remains unassigned / unreachable in queue, trigger autonomous
+          // exploratory probe pathing so no task is left stranded indefinitely.
+          if (!assigned) {
+            task.unreachableTimeSec = (task.unreachableTimeSec || 0) + 2.5;
+            if (task.unreachableTimeSec >= 4.0) {
+              const availableBots = bots.filter(b => b.status === 'IDLE' && b.battery >= LOW_BATTERY_THRESHOLD);
+              if (availableBots.length > 0) {
+                // Select an idle bot to execute an autonomous exploratory probe
+                const probeBot = availableBots[Math.floor(Math.random() * availableBots.length)];
+                
+                // Calculate random safe perimeter waypoint near target task to bypass wall blockage
+                const probeAngle = Math.random() * Math.PI * 2;
+                const probeRadius = 1.5 + Math.random() * 2.5;
+                const probeX = Math.min(Math.max(1.0, task.x + Math.cos(probeAngle) * probeRadius), ARENA_WIDTH_M - 1.0);
+                const probeY = Math.min(Math.max(1.0, task.y + Math.sin(probeAngle) * probeRadius), ARENA_HEIGHT_M - 1.0);
+
+                const probePath = findPathAStar(probeBot.x, probeBot.y, probeX, probeY) || [{ x: probeX, y: probeY }];
+                
+                probeBot.assignedTask = task;
+                probeBot.taskQueue = [task];
+                probeBot.waypoints = probePath;
+                probeBot.status = 'MOVING';
+                probeBot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+                task.assignedBotId = probeBot.id;
+                task.unreachableTimeSec = 0;
+
+                logEvent(`[🎲 AUTONOMOUS RESCUE PROBE] ${probeBot.name} dispatched on exploratory random path to unblock queued Task #${task.id}!`, 'log-win', 'win');
+                soundSpawn();
+                triggerBroadcastAnimation('#8b5cf6');
+                updateDashboards();
+              }
+            }
+          } else {
+            task.unreachableTimeSec = 0;
+          }
         }
       }
     }
@@ -2455,12 +2495,28 @@
       logEvent('[ALGORITHM] Weights reset to defaults (0.50, 0.30, 0.20)', 'log-sys', 'sys');
     }
 
+    function sendToDock(botId) {
+      const bot = bots.find(b => b.id === botId);
+      if (bot) {
+        if (bot.assignedTask) handleTaskDrop(bot);
+        bot.status = 'CHARGING';
+        bot.chargingWaypoints = null;
+        logEvent(`[⚡ MANUAL DOCK] ${bot.name} manually commanded to navigate to Charging Station!`, 'log-warn', 'warn');
+        soundAlert();
+        if (botId === coordinatorId) electLeader();
+        updateDashboards();
+      }
+    }
+
     function triggerDrain(botId) {
       const bot = bots.find(b => b.id === botId);
       if (bot) {
         bot.battery = 10.0;
-        logEvent(`[MANUAL DRAIN] Bot ${botId} battery forced to 10 Wh (10%)`, 'log-warn', 'warn');
-        if (bot.assignedTask) handleTaskDrop(bot); else bot.status = 'CRITICAL';
+        if (bot.assignedTask) handleTaskDrop(bot);
+        bot.status = 'CHARGING';
+        bot.chargingWaypoints = null;
+        logEvent(`[⚡ MANUAL DRAIN] ${bot.name} battery forced to 10 Wh (10%) — Auto-docking to Charging Station!`, 'log-warn', 'warn');
+        soundAlert();
         if (botId === coordinatorId) electLeader();
         updateDashboards();
       }
@@ -2470,7 +2526,8 @@
       const bot = bots.find(b => b.id === botId);
       if (bot) {
         bot.battery = 100.0;
-        if (bot.status === 'CRITICAL') bot.status = 'IDLE';
+        if (bot.status === 'CRITICAL' || bot.status === 'CHARGING') bot.status = 'IDLE';
+        bot.chargingWaypoints = null;
         logEvent(`[MANUAL RECHARGE] Bot ${botId} recharged to 100 Wh (100%)`, 'log-sys', 'sys');
         electLeader(); updateDashboards(); processPendingQueue();
       }
