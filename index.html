@@ -89,103 +89,192 @@
 
     /* Top Navigation Header */
     header {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--panel-border);
-      padding: 0.45rem 1.25rem;
+      padding: 0.5rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      gap: 1.25rem;
+      min-height: 56px;
+      box-sizing: border-box;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
     }
 
     .header-titles {
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+      flex-shrink: 0;
+    }
+
+    .title-row {
+      display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 8px;
+      white-space: nowrap;
     }
 
     .app-title {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: 1.05rem;
       font-weight: 800;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
       color: var(--text-main);
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 6px;
+      margin: 0;
+      white-space: nowrap;
+      line-height: 1.2;
+    }
+
+    .title-brand {
+      color: #0f172a;
+      font-weight: 800;
+    }
+
+    .title-slash {
+      color: #94a3b8;
+      font-weight: 400;
+      font-size: 0.95rem;
+      user-select: none;
     }
 
     .title-accent {
-      background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+      background: linear-gradient(135deg, #0284c7 0%, #6366f1 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .status-badge {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.6rem;
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
-      border: 1px solid rgba(5, 150, 105, 0.25);
-      text-transform: uppercase;
+      font-size: 0.58rem;
       font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      text-transform: uppercase;
       letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      line-height: 1;
     }
 
-    /* Header Controls */
+    .status-pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: badgeDotPulse 2s infinite;
+    }
+
+    @keyframes badgeDotPulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .header-subtitle {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.2;
+    }
+
+    .header-subtitle .sub-sep {
+      opacity: 0.45;
+      font-size: 0.65rem;
+    }
+
+    /* Header Action Button Group */
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
+      gap: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .btn {
       background: var(--bg-surface);
       border: 1px solid var(--panel-border);
       color: var(--text-main);
-      padding: 0.35rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.725rem;
+      height: 32px;
+      box-sizing: border-box;
+      padding: 0 10px;
+      border-radius: 7px;
+      font-size: 0.72rem;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      white-space: nowrap;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      justify-content: center;
+      gap: 5px;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .btn svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      display: block;
     }
 
     .btn:hover {
       background: var(--bg-subtle);
       border-color: #cbd5e1;
       transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
     }
 
     .btn-primary {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
       color: #ffffff;
       font-weight: 700;
-      border: none;
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+      border: 1px solid rgba(2, 132, 199, 0.4);
+      box-shadow: 0 1px 4px rgba(2, 132, 199, 0.25);
     }
 
     .btn-primary:hover {
       background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.35);
+      transform: translateY(-1px);
     }
 
     .btn-emergency {
       background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
       color: #ffffff;
       font-weight: 700;
-      border: none;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
-      animation: alertPulseLight 2s infinite;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      box-shadow: 0 1px 4px rgba(220, 38, 38, 0.25);
+      animation: alertPulseLight 2.5s infinite;
+    }
+
+    .btn-emergency:hover {
+      background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+      box-shadow: 0 3px 8px rgba(220, 38, 38, 0.35);
+      transform: translateY(-1px);
     }
 
     @keyframes alertPulseLight {
@@ -195,17 +284,20 @@
     }
 
     .btn-active {
-      background: #e0f2fe !important;
-      border-color: #38bdf8 !important;
+      background: rgba(2, 132, 199, 0.1) !important;
+      border-color: rgba(2, 132, 199, 0.4) !important;
       color: #0284c7 !important;
+      font-weight: 700 !important;
     }
 
     .btn-danger {
       color: var(--accent-red);
-      border-color: rgba(220, 38, 38, 0.2);
+      border-color: rgba(220, 38, 38, 0.25);
     }
     .btn-danger:hover {
       background: var(--accent-red-bg);
+      border-color: rgba(220, 38, 38, 0.4);
+      transform: translateY(-1px);
     }
 
     /* Executive Stat Cards Strip */
@@ -317,55 +409,346 @@
       height: 100%;
       min-height: 0;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    .tool-bar {
+    .arena-header {
+      padding: 0.45rem 0.85rem;
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-surface);
+      flex-wrap: nowrap;
+      gap: 0.75rem;
+      min-height: 42px;
+      box-sizing: border-box;
+    }
+
+    .arena-title-wrap {
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      background: var(--bg-surface);
-      padding: 2px 6px;
-      border-radius: 8px;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+      gap: 0.5rem;
+      min-width: 0;
+      flex-shrink: 0;
+    }
+
+    .arena-title-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(2, 132, 199, 0.08);
+      color: var(--bot1-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .arena-title-icon svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .arena-title-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.775rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .arena-dim-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .arena-scenario-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .arena-mode-btn {
+      height: 28px !important;
+      padding: 0 10px !important;
+      font-size: 0.7rem !important;
+      font-weight: 700 !important;
+      border-radius: 6px !important;
+      box-shadow: 0 1px 3px rgba(2, 132, 199, 0.25) !important;
+    }
+
+    .scenario-select {
+      background: #f0f9ff !important;
+      color: #0284c7 !important;
+      border: 1px solid rgba(2, 132, 199, 0.35) !important;
+      height: 28px !important;
+      padding: 0 8px !important;
+      border-radius: 6px !important;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-size: 0.7rem !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+    }
+
+    .scenario-select:hover {
+      background: #e0f2fe !important;
+      border-color: #0284c7 !important;
+    }
+
+    /* Sub-Toolbar Strip */
+    .arena-subtoolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 0 0.85rem;
+      height: 38px;
+      min-height: 38px;
+      box-sizing: border-box;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+
+    .arena-subtoolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .toolbar-left-cluster {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .tool-segmented-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      background: #e2e8f0;
+      padding: 2px;
+      border-radius: 7px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+      flex-shrink: 0;
     }
 
     .tool-btn {
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-muted);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.7rem;
+      height: 26px;
+      box-sizing: border-box;
+      padding: 0 8px;
+      border-radius: 5px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.69rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
+      transition: all 0.15s ease;
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       white-space: nowrap;
+      user-select: none;
+      line-height: 1;
     }
 
-    .tool-btn:hover { color: var(--text-main); background: var(--bg-subtle); }
+    .tool-btn svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .tool-btn:hover:not(.active) {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.65);
+    }
+
     .tool-btn.active {
-      background: var(--bot1-bg);
-      border-color: rgba(2, 132, 199, 0.3);
-      color: var(--bot1-color);
-      font-weight: 700;
+      background: #ffffff !important;
+      border-color: rgba(2, 132, 199, 0.25) !important;
+      color: var(--bot1-color) !important;
+      font-weight: 700 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    #toolObstacle.active {
+      color: #dc2626 !important;
+      border-color: rgba(220, 38, 38, 0.3) !important;
+    }
+
+    #toolEraser.active {
+      color: #ea580c !important;
+      border-color: rgba(234, 88, 12, 0.3) !important;
     }
 
     .prio-select {
-      background: var(--bg-surface);
-      border: 1px solid var(--panel-border);
-      color: var(--text-main);
-      padding: 3px 6px;
-      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      height: 26px;
+      box-sizing: border-box;
+      padding: 0 6px;
+      border-radius: 5px;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       font-weight: 600;
       outline: none;
       cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .prio-select:hover {
+      border-color: #94a3b8;
+    }
+
+    .prio-select:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+    }
+
+    .toolbar-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--panel-border);
+      flex-shrink: 0;
+      margin: 0 2px;
+    }
+
+    .tool-toggles-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .layer-toggle-btn {
+      height: 26px;
+      box-sizing: border-box;
+      padding: 0 8px;
+      border-radius: 6px;
+      border: 1px solid var(--panel-border);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.69rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 1;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    .layer-toggle-btn svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .layer-toggle-btn:hover {
+      color: var(--text-main);
+      border-color: #cbd5e1;
+      background: #ffffff;
+      transform: translateY(-0.5px);
+    }
+
+    .layer-toggle-btn.btn-active {
+      font-weight: 700 !important;
+    }
+
+    #btnToggleHeatmap.btn-active {
+      background: rgba(245, 158, 11, 0.12) !important;
+      border-color: rgba(245, 158, 11, 0.4) !important;
+      color: #d97706 !important;
+    }
+
+    #btnToggle3D.btn-active {
+      background: rgba(99, 102, 241, 0.12) !important;
+      border-color: rgba(99, 102, 241, 0.4) !important;
+      color: #6366f1 !important;
+    }
+
+    #btnToggleDynamicObs.btn-active {
+      background: rgba(239, 68, 68, 0.12) !important;
+      border-color: rgba(239, 68, 68, 0.4) !important;
+      color: #dc2626 !important;
+    }
+
+    #btnToggleVirtualWall.btn-active {
+      background: rgba(2, 132, 199, 0.12) !important;
+      border-color: rgba(2, 132, 199, 0.4) !important;
+      color: #0284c7 !important;
+    }
+
+    .toolbar-right-cluster {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .tool-clear-btn {
+      height: 26px;
+      box-sizing: border-box;
+      padding: 0 9px;
+      border-radius: 6px;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      background: var(--bg-surface);
+      color: var(--accent-red);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.69rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 1;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    .tool-clear-btn svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .tool-clear-btn:hover {
+      background: var(--accent-red-bg);
+      border-color: rgba(220, 38, 38, 0.45);
+      transform: translateY(-0.5px);
     }
 
     .canvas-container {
@@ -1047,6 +1430,125 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+
+    /* ── FLOATING VIEWPORT ZOOM & FIT CONTROLS ──────────────── */
+    .arena-view-controls {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 3px 6px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      z-index: 10;
+    }
+    .view-btn {
+      background: transparent;
+      border: none;
+      height: 24px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .view-btn:hover {
+      background: var(--bg-subtle);
+    }
+
+    /* ── FOLLOW CAM TRACKING BADGE ─────────────────────────── */
+    .follow-cam-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(2, 132, 199, 0.95);
+      color: #ffffff;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      z-index: 10;
+      cursor: pointer;
+      animation: alertPulseLight 2.5s infinite;
+    }
+
+    /* ── RADIAL / CONTEXT MENU ──────────────────────────────── */
+    .arena-context-menu {
+      position: fixed;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+      min-width: 190px;
+      padding: 6px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      animation: menuFadeIn 0.15s ease-out;
+    }
+    @keyframes menuFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .context-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.12s ease;
+    }
+    .context-item:hover {
+      background: var(--bg-subtle);
+      color: var(--bot1-color);
+    }
+    .context-divider {
+      height: 1px;
+      background: var(--panel-border);
+      margin: 3px 0;
+    }
+    .context-header {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 4px 10px 2px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── COLLAPSED INSPECTOR GRID ───────────────────────────── */
+    .workspace-grid {
+      transition: grid-template-columns 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .workspace-grid.inspector-collapsed {
+      grid-template-columns: minmax(0, 1fr) 0px !important;
+      gap: 0 !important;
+    }
+    .workspace-grid.inspector-collapsed .right-col {
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -1056,40 +1558,58 @@
     <!-- Top Header -->
     <header>
       <div class="header-titles">
-        <h1 class="app-title">
-          ESP32 SWARM // <span class="title-accent">AGV FLEET HUB</span>
-          <span class="status-badge">ESP-NOW MESH ACTIVE</span>
-        </h1>
-        <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 600; margin-top: 2px;">
-          Amazon Kiva Intralogistics Architecture // Autonomous Multi-Agent Pick-to-Pack
+        <div class="title-row">
+          <h1 class="app-title">
+            <span class="title-brand">ESP32 SWARM</span>
+            <span class="title-slash">//</span>
+            <span class="title-accent">AGV FLEET HUB</span>
+          </h1>
+          <span class="status-badge">
+            <span class="status-pulse-dot"></span>
+            ESP-NOW MESH ACTIVE
+          </span>
+        </div>
+        <div class="header-subtitle">
+          Amazon Kiva Intralogistics Architecture <span class="sub-sep">&bull;</span> Autonomous Multi-Agent Pick-to-Pack
         </div>
       </div>
 
       <!-- Action Controls Header Buttons -->
       <div class="header-actions">
-        <button id="btnToggleRL" class="btn btn-active" onclick="toggleRL()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-          Q-Learning: ON
+        <button id="btnToggleRL" class="btn btn-active" onclick="toggleRL()" title="Reinforcement Learning Algorithm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          <span>Q-Learning: ON</span>
         </button>
 
-        <button id="btnAudioToggle" class="btn btn-active" onclick="toggleAudio()">
-          <svg id="audioIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-          Audio: ON
+        <button id="btnAudioToggle" class="btn btn-active" onclick="toggleAudio()" title="Sound Effects">
+          <svg id="audioIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          <span>Audio: ON</span>
         </button>
 
-        <button id="btnSpawnTask" class="btn btn-primary">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          Spawn Task
+        <button id="btnSpawnTask" class="btn btn-primary" title="Spawn New Task">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Spawn Task</span>
         </button>
 
-        <button id="btnEmergencyDispatch" class="btn btn-emergency">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          EMERGENCY DISPATCH
+        <button id="btnEmergencyDispatch" class="btn btn-emergency" title="Priority 1 Emergency Dispatch">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Emergency Dispatch</span>
         </button>
 
-        <button id="btnAutoSpawn" class="btn">Auto-Spawn: OFF</button>
-        <button id="btnRechargeAll" class="btn">Recharge All</button>
-        <button id="btnResetSim" class="btn btn-danger">Reset</button>
+        <button id="btnAutoSpawn" class="btn" title="Poisson Auto-Spawn Interval (10-20s)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Auto-Spawn: OFF</span>
+        </button>
+
+        <button id="btnRechargeAll" class="btn" title="Recharge All Swarm Bots">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <span>Recharge All</span>
+        </button>
+
+        <button id="btnResetSim" class="btn btn-danger" title="Reset Simulation State">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          <span>Reset</span>
+        </button>
       </div>
     </header>
 
@@ -1150,19 +1670,22 @@
     <div class="workspace-grid">
       <!-- Left Column: Arena Canvas -->
       <div class="studio-card arena-card">
-        <div class="card-header">
-          <div class="card-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12l4.5-4.5"/></svg>
-            Logistics Arena Digital Twin // 20m × 20m Floor
+        <div class="card-header arena-header">
+          <div class="arena-title-wrap">
+            <div class="arena-title-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12l4.5-4.5"/></svg>
+            </div>
+            <span class="arena-title-text">Logistics Arena Digital Twin</span>
+            <span class="arena-dim-pill">20m × 20m Grid</span>
           </div>
 
-          <!-- Tool Selector & Next-Level Controls -->
-          <div class="tool-bar">
-            <button id="btnToggleWarehouseMode" class="btn btn-sm btn-primary" style="font-size: 0.7rem; padding: 4px 9px;" onclick="toggleWarehouseMode()">
+          <!-- Scenario & Mode Selectors -->
+          <div class="arena-scenario-bar">
+            <button id="btnToggleWarehouseMode" class="btn btn-sm btn-primary arena-mode-btn" onclick="toggleWarehouseMode()" title="Toggle Warehouse AGV Mode">
               📦 Mode: Warehouse AGV
             </button>
 
-            <select id="scenarioSelect" class="prio-select" style="background: #e0f2fe; color: #0284c7; border-color: rgba(2, 132, 199, 0.3);" onchange="loadScenario(this.value)">
+            <select id="scenarioSelect" class="prio-select scenario-select" onchange="loadScenario(this.value)" title="Load Preconfigured Scenario">
               <option value="default">Preset: Clean Arena (Default)</option>
               <option value="warehouse">Preset: 📦 E-Commerce AGV Warehouse (Pick &amp; Pack)</option>
               <option value="blackfriday">Preset: ⚡ Black Friday Surge (Heavy Cargo)</option>
@@ -1170,64 +1693,116 @@
               <option value="overload">Preset: Swarm Overload (5 Tasks)</option>
               <option value="failover">Preset: Low-Batt Crisis &amp; Failover</option>
             </select>
+          </div>
+        </div>
 
-            <button id="toolTask" class="tool-btn active" onclick="setMode('task')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-              Spawn Task
+        <!-- Tactical Arena Sub-Toolbar Strip -->
+        <div class="tool-bar arena-subtoolbar">
+          <div class="toolbar-left-cluster">
+            <!-- Segmented Interactive Mouse Tools -->
+            <div class="tool-segmented-group">
+              <button id="toolTask" class="tool-btn active" onclick="setMode('task')" title="Click arena floor to spawn Task coordinates">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+                <span>Spawn Task</span>
+              </button>
+              
+              <select id="taskPrioritySelect" class="prio-select" title="Default Task Priority">
+                <option value="normal">Priority: Normal (1x)</option>
+                <option value="high">Priority: High (1.5x)</option>
+                <option value="emergency">Priority: Emergency (2x)</option>
+                <option value="cooperative">🤝 Cooperative (2 Bots)</option>
+              </select>
+
+              <button id="toolObstacle" class="tool-btn" onclick="setMode('obstacle')" title="Click &amp; drag on arena floor to draw Hazard Wall">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 22h20L12 2z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+                <span>Place Hazard</span>
+              </button>
+
+              <button id="toolEraser" class="tool-btn" onclick="setMode('eraser')" title="Click any task target or hazard wall to erase it">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2C14 1 16 1 17 2L21 6C22 7 22 9 21 10L14 17"/><path d="M7 17l5-5"/></svg>
+                <span>Eraser</span>
+              </button>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <!-- Visual & Physics Layer Toggles -->
+            <div class="tool-toggles-group">
+              <button id="btnToggleHeatmap" class="tool-btn layer-toggle-btn" onclick="toggleHeatmap()" title="Toggle Swarm Density Heatmap Overlay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="6"/></svg>
+                <span id="btnHeatmapText">Heatmap: OFF</span>
+              </button>
+
+              <button id="btnToggle3D" class="tool-btn layer-toggle-btn" onclick="toggle3DView()" title="Toggle Isometric 3D Perspective Mode">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span id="btn3DText">3D View: OFF</span>
+              </button>
+
+              <button id="btnToggleDynamicObs" class="tool-btn layer-toggle-btn" onclick="toggleDynamicObs()" title="Toggle Moving Dynamic Hazards">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 9l4 4-4 4M19 9l-4 4 4 4"/></svg>
+                <span id="btnDynamicObsText">Moving Hazards: OFF</span>
+              </button>
+
+              <button id="btnToggleVirtualWall" class="tool-btn layer-toggle-btn btn-active" onclick="toggleVirtualWall()" title="Toggle Virtual Protection Wall Visibility">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span id="btnVirtualWallText">Shield: ON</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas Utility Actions -->
+          <div class="toolbar-right-cluster">
+            <button id="btnClearItems" class="tool-clear-btn" onclick="clearCanvasItems()" title="Clear all tasks, dynamic obstacles, and bot assignments">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+              <span>Clear</span>
             </button>
-            
-            <select id="taskPrioritySelect" class="prio-select">
-              <option value="normal">Priority: Normal (1x)</option>
-              <option value="high">Priority: High (1.5x)</option>
-              <option value="emergency">Priority: Emergency (2x)</option>
-              <option value="cooperative">🤝 Cooperative (2 Bots Required)</option>
-            </select>
-
-            <button id="toolObstacle" class="tool-btn" onclick="setMode('obstacle')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-              Place Hazard
-            </button>
-
-            <button id="toolEraser" class="tool-btn" onclick="setMode('eraser')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 20H7L3 16C2 15 2 13 3 12L13 2C14 1 16 1 17 2L21 6C22 7 22 9 21 10L14 17"/></svg>
-              Eraser
-            </button>
-
-            <button id="btnToggleHeatmap" class="tool-btn" onclick="toggleHeatmap()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="6"/></svg>
-              Heatmap: OFF
-            </button>
-
-            <button id="btnToggle3D" class="tool-btn" onclick="toggle3DView()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              3D View: OFF
-            </button>
-
-            <button id="btnToggleDynamicObs" class="tool-btn" onclick="toggleDynamicObs()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 9l4 4-4 4M19 9l-4 4 4 4"/></svg>
-              Moving Hazards: OFF
-            </button>
-
-            <button id="btnToggleVirtualWall" class="tool-btn btn-active" onclick="toggleVirtualWall()" title="Toggle Virtual Protection Wall Visibility">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span id="btnVirtualWallText">Shield: ON</span>
-            </button>
-
-            <button class="btn btn-xs btn-danger" style="margin-left: 4px;" onclick="clearCanvasItems()">Clear</button>
           </div>
         </div>
 
         <div class="canvas-container" id="canvasContainer">
           <canvas id="simCanvas"></canvas>
+
+          <!-- Arena Hint Pill -->
           <div class="arena-hint">
             <div class="pulse-dot"></div>
             <span id="arenaHintText">Click anywhere on floor to place Task target coordinates</span>
+          </div>
+
+          <!-- Floating View Controls (Fit & Expand) -->
+          <div class="arena-view-controls">
+            <button class="view-btn" onclick="resetArenaView()" title="Fit / Reset View" style="font-size: 0.68rem; width: auto; padding: 0 8px; font-weight: 700;">⌖ Fit</button>
+            <button class="view-btn" id="btnToggleInspectorFloat" onclick="toggleInspectorCollapse()" title="Toggle Fullscreen Arena View" style="font-size: 0.68rem; width: auto; padding: 0 8px; color: var(--bot1-color); font-weight: 700;">⇥ Expand</button>
+          </div>
+
+          <!-- Follow Bot Tracking Indicator -->
+          <div id="followCamBadge" class="follow-cam-badge" style="display: none;" onclick="setFollowBot(null)">
+            <span>🎥</span>
+            <span id="followCamText">TRACKING BOT 1</span>
+            <span style="opacity: 0.7; font-size: 0.6rem;">(Click to Release)</span>
+          </div>
+
+          <!-- Right-Click Radial Context Menu -->
+          <div id="arenaContextMenu" class="arena-context-menu" style="display: none;">
+            <div id="ctxHeader" class="context-header">Arena Operations</div>
+            <div id="ctxBotItems" style="display: none;">
+              <div class="context-item" onclick="contextAction('dock')">⚡ Auto-Dock to Charger</div>
+              <div class="context-item" onclick="contextAction('drain')">📉 Force Battery Drain 10%</div>
+              <div class="context-item" onclick="contextAction('recharge')">🔋 Instant Full Recharge</div>
+              <div class="context-item" onclick="contextAction('follow')">🎥 Lock Follow Camera</div>
+              <div class="context-divider"></div>
+            </div>
+            <div class="context-item" onclick="contextAction('spawnNormal')">📍 Spawn Normal Task Here</div>
+            <div class="context-item" onclick="contextAction('spawnEmergency')">🚨 Spawn Emergency Task</div>
+            <div class="context-item" onclick="contextAction('spawnCoop')">🤝 Spawn Cooperative Task</div>
+            <div class="context-divider"></div>
+            <div class="context-item" onclick="contextAction('toggleShield')">🛡️ Toggle Shield Visibility</div>
+            <div class="context-item" onclick="contextAction('resetView')">⌖ Fit Arena View (100%)</div>
           </div>
         </div>
       </div>
 
       <!-- Right Column: Telemetry & Inspector -->
-      <div class="right-col">
+      <div class="right-col" id="inspectorRightCol">
         <!-- Inspector Navigation Tabs -->
         <div class="inspector-tabs-bar">
           <button class="insp-tab active" id="tabBtnTelemetry" onclick="switchInspectorTab('telemetry')" title="Hardware Swarm Nodes Telemetry">
@@ -1249,6 +1824,9 @@
           <button class="insp-tab" id="tabBtnLogistics" onclick="switchInspectorTab('logistics')" title="Autonomous Warehouse &amp; AGV Operations">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             <span>Logistics</span>
+          </button>
+          <button class="insp-tab" onclick="toggleInspectorCollapse()" title="Collapse / Expand Inspector Drawer" style="margin-left: auto; color: var(--text-muted); font-size: 0.75rem;">
+            <span id="collapseIcon">⇥</span>
           </button>
         </div>
 
@@ -1918,6 +2496,28 @@
               </div>
             </div>
 
+            <!-- Fleet Utilization Donut Gauge -->
+            <div style="background: var(--bg-subtle); border: 1px solid var(--panel-border); border-radius: 10px; padding: 0.5rem 0.75rem; margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 0.65rem;">
+                <svg width="50" height="50" viewBox="0 0 36 36" style="transform: rotate(-90deg);">
+                  <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(203, 213, 225, 0.3)" stroke-width="3.5"></circle>
+                  <circle id="donutDelivering" cx="18" cy="18" r="14" fill="none" stroke="#059669" stroke-width="3.5" stroke-dasharray="0 100" stroke-dashoffset="0"></circle>
+                  <circle id="donutPicking" cx="18" cy="18" r="14" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="0 100" stroke-dashoffset="0"></circle>
+                  <circle id="donutCharging" cx="18" cy="18" r="14" fill="none" stroke="#d97706" stroke-width="3.5" stroke-dasharray="0 100" stroke-dashoffset="0"></circle>
+                </svg>
+                <div>
+                  <div style="font-size: 0.64rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Fleet Allocation</div>
+                  <div id="fleetUtilPct" style="font-size: 1.0rem; font-weight: 800; color: #059669; font-family: 'JetBrains Mono', monospace;">0% ACTIVE</div>
+                </div>
+              </div>
+              <div style="font-size: 0.62rem; display: flex; flex-direction: column; gap: 2px;">
+                <span style="color: #059669; font-weight: 700;">● Deliv: <span id="countDelivering">0</span></span>
+                <span style="color: #0284c7; font-weight: 700;">● Pick: <span id="countPicking">0</span></span>
+                <span style="color: #d97706; font-weight: 700;">● Dock: <span id="countCharging">0</span></span>
+                <span style="color: #64748b; font-weight: 700;">● Idle: <span id="countIdle">3</span></span>
+              </div>
+            </div>
+
             <!-- Active AGV Carrier Status Rows -->
             <div style="margin-top: 0.65rem;">
               <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.35rem;">
@@ -2273,15 +2873,22 @@
     function toggleAudio() {
       audioEnabled = !audioEnabled;
       const btn = document.getElementById('btnAudioToggle');
-      btn.innerText = audioEnabled ? 'Audio: ON' : 'Audio: OFF';
-      btn.classList.toggle('btn-active', audioEnabled);
+      if (btn) {
+        btn.innerHTML = audioEnabled 
+          ? `<svg id="audioIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> <span>Audio: ON</span>`
+          : `<svg id="audioIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg> <span>Audio: OFF</span>`;
+        btn.classList.toggle('btn-active', audioEnabled);
+      }
+      logEvent(`[AUDIO] Master acoustic synthesized sound effects turned ${audioEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
     }
 
     function toggleRL() {
       isQlearningEnabled = !isQlearningEnabled;
       const btn = document.getElementById('btnToggleRL');
-      btn.innerText = isQlearningEnabled ? 'Q-Learning: ON' : 'Q-Learning: OFF (Fixed Weights)';
-      btn.classList.toggle('btn-active', isQlearningEnabled);
+      if (btn) {
+        btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> <span>Q-Learning: ${isQlearningEnabled ? 'ON' : 'OFF'}</span>`;
+        btn.classList.toggle('btn-active', isQlearningEnabled);
+      }
       logEvent(`[ALGORITHM TOGGLE] Reinforcement Learning turned ${isQlearningEnabled ? 'ON (Q-Learning Active)' : 'OFF (Fixed Weights Baseline)'}`, 'log-sys', 'sys');
     }
 
@@ -2298,16 +2905,26 @@
     function toggleDynamicObs() {
       isDynamicObstaclesEnabled = !isDynamicObstaclesEnabled;
       const btn = document.getElementById('btnToggleDynamicObs');
-      btn.innerText = isDynamicObstaclesEnabled ? 'Moving Hazards: ON' : 'Moving Hazards: OFF';
-      btn.classList.toggle('btn-active', isDynamicObstaclesEnabled);
+      const txt = document.getElementById('btnDynamicObsText');
+      if (txt) {
+        txt.innerText = isDynamicObstaclesEnabled ? 'Moving Hazards: ON' : 'Moving Hazards: OFF';
+      } else if (btn) {
+        btn.innerText = isDynamicObstaclesEnabled ? 'Moving Hazards: ON' : 'Moving Hazards: OFF';
+      }
+      if (btn) btn.classList.toggle('btn-active', isDynamicObstaclesEnabled);
       logEvent(`[HAZARD] Dynamic Moving Obstacles turned ${isDynamicObstaclesEnabled ? 'ON' : 'OFF'}`, 'log-warn', 'sys');
     }
 
     function toggleHeatmap() {
       isHeatmapEnabled = !isHeatmapEnabled;
       const btn = document.getElementById('btnToggleHeatmap');
-      btn.innerText = isHeatmapEnabled ? 'Heatmap: ON' : 'Heatmap: OFF';
-      btn.classList.toggle('btn-active', isHeatmapEnabled);
+      const txt = document.getElementById('btnHeatmapText');
+      if (txt) {
+        txt.innerText = isHeatmapEnabled ? 'Heatmap: ON' : 'Heatmap: OFF';
+      } else if (btn) {
+        btn.innerText = isHeatmapEnabled ? 'Heatmap: ON' : 'Heatmap: OFF';
+      }
+      if (btn) btn.classList.toggle('btn-active', isHeatmapEnabled);
       logEvent(`[VISUALIZATION] Swarm Density Heatmap turned ${isHeatmapEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
     }
 
@@ -2315,9 +2932,14 @@
       is3DModeEnabled = !is3DModeEnabled;
       const container = document.getElementById('canvasContainer');
       const btn = document.getElementById('btnToggle3D');
-      container.classList.toggle('iso-mode', is3DModeEnabled);
-      btn.innerText = is3DModeEnabled ? '3D View: ON' : '3D View: OFF';
-      btn.classList.toggle('btn-active', is3DModeEnabled);
+      const txt = document.getElementById('btn3DText');
+      if (container) container.classList.toggle('iso-mode', is3DModeEnabled);
+      if (txt) {
+        txt.innerText = is3DModeEnabled ? '3D View: ON' : '3D View: OFF';
+      } else if (btn) {
+        btn.innerText = is3DModeEnabled ? '3D View: ON' : '3D View: OFF';
+      }
+      if (btn) btn.classList.toggle('btn-active', is3DModeEnabled);
       logEvent(`[VIEWPORT] Holographic Isometric 3D Perspective Mode turned ${is3DModeEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
     }
 
@@ -2465,6 +3087,23 @@
     let particles = [];
     let radarAngle = 0;
 
+    /* =========================================================================
+     * VIEWPORT CAMERA, PAN, ZOOM, AND VIEW STATE
+     * ========================================================================= */
+    let cameraZoom = 1.0;
+    let cameraPanX = 0;
+    let cameraPanY = 0;
+    let isPanning = false;
+    let panStartX = 0, panStartY = 0;
+    let isSpacePressed = false;
+    let followedBotId = null;
+    let isInspectorCollapsed = false;
+
+    let hoveredEntity = null;
+    let contextClickMX = 0;
+    let contextClickMY = 0;
+    let contextTargetBotId = null;
+
     // Coordinate Transform Utilities (Metres <-> Pixels Rendering Layer Only)
     function getPxPerMeterX() { return canvas.clientWidth / ARENA_WIDTH_M; }
     function getPxPerMeterY() { return canvas.clientHeight / ARENA_HEIGHT_M; }
@@ -2472,6 +3111,12 @@
     function mToPxY(mY) { return mY * getPxPerMeterY(); }
     function pxToMX(pX) { return pX / getPxPerMeterX(); }
     function pxToMY(pY) { return pY / getPxPerMeterY(); }
+
+    // Screen pixel coordinates (with camera zoom and pan) <-> Arena Meters
+    function screenPxToMX(screenX) { return ((screenX - cameraPanX) / cameraZoom) / getPxPerMeterX(); }
+    function screenPxToMY(screenY) { return ((screenY - cameraPanY) / cameraZoom) / getPxPerMeterY(); }
+    function mToScreenPxX(mX) { return (mToPxX(mX) * cameraZoom) + cameraPanX; }
+    function mToScreenPxY(mY) { return (mToPxY(mY) * cameraZoom) + cameraPanY; }
 
     /* Swarm Bots (Positions in Meters, Speed in m/s, Battery in Wh/%) */
     const bots = [
@@ -3297,9 +3942,11 @@
     }
 
     window.addEventListener('resize', resizeCanvas);
-    const resizeObs = new ResizeObserver(() => resizeCanvas());
-    const containerElem = document.getElementById('canvasContainer');
-    if (containerElem) resizeObs.observe(containerElem);
+    if (typeof ResizeObserver !== 'undefined') {
+      const resizeObs = new ResizeObserver(() => resizeCanvas());
+      const containerElem = document.getElementById('canvasContainer');
+      if (containerElem) resizeObs.observe(containerElem);
+    }
     setTimeout(resizeCanvas, 50);
 
     function triggerBroadcastAnimation(color = '#0284c7') {
@@ -3839,12 +4486,32 @@
     function drawArena(w, h) {
       ctx.clearRect(0, 0, w, h);
 
+      // Follow Camera Centering on Followed Bot
+      if (followedBotId !== null) {
+        const fBot = bots.find(b => b.id === followedBotId);
+        if (fBot) {
+          const targetPxX = mToPxX(fBot.x);
+          const targetPxY = mToPxY(fBot.y);
+          const desiredPanX = (w / 2) - (targetPxX * cameraZoom);
+          const desiredPanY = (h / 2) - (targetPxY * cameraZoom);
+          cameraPanX += (desiredPanX - cameraPanX) * 0.12;
+          cameraPanY += (desiredPanY - cameraPanY) * 0.12;
+        }
+      }
+
+      // Begin World-Space Scaled & Panned Canvas Transform
+      ctx.save();
+      ctx.translate(cameraPanX, cameraPanY);
+      ctx.scale(cameraZoom, cameraZoom);
+
       // Light Floor Blueprint Grid Lines
       ctx.strokeStyle = 'rgba(203, 213, 225, 0.45)';
       ctx.lineWidth = 1;
       const gridSize = mToPxX(2.0);
-      for (let x = 0; x < w; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-      for (let y = 0; y < h; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+      const arenaW = mToPxX(ARENA_WIDTH_M);
+      const arenaH = mToPxY(ARENA_HEIGHT_M);
+      for (let x = 0; x <= arenaW + 1; x += gridSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, arenaH); ctx.stroke(); }
+      for (let y = 0; y <= arenaH + 1; y += gridSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(arenaW, y); ctx.stroke(); }
 
       // Swarm Density Heatmap Overlay
       if (isHeatmapEnabled && heatPoints.length > 0) {
@@ -3864,7 +4531,7 @@
       }
 
       // Subtle Radar Sweep
-      const cx = w / 2, cy = h / 2, radarRadius = Math.max(w, h);
+      const cx = arenaW / 2, cy = arenaH / 2, radarRadius = Math.max(arenaW, arenaH);
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(radarAngle);
@@ -3993,6 +4660,17 @@
             ctx.moveTo(px, sy);
             ctx.lineTo(px + pw, sy);
             ctx.stroke();
+
+            // Storage Bay Slot Number & Occupancy Indicator LED
+            ctx.fillStyle = '#64748b';
+            ctx.font = '700 7.5px JetBrains Mono, monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText(`BAY ${obs.label && obs.label.includes('B') ? 'B' : 'A'}-${s}`, px + 6, sy - 4);
+            
+            ctx.beginPath();
+            ctx.arc(px + pw - 8, sy - 6, 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = (s === 2 && tasks.length > 0) ? '#f59e0b' : '#10b981';
+            ctx.fill();
           }
 
           ctx.fillStyle = '#1e293b';
@@ -4107,6 +4785,22 @@
         packStations.forEach(st => {
           const spx = mToPxX(st.x), spy = mToPxY(st.y);
           ctx.save();
+
+          // Outbound Roller Conveyor with Moving Chevrons
+          const chevronOffset = (Date.now() * 0.025) % 12;
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 1.6;
+          for (let cy = spy + 22; cy < spy + 42; cy += 8) {
+            const animY = cy + chevronOffset;
+            if (animY <= spy + 45) {
+              ctx.beginPath();
+              ctx.moveTo(spx - 9, animY - 3);
+              ctx.lineTo(spx, animY);
+              ctx.lineTo(spx + 9, animY - 3);
+              ctx.stroke();
+            }
+          }
+
           ctx.beginPath();
           ctx.arc(spx, spy, 22, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
@@ -4119,7 +4813,7 @@
           ctx.fillStyle = '#065f46';
           ctx.font = '800 9px Plus Jakarta Sans, sans-serif';
           ctx.textAlign = 'center';
-          ctx.fillText('📦 ' + st.name, spx, spy + 32);
+          ctx.fillText('📦 ' + st.name, spx, spy + 54);
           ctx.restore();
         });
       }
@@ -4130,8 +4824,10 @@
         ctx.strokeStyle = '#dc2626';
         ctx.setLineDash([4, 4]);
         ctx.lineWidth = 2;
-        ctx.fillRect(obstacleStart.px, obstacleStart.py, obstacleStart.pw, obstacleStart.ph);
-        ctx.strokeRect(obstacleStart.px, obstacleStart.py, obstacleStart.pw, obstacleStart.ph);
+        const ox = mToPxX(obstacleStart.x), oy = mToPxY(obstacleStart.y);
+        const ow = mToPxX(obstacleStart.width), oh = mToPxY(obstacleStart.height);
+        ctx.fillRect(ox, oy, ow, oh);
+        ctx.strokeRect(ox, oy, ow, oh);
         ctx.restore();
       }
 
@@ -4297,6 +4993,69 @@
           ctx.setLineDash([]);
         }
 
+        // Follow-Cam LiDAR Perception Scan Wave
+        if (followedBotId === bot.id) {
+          const scanAngle = (Date.now() * 0.005) % (Math.PI * 2);
+          ctx.save();
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+          ctx.lineWidth = 1.2;
+          ctx.setLineDash([3, 4]);
+          ctx.beginPath(); ctx.arc(0, 0, mToPxX(1.4), 0, Math.PI * 2); ctx.stroke();
+          ctx.beginPath(); ctx.arc(0, 0, mToPxX(2.4), 0, Math.PI * 2); ctx.stroke();
+          ctx.setLineDash([]);
+
+          const scanGrad = ctx.createConicGradient(scanAngle, 0, 0);
+          scanGrad.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
+          scanGrad.addColorStop(0.12, 'rgba(56, 189, 248, 0.02)');
+          scanGrad.addColorStop(0.22, 'transparent');
+          scanGrad.addColorStop(1, 'transparent');
+          ctx.fillStyle = scanGrad;
+          ctx.beginPath(); ctx.arc(0, 0, mToPxX(2.4), 0, Math.PI * 2); ctx.fill();
+
+          ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(Math.cos(scanAngle) * mToPxX(2.4), Math.sin(scanAngle) * mToPxX(2.4));
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Steering Velocity Vectors & Trajectory Heading
+        const botSpeed = Math.hypot(bot.vx, bot.vy);
+        if (botSpeed > 0.05 || bot.status === 'MOVING') {
+          const vecLen = Math.min(32, Math.max(14, botSpeed * 22));
+          const headX = Math.cos(bot.angle) * vecLen;
+          const headY = Math.sin(bot.angle) * vecLen;
+          ctx.save();
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(headX, headY);
+          ctx.stroke();
+
+          // Arrowhead
+          ctx.save();
+          ctx.translate(headX, headY);
+          ctx.rotate(bot.angle);
+          ctx.fillStyle = '#38bdf8';
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(-6, -3.5);
+          ctx.lineTo(-6, 3.5);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          // Speed tag
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = '700 7.5px JetBrains Mono, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(`${botSpeed.toFixed(1)}m/s`, headX * 1.35, headY * 1.35);
+          ctx.restore();
+        }
+
         ctx.beginPath(); ctx.arc(0, 0, 22, 0, Math.PI * 2);
         ctx.fillStyle = bot.glowColor; ctx.fill();
 
@@ -4349,6 +5108,117 @@
         }
         ctx.restore();
       });
+
+      // Restore Canvas Context from World Space Pan & Zoom Transform
+      ctx.restore();
+
+      // Screen-Space Glass HUD Telemetry Tooltip
+      if (hoveredEntity) {
+        drawHudTooltip(hoveredEntity, w, h);
+      }
+    }
+
+    function drawHudTooltip(entity, canvasW, canvasH) {
+      const tipW = 195;
+      let tipH = 100;
+      if (entity.type === 'bot') tipH = 120;
+      else if (entity.type === 'task') tipH = 95;
+      else if (entity.type === 'rack') tipH = 88;
+      else if (entity.type === 'charger') tipH = 80;
+
+      const tipX = Math.min(canvasW - tipW - 12, Math.max(12, entity.screenX + 16));
+      const tipY = Math.min(canvasH - tipH - 12, Math.max(12, entity.screenY + 16));
+
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+      ctx.lineWidth = 1.2;
+
+      if (ctx.roundRect) {
+        ctx.beginPath();
+        ctx.roundRect(tipX, tipY, tipW, tipH, 8);
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        ctx.fillRect(tipX, tipY, tipW, tipH);
+        ctx.strokeRect(tipX, tipY, tipW, tipH);
+      }
+
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+
+      if (entity.type === 'bot') {
+        const b = entity.item;
+        ctx.fillStyle = b.color;
+        ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`🤖 ${b.name.toUpperCase()} (ID: ${b.id})`, tipX + 10, tipY + 10);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 8.5px JetBrains Mono, monospace';
+        ctx.fillText(`Status: ${b.status} | Speed: ${Math.hypot(b.vx, b.vy).toFixed(1)}m/s`, tipX + 10, tipY + 28);
+        
+        const battPct = Math.round(b.battery);
+        ctx.fillText(`Battery: ${battPct}% (${battPct} Wh)`, tipX + 10, tipY + 44);
+
+        // Mini battery bar
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.fillRect(tipX + 10, tipY + 58, tipW - 20, 5);
+        ctx.fillStyle = battPct > 50 ? '#10b981' : (battPct > 20 ? '#f59e0b' : '#ef4444');
+        ctx.fillRect(tipX + 10, tipY + 58, (tipW - 20) * (battPct / 100), 5);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(`Predicted RUL: ~${(b.predictedRUL || 240).toFixed(0)}s`, tipX + 10, tipY + 70);
+
+        const cargoTxt = b.carryingPayloadKg > 0 ? `📦 ${b.carryingSku || 'Cargo'} (${b.carryingPayloadKg}kg)` : 'Standby (0kg)';
+        ctx.fillStyle = b.carryingPayloadKg > 0 ? '#fbbf24' : '#64748b';
+        ctx.fillText(`Payload: ${cargoTxt}`, tipX + 10, tipY + 86);
+
+        ctx.fillStyle = '#64748b';
+        ctx.fillText(`Pos: (${b.x.toFixed(1)}m, ${b.y.toFixed(1)}m)`, tipX + 10, tipY + 102);
+      } else if (entity.type === 'task') {
+        const t = entity.item;
+        ctx.fillStyle = t.priority === 'emergency' ? '#ef4444' : (t.priority === 'high' ? '#f59e0b' : '#38bdf8');
+        ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`📍 TASK #${t.id} (${t.priority.toUpperCase()})`, tipX + 10, tipY + 10);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 8.5px JetBrains Mono, monospace';
+        ctx.fillText(`Status: ${t.assignedBotId ? 'Assigned to B' + t.assignedBotId : 'Pending Auction'}`, tipX + 10, tipY + 28);
+        ctx.fillText(`Payload: ${t.payloadKg || 12} kg`, tipX + 10, tipY + 44);
+        if (t.isWarehouseOrder) {
+          ctx.fillText(`Warehouse Stage: ${t.stage || 'PICK'}`, tipX + 10, tipY + 60);
+          ctx.fillText(`Drop: ${t.dropName || 'Pack Station'}`, tipX + 10, tipY + 76);
+        } else {
+          ctx.fillText(`Coordinates: (${t.x.toFixed(1)}m, ${t.y.toFixed(1)}m)`, tipX + 10, tipY + 60);
+          ctx.fillText(`Type: Tactical Swarm Mission`, tipX + 10, tipY + 76);
+        }
+      } else if (entity.type === 'rack') {
+        const obs = entity.item;
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`🏬 ${obs.label || 'STORAGE RACK'}`, tipX + 10, tipY + 10);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 8.5px JetBrains Mono, monospace';
+        ctx.fillText(`Dimensions: ${obs.width.toFixed(1)}m × ${obs.height.toFixed(1)}m`, tipX + 10, tipY + 28);
+        ctx.fillText(`Bay Slots: Bay A-1 to A-4 (500kg)`, tipX + 10, tipY + 44);
+        ctx.fillStyle = '#10b981';
+        ctx.fillText(`Shield: Virtual Anti-Pinch ACTIVE`, tipX + 10, tipY + 62);
+      } else if (entity.type === 'charger') {
+        ctx.fillStyle = '#10b981';
+        ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+        ctx.fillText(`⚡ INDUCTIVE CHARGE DOCK`, tipX + 10, tipY + 10);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '600 8.5px JetBrains Mono, monospace';
+        ctx.fillText(`Power: 100W Constant Fast-Charge`, tipX + 10, tipY + 28);
+        ctx.fillText(`Pad Radius: ${CHARGER_RADIUS_M}m Inductive Pad`, tipX + 10, tipY + 44);
+        const dockedCount = bots.filter(b => b.status === 'CHARGING').length;
+        ctx.fillStyle = dockedCount > 0 ? '#f59e0b' : '#10b981';
+        ctx.fillText(`Docked Fleet: ${dockedCount} AGVs Active`, tipX + 10, tipY + 60);
+      }
+
+      ctx.restore();
     }
 
     /* Tool Handlers */
@@ -4380,14 +5250,26 @@
       }
     }
 
-    function spawnTask(pxX, pxY, priority, warehouseMeta) {
-      const container = document.getElementById('canvasContainer');
-      const targetPxX = pxX !== undefined ? pxX : Math.floor(Math.random() * (container.clientWidth - 120)) + 60;
-      const targetPxY = pxY !== undefined ? pxY : Math.floor(Math.random() * (container.clientHeight - 120)) + 60;
-      const prio = priority || document.getElementById('taskPrioritySelect').value;
+    function spawnTask(argX, argY, priority, warehouseMeta, isMeter = false) {
+      let mX, mY;
+      if (isMeter && argX !== undefined && argY !== undefined) {
+        mX = argX;
+        mY = argY;
+      } else if (argX !== undefined && argY !== undefined) {
+        mX = pxToMX(argX);
+        mY = pxToMY(argY);
+      } else {
+        const container = document.getElementById('canvasContainer');
+        const randPxX = Math.floor(Math.random() * ((container ? container.clientWidth : 800) - 120)) + 60;
+        const randPxY = Math.floor(Math.random() * ((container ? container.clientHeight : 600) - 120)) + 60;
+        mX = pxToMX(randPxX);
+        mY = pxToMY(randPxY);
+      }
 
-      const mX = pxToMX(targetPxX);
-      const mY = pxToMY(targetPxY);
+      mX = Math.max(0.6, Math.min(ARENA_WIDTH_M - 0.6, mX));
+      mY = Math.max(0.6, Math.min(ARENA_HEIGHT_M - 0.6, mY));
+
+      const prio = priority || (document.getElementById('taskPrioritySelect') && document.getElementById('taskPrioritySelect').value) || 'normal';
 
       const newTask = { id: taskIdCounter++, x: mX, y: mY, priority: prio, assignedBotId: null };
 
@@ -4411,17 +5293,69 @@
       runAuction(newTask);
     }
 
+    // Pan Navigation Keyboard Helpers (Spacebar)
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && (e.target === document.body || e.target === canvas)) {
+        isSpacePressed = true;
+        if (!isPanning) canvas.style.cursor = 'grab';
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'Space') {
+        isSpacePressed = false;
+        if (!isPanning) canvas.style.cursor = '';
+      }
+    });
+
+    // Arena Zoom via Mouse Wheel
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.15 : 0.87;
+      zoomArena(factor, mouseX, mouseY);
+    }, { passive: false });
+
     canvas.addEventListener('mousedown', (e) => {
+      const menu = document.getElementById('arenaContextMenu');
+      if (menu) menu.style.display = 'none';
+
       const rect = canvas.getBoundingClientRect();
       const pxX = e.clientX - rect.left;
       const pxY = e.clientY - rect.top;
 
-      if (currentTool === 'task') spawnTask(pxX, pxY);
-      else if (currentTool === 'obstacle') {
+      // Middle-click or Space + Left-Click: Begin Pan Drag
+      if (e.button === 1 || (e.button === 0 && isSpacePressed)) {
+        isPanning = true;
+        panStartX = e.clientX - cameraPanX;
+        panStartY = e.clientY - cameraPanY;
+        canvas.style.cursor = 'grabbing';
+        e.preventDefault();
+        return;
+      }
+
+      // Ignore Right-Click (handled in contextmenu event)
+      if (e.button === 2) return;
+
+      const clickMX = screenPxToMX(pxX);
+      const clickMY = screenPxToMY(pxY);
+
+      // Check if user clicked directly on a bot to lock follow-cam
+      const clickedBot = bots.find(b => Math.hypot(b.x - clickMX, b.y - clickMY) < 0.85);
+      if (clickedBot && currentTool === 'task') {
+        if (followedBotId === clickedBot.id) setFollowBot(null);
+        else setFollowBot(clickedBot.id);
+        return;
+      }
+
+      if (currentTool === 'task') {
+        spawnTask(clickMX, clickMY, null, null, true);
+      } else if (currentTool === 'obstacle') {
         isDrawingObstacle = true;
-        obstacleStart = { startPxX: pxX, startPxY: pxY, px: pxX, py: pxY, pw: 0, ph: 0 };
+        obstacleStart = { startMX: clickMX, startMY: clickMY, x: clickMX, y: clickMY, width: 0, height: 0 };
       } else if (currentTool === 'eraser') {
-        const clickMX = pxToMX(pxX), clickMY = pxToMY(pxY);
         tasks = tasks.filter(t => Math.hypot(t.x - clickMX, t.y - clickMY) > 1.0);
         pendingQueue = pendingQueue.filter(t => Math.hypot(t.x - clickMX, t.y - clickMY) > 1.0);
         obstacles = obstacles.filter(o => !(clickMX >= o.x && clickMX <= o.x + o.width && clickMY >= o.y && clickMY <= o.y + o.height));
@@ -4430,27 +5364,65 @@
     });
 
     canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const curPxX = e.clientX - rect.left;
+      const curPxY = e.clientY - rect.top;
+
+      if (isPanning) {
+        cameraPanX = e.clientX - panStartX;
+        cameraPanY = e.clientY - panStartY;
+        return;
+      }
+
+      const curMX = screenPxToMX(curPxX);
+      const curMY = screenPxToMY(curPxY);
+
       if (isDrawingObstacle && obstacleStart) {
-        const rect = canvas.getBoundingClientRect();
-        const curPxX = e.clientX - rect.left;
-        const curPxY = e.clientY - rect.top;
-        obstacleStart.px = Math.min(obstacleStart.startPxX, curPxX);
-        obstacleStart.py = Math.min(obstacleStart.startPxY, curPxY);
-        obstacleStart.pw = Math.abs(curPxX - obstacleStart.startPxX);
-        obstacleStart.ph = Math.abs(curPxY - obstacleStart.startPxY);
+        obstacleStart.x = Math.min(obstacleStart.startMX, curMX);
+        obstacleStart.y = Math.min(obstacleStart.startMY, curMY);
+        obstacleStart.width = Math.abs(curMX - obstacleStart.startMX);
+        obstacleStart.height = Math.abs(curMY - obstacleStart.startMY);
+      }
+
+      // Rich HUD Entity Hover Detection
+      const bot = bots.find(b => Math.hypot(b.x - curMX, b.y - curMY) < 0.85);
+      if (bot) {
+        hoveredEntity = { type: 'bot', item: bot, screenX: curPxX, screenY: curPxY };
+      } else {
+        const task = tasks.find(t => Math.hypot(t.x - curMX, t.y - curMY) < 0.85);
+        if (task) {
+          hoveredEntity = { type: 'task', item: task, screenX: curPxX, screenY: curPxY };
+        } else if (Math.hypot(curMX - CHARGER_X_M, curMY - CHARGER_Y_M) < CHARGER_RADIUS_M + 0.3) {
+          hoveredEntity = { type: 'charger', screenX: curPxX, screenY: curPxY };
+        } else {
+          const obs = obstacles.find(o => curMX >= o.x && curMX <= o.x + o.width && curMY >= o.y && curMY <= o.y + o.height);
+          if (obs) {
+            hoveredEntity = { type: 'rack', item: obs, screenX: curPxX, screenY: curPxY };
+          } else {
+            hoveredEntity = null;
+          }
+        }
+      }
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      hoveredEntity = null;
+      if (isPanning) {
+        isPanning = false;
+        canvas.style.cursor = isSpacePressed ? 'grab' : '';
       }
     });
 
     canvas.addEventListener('mouseup', () => {
-      if (isDrawingObstacle && obstacleStart) {
-        if (obstacleStart.pw > 10 && obstacleStart.ph > 10) {
-          const obsMX = pxToMX(obstacleStart.px);
-          const obsMY = pxToMY(obstacleStart.py);
-          const obsMW = pxToMX(obstacleStart.pw);
-          const obsMH = pxToMY(obstacleStart.ph);
+      if (isPanning) {
+        isPanning = false;
+        canvas.style.cursor = isSpacePressed ? 'grab' : '';
+      }
 
-          obstacles.push({ x: obsMX, y: obsMY, width: obsMW, height: obsMH });
-          logEvent(`[HAZARD] Placed Obstacle Wall (${obsMW.toFixed(1)}m x ${obsMH.toFixed(1)}m)`, 'log-sys', 'sys');
+      if (isDrawingObstacle && obstacleStart) {
+        if (obstacleStart.width > 0.4 && obstacleStart.height > 0.4) {
+          obstacles.push({ x: obstacleStart.x, y: obstacleStart.y, width: obstacleStart.width, height: obstacleStart.height });
+          logEvent(`[HAZARD] Placed Obstacle Wall (${obstacleStart.width.toFixed(1)}m x ${obstacleStart.height.toFixed(1)}m)`, 'log-sys', 'sys');
           
           bots.forEach(bot => {
             if (bot.assignedTask) {
@@ -4466,6 +5438,47 @@
         }
         isDrawingObstacle = false;
         obstacleStart = null;
+      }
+    });
+
+    // Right-Click Context Menu for Arena & Bot Operations
+    canvas.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const pxX = e.clientX - rect.left;
+      const pxY = e.clientY - rect.top;
+      contextClickMX = screenPxToMX(pxX);
+      contextClickMY = screenPxToMY(pxY);
+
+      const clickedBot = bots.find(b => Math.hypot(b.x - contextClickMX, b.y - contextClickMY) < 0.85);
+      const menu = document.getElementById('arenaContextMenu');
+      const botItems = document.getElementById('ctxBotItems');
+      const header = document.getElementById('ctxHeader');
+
+      if (clickedBot) {
+        contextTargetBotId = clickedBot.id;
+        if (header) header.innerText = `Node B${clickedBot.id} (${clickedBot.name})`;
+        if (botItems) botItems.style.display = 'block';
+      } else {
+        contextTargetBotId = null;
+        if (header) header.innerText = 'Arena Operations';
+        if (botItems) botItems.style.display = 'none';
+      }
+
+      const container = document.getElementById('canvasContainer');
+      const maxLeft = (container ? container.clientWidth : 800) - 210;
+      const maxTop = (container ? container.clientHeight : 600) - 230;
+      if (menu) {
+        menu.style.left = `${Math.max(10, Math.min(maxLeft, pxX))}px`;
+        menu.style.top = `${Math.max(10, Math.min(maxTop, pxY))}px`;
+        menu.style.display = 'block';
+      }
+    });
+
+    window.addEventListener('click', (e) => {
+      const menu = document.getElementById('arenaContextMenu');
+      if (menu && !menu.contains(e.target)) {
+        menu.style.display = 'none';
       }
     });
 
@@ -4508,13 +5521,16 @@
 
     const btnAutoSpawn = document.getElementById('btnAutoSpawn');
     btnAutoSpawn.addEventListener('click', () => {
+      const autoIcon = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
       if (autoSpawnInterval) {
         clearInterval(autoSpawnInterval); autoSpawnInterval = null;
-        btnAutoSpawn.innerText = 'Auto-Spawn: OFF'; btnAutoSpawn.classList.remove('btn-active');
+        btnAutoSpawn.innerHTML = `${autoIcon} <span>Auto-Spawn: OFF</span>`;
+        btnAutoSpawn.classList.remove('btn-active');
       } else {
         spawnTask();
         autoSpawnInterval = setInterval(() => spawnTask(), Math.floor(Math.random() * 10000) + 10000);
-        btnAutoSpawn.innerText = 'Auto-Spawn: ON (Poisson 10-20s)'; btnAutoSpawn.classList.add('btn-active');
+        btnAutoSpawn.innerHTML = `${autoIcon} <span>Auto-Spawn: ON</span>`;
+        btnAutoSpawn.classList.add('btn-active');
       }
     });
 
@@ -4820,6 +5836,45 @@
           pwr.innerText = `${bot.situationalPower.totalPowerW.toFixed(1)} W`;
         }
       });
+
+      // Fleet Allocation Donut Gauge SVG Calculations
+      const totalBots = bots.length;
+      const deliveringBots = bots.filter(b => b.carryingPayloadKg > 0).length;
+      const pickingBots = bots.filter(b => b.status === 'MOVING' && b.carryingPayloadKg === 0).length;
+      const chargingBots = bots.filter(b => b.status === 'CHARGING' || b.status === 'CRITICAL').length;
+      const activeBots = deliveringBots + pickingBots;
+
+      const utilPct = totalBots > 0 ? Math.round((activeBots / totalBots) * 100) : 0;
+      const utilEl = document.getElementById('fleetUtilPct');
+      if (utilEl) {
+        utilEl.innerText = `${utilPct}% ACTIVE`;
+        utilEl.style.color = utilPct > 50 ? '#059669' : (utilPct > 0 ? '#0284c7' : 'var(--text-muted)');
+      }
+
+      // SVG circle radius = 14, circumference C = 2 * PI * 14 = 87.9644
+      const C = 2 * Math.PI * 14;
+      const delivPct = deliveringBots / totalBots;
+      const pickPct = pickingBots / totalBots;
+      const chargePct = chargingBots / totalBots;
+
+      const dDeliv = document.getElementById('donutDelivering');
+      const dPick = document.getElementById('donutPicking');
+      const dCharge = document.getElementById('donutCharging');
+
+      if (dDeliv && dPick && dCharge) {
+        const lenDeliv = delivPct * C;
+        const lenPick = pickPct * C;
+        const lenCharge = chargePct * C;
+
+        dDeliv.setAttribute('stroke-dasharray', `${lenDeliv.toFixed(2)} ${C.toFixed(2)}`);
+        dDeliv.setAttribute('stroke-dashoffset', '0');
+
+        dPick.setAttribute('stroke-dasharray', `${lenPick.toFixed(2)} ${C.toFixed(2)}`);
+        dPick.setAttribute('stroke-dashoffset', `-${lenDeliv.toFixed(2)}`);
+
+        dCharge.setAttribute('stroke-dasharray', `${lenCharge.toFixed(2)} ${C.toFixed(2)}`);
+        dCharge.setAttribute('stroke-dashoffset', `-${(lenDeliv + lenPick).toFixed(2)}`);
+      }
     }
 
     /* =========================================================================
@@ -5259,6 +6314,102 @@ VERDICT: Statistically proven AI, Reinforcement Learning & Swarm Intelligence.
       }
 
       logEvent(`[NAVIGATION] Switched view focus to ${tabName.toUpperCase()}`, 'log-sys', 'sys');
+    }
+
+    /* =========================================================================
+     * VIEWPORT CAMERA, PAN & ZOOM CONTROLLERS
+     * ========================================================================= */
+    function toggleInspectorCollapse() {
+      isInspectorCollapsed = !isInspectorCollapsed;
+      const grid = document.querySelector('.workspace-grid');
+      if (grid) grid.classList.toggle('inspector-collapsed', isInspectorCollapsed);
+
+      const icon = document.getElementById('collapseIcon');
+      if (icon) icon.innerText = isInspectorCollapsed ? '⇤' : '⇥';
+
+      const floatBtn = document.getElementById('btnToggleInspectorFloat');
+      if (floatBtn) {
+        floatBtn.innerText = isInspectorCollapsed ? '⇤ Restore' : '⇥ Expand';
+        floatBtn.title = isInspectorCollapsed ? 'Restore Inspector Drawer' : 'Toggle Fullscreen Arena View';
+      }
+
+      setTimeout(() => {
+        resizeCanvas();
+        resizeNeuralCanvases();
+      }, 50);
+
+      logEvent(`[LAYOUT] Inspector drawer ${isInspectorCollapsed ? 'COLLAPSED (Expanded Arena View)' : 'RESTORED'}`, 'log-sys', 'sys');
+    }
+
+    function zoomArena(factor, focusX, focusY) {
+      if (focusX === undefined || focusY === undefined) {
+        focusX = canvas.clientWidth / 2;
+        focusY = canvas.clientHeight / 2;
+      }
+      const newZoom = Math.max(0.5, Math.min(3.0, cameraZoom * factor));
+      cameraPanX = focusX - (focusX - cameraPanX) * (newZoom / cameraZoom);
+      cameraPanY = focusY - (focusY - cameraPanY) * (newZoom / cameraZoom);
+      cameraZoom = newZoom;
+    }
+
+    function resetArenaView() {
+      cameraZoom = 1.0;
+      cameraPanX = 0;
+      cameraPanY = 0;
+      followedBotId = null;
+      updateFollowBadge();
+      logEvent('[VIEWPORT] Arena camera reset to default 1.0x centered view.', 'log-sys', 'sys');
+    }
+
+    function setFollowBot(botId) {
+      followedBotId = botId;
+      updateFollowBadge();
+      if (botId) {
+        logEvent(`[CAMERA] Locked follow-camera tracking to Node B${botId}`, 'log-sys', 'sys');
+      } else {
+        logEvent('[CAMERA] Follow-camera released to free-roam.', 'log-sys', 'sys');
+      }
+    }
+
+    function updateFollowBadge() {
+      const badge = document.getElementById('followCamBadge');
+      const txt = document.getElementById('followCamText');
+      if (badge) {
+        if (followedBotId !== null) {
+          badge.style.display = 'flex';
+          if (txt) txt.innerText = `TRACKING BOT ${followedBotId}`;
+        } else {
+          badge.style.display = 'none';
+        }
+      }
+    }
+
+    /* =========================================================================
+     * RADIAL CONTEXT MENU HANDLERS
+     * ========================================================================= */
+    function contextAction(action) {
+      const menu = document.getElementById('arenaContextMenu');
+      if (menu) menu.style.display = 'none';
+
+      if (action === 'dock' && contextTargetBotId) {
+        sendToDock(contextTargetBotId);
+      } else if (action === 'drain' && contextTargetBotId) {
+        triggerDrain(contextTargetBotId);
+      } else if (action === 'recharge' && contextTargetBotId) {
+        rechargeBot(contextTargetBotId);
+      } else if (action === 'follow' && contextTargetBotId) {
+        setFollowBot(contextTargetBotId);
+      } else if (action === 'spawnNormal') {
+        spawnTask(contextClickMX, contextClickMY, 'normal', null, true);
+      } else if (action === 'spawnEmergency') {
+        spawnTask(contextClickMX, contextClickMY, 'emergency', null, true);
+      } else if (action === 'spawnCoop') {
+        spawnTask(contextClickMX, contextClickMY, 'cooperative', null, true);
+      } else if (action === 'toggleShield') {
+        toggleVirtualWall();
+      } else if (action === 'resetView') {
+        resetArenaView();
+      }
     }
 
     // Initialize Simulation & Neural Renderers
