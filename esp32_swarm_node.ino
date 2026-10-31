@@ -49,18 +49,20 @@ enum MessageType {
   MSG_TASK_DROPPED  = 4   // Broadcast when node's battery drops below 15% mid-task
 };
 
-// Task Definition Structure
+// Task Definition Structure (Augmented with Industrial Warehouse Intralogistics Parameters)
 struct TaskData {
   uint16_t id;
   float x;
   float y;
+  float payloadMassKg; // Real-world logistics: Mass of shelf pod/pallet (kg)
+  uint8_t stage;       // 0 = PICK (retrieve from rack), 1 = PACK (transport to outbound dock)
 };
 
 // ESP-NOW Network Transmission Packet
 struct SwarmPacket {
   uint8_t msgType;      // MessageType enum
   uint8_t senderNodeId; // Node ID (1, 2, 3)
-  TaskData task;        // Target task coordinates
+  TaskData task;        // Target task coordinates & logistics payload
   float bidCost;        // Calculated cost from calculateBid()
 };
 
@@ -69,7 +71,8 @@ struct BotState {
   uint8_t id;
   float x;
   float y;
-  float battery;        // Remaining battery percentage (0.0 to 100.0)
+  float battery;          // Remaining battery percentage (0.0 to 100.0)
+  float carryingPayloadKg;// Currently loaded payload mass (0.0 if empty)
   NodeStatus status;
   int currentTaskId;
 } botState;
@@ -145,10 +148,17 @@ float calculateBid(BotState bot, TaskData task) {
   // 3. Status Metric: Penalty if bot is already engaged or moving
   float statusPenalty = (bot.status != STATUS_IDLE) ? 1.0f : 0.0f;
 
-  // Calculate weighted aggregate cost
-  float cost = (WEIGHT_DISTANCE * normDistance) +
-               (WEIGHT_BATTERY  * normBatteryPenalty) +
-               (WEIGHT_STATUS   * statusPenalty);
+  // 4. Warehouse Payload Mass Multiplier: Higher mass increases kinetic torque & drain
+  const float CHASSIS_MASS_KG = 20.0f;
+  float massMultiplier = 1.0f;
+  if (task.payloadMassKg > 0.0f) {
+    massMultiplier = 1.0f + (task.payloadMassKg / CHASSIS_MASS_KG);
+  }
+
+  // Calculate weighted aggregate cost augmented by payload mass
+  float cost = ((WEIGHT_DISTANCE * normDistance) +
+                (WEIGHT_BATTERY  * normBatteryPenalty * massMultiplier) +
+                (WEIGHT_STATUS   * statusPenalty));
 
   return cost;
 }

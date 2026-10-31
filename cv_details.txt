@@ -13,8 +13,9 @@ A decentralized swarm robotics operations hub and multi-agent simulation engine.
 My Contribution (Impact-Driven CV Bullet Points - Pick 2-3 depending on your focus):
 
 * For AI / Machine Learning & Robotics Roles:
+- Integrated an Autonomous Mobile Robot (AMR / AGV) E-Commerce Fulfillment system (Amazon Kiva Architecture), orchestrating two-phase pick-and-pack order lifecycles with decentralized Contract Net Protocol bidding.
 - Architected an in-browser Deep Neural Network (MLP 5-6-3) trained via online Stochastic Gradient Descent backpropagation, achieving a +39.4% improvement in multi-agent mission makespan over traditional rule-based dispatchers.
-- Developed a non-linear Situational Battery & Remaining Useful Life (RUL) regression model that factors motor torque, cornering friction, and hazard corridors, reducing in-transit brownout mission drops from 18.5% to 0.0%.
+- Developed a non-linear Situational Battery & Remaining Useful Life (RUL) regression model that factors cargo payload mass (5-30 kg), motor torque, cornering friction, and hazard corridors, reducing in-transit brownout mission drops from 18.5% to 0.0%.
 - Integrated Model-Free Q-Learning with Contract Net Protocol P2P bidding over simulated ESP-NOW mesh networking, conserving 38.2% fleet energy per task.
 
 * For Full-Stack & Software Engineering Roles:

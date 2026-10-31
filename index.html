@@ -571,7 +571,7 @@
     /* Inspector Tab System */
     .inspector-tabs-bar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 4px;
       background: var(--bg-surface);
       border: 1px solid var(--panel-border);
@@ -1057,9 +1057,12 @@
     <header>
       <div class="header-titles">
         <h1 class="app-title">
-          CYBER-SWARM // <span class="title-accent">QUANTUM HUB</span>
-          <span class="status-badge">ESP-NOW ONLINE</span>
+          ESP32 SWARM // <span class="title-accent">AGV FLEET HUB</span>
+          <span class="status-badge">ESP-NOW MESH ACTIVE</span>
         </h1>
+        <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 600; margin-top: 2px;">
+          Amazon Kiva Intralogistics Architecture // Autonomous Multi-Agent Pick-to-Pack
+        </div>
       </div>
 
       <!-- Action Controls Header Buttons -->
@@ -1150,16 +1153,22 @@
         <div class="card-header">
           <div class="card-title">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bot1-color)" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12l4.5-4.5"/></svg>
-            Spatial Tactical Radar Arena
+            Logistics Arena Digital Twin // 20m × 20m Floor
           </div>
 
           <!-- Tool Selector & Next-Level Controls -->
           <div class="tool-bar">
+            <button id="btnToggleWarehouseMode" class="btn btn-sm btn-primary" style="font-size: 0.7rem; padding: 4px 9px;" onclick="toggleWarehouseMode()">
+              📦 Mode: Warehouse AGV
+            </button>
+
             <select id="scenarioSelect" class="prio-select" style="background: #e0f2fe; color: #0284c7; border-color: rgba(2, 132, 199, 0.3);" onchange="loadScenario(this.value)">
-              <option value="default">Preset: Clean Arena</option>
+              <option value="default">Preset: Clean Arena (Default)</option>
+              <option value="warehouse">Preset: 📦 E-Commerce AGV Warehouse (Pick &amp; Pack)</option>
+              <option value="blackfriday">Preset: ⚡ Black Friday Surge (Heavy Cargo)</option>
               <option value="maze">Preset: Maze Runner Challenge</option>
               <option value="overload">Preset: Swarm Overload (5 Tasks)</option>
-              <option value="failover">Preset: Low-Batt Crisis & Failover</option>
+              <option value="failover">Preset: Low-Batt Crisis &amp; Failover</option>
             </select>
 
             <button id="toolTask" class="tool-btn active" onclick="setMode('task')">
@@ -1199,6 +1208,11 @@
               Moving Hazards: OFF
             </button>
 
+            <button id="btnToggleVirtualWall" class="tool-btn btn-active" onclick="toggleVirtualWall()" title="Toggle Virtual Protection Wall Visibility">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span id="btnVirtualWallText">Shield: ON</span>
+            </button>
+
             <button class="btn btn-xs btn-danger" style="margin-left: 4px;" onclick="clearCanvasItems()">Clear</button>
           </div>
         </div>
@@ -1231,6 +1245,10 @@
           <button class="insp-tab" id="tabBtnBenchmark" onclick="switchInspectorTab('benchmark')" title="A/B Benchmark Validation Suite">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
             <span>Benchmark</span>
+          </button>
+          <button class="insp-tab" id="tabBtnLogistics" onclick="switchInspectorTab('logistics')" title="Autonomous Warehouse &amp; AGV Operations">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <span>Logistics</span>
           </button>
         </div>
 
@@ -1845,6 +1863,129 @@
             </div>
           </div>
         </div>
+
+        <!-- PANE 5: AUTONOMOUS WAREHOUSE & AGV OPERATIONS (AMAZON KIVA HUB) -->
+        <div id="paneLogistics" class="insp-pane" style="display: none;">
+          <div class="studio-card nn-card">
+            <div class="nn-header-strip">
+              <div class="nn-title-wrap">
+                <div class="card-title">Warehouse AGV Operations Hub</div>
+                <div class="card-subtitle">Amazon Kiva Architecture // Multi-Agent Pick-to-Pack Fulfillment</div>
+              </div>
+              <span class="bm-gain-badge" style="background: rgba(16, 185, 129, 0.15); color: #059669; border-color: rgba(16, 185, 129, 0.3);">AMR FLEET ACTIVE</span>
+            </div>
+
+            <!-- Warehouse Executive KPI Grid -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.45rem; margin-top: 0.6rem;">
+              <div class="stat-card" style="padding: 0.45rem 0.6rem; min-height: auto;">
+                <div class="stat-icon-wrap" style="width: 28px; height: 28px; color: #0284c7; background: #e0f2fe;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <div>
+                  <div id="whStatOrders" class="stat-num" style="font-size: 1.05rem;">0</div>
+                  <div class="stat-lbl" style="font-size: 0.6rem;">Orders Fulfilled</div>
+                </div>
+              </div>
+
+              <div class="stat-card" style="padding: 0.45rem 0.6rem; min-height: auto;">
+                <div class="stat-icon-wrap" style="width: 28px; height: 28px; color: #d97706; background: #fef3c7;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <div>
+                  <div id="whStatTonnage" class="stat-num" style="font-size: 1.05rem;">0.0 kg</div>
+                  <div class="stat-lbl" style="font-size: 0.6rem;">Tonnage Moved</div>
+                </div>
+              </div>
+
+              <div class="stat-card" style="padding: 0.45rem 0.6rem; min-height: auto;">
+                <div class="stat-icon-wrap" style="width: 28px; height: 28px; color: #7c3aed; background: #f3e8ff;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
+                <div>
+                  <div id="whStatUPH" class="stat-num" style="font-size: 1.05rem;">0 UPH</div>
+                  <div class="stat-lbl" style="font-size: 0.6rem;">Picking Velocity</div>
+                </div>
+              </div>
+
+              <div class="stat-card" style="padding: 0.45rem 0.6rem; min-height: auto;">
+                <div class="stat-icon-wrap" style="width: 28px; height: 28px; color: #059669; background: #d1fae5;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div>
+                  <div id="whStatEnergyTonKm" class="stat-num" style="font-size: 1.05rem;">0.00 Wh/kg·km</div>
+                  <div class="stat-lbl" style="font-size: 0.6rem;">Fleet Energy Cost</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active AGV Carrier Status Rows -->
+            <div style="margin-top: 0.65rem;">
+              <div style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.35rem;">
+                AGV Fleet Carrier Status &amp; Dynamic Mass Loads
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                <!-- Bot 1 -->
+                <div class="rul-bot-card" style="padding: 0.45rem 0.65rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 800; color: var(--bot1-color);">AGV-01</span>
+                    <span id="whB1Badge" class="rul-tag-safe" style="font-size: 0.55rem;">IDLE (0 kg)</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-muted); margin-top: 2px;">
+                    <span id="whB1Sku">Empty Standby</span>
+                    <span>Mass Draw: <strong id="whB1Power" style="color: #0284c7;">0.5 W</strong></span>
+                  </div>
+                </div>
+
+                <!-- Bot 2 -->
+                <div class="rul-bot-card" style="padding: 0.45rem 0.65rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 800; color: var(--bot2-color);">AGV-02</span>
+                    <span id="whB2Badge" class="rul-tag-safe" style="font-size: 0.55rem;">IDLE (0 kg)</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-muted); margin-top: 2px;">
+                    <span id="whB2Sku">Empty Standby</span>
+                    <span>Mass Draw: <strong id="whB2Power" style="color: #7c3aed;">0.5 W</strong></span>
+                  </div>
+                </div>
+
+                <!-- Bot 3 -->
+                <div class="rul-bot-card" style="padding: 0.45rem 0.65rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-family: 'Outfit', sans-serif; font-size: 0.75rem; font-weight: 800; color: var(--bot3-color);">AGV-03</span>
+                    <span id="whB3Badge" class="rul-tag-safe" style="font-size: 0.55rem;">IDLE (0 kg)</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--text-muted); margin-top: 2px;">
+                    <span id="whB3Sku">Empty Standby</span>
+                    <span>Mass Draw: <strong id="whB3Power" style="color: #d97706;">0.5 W</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Action Toolbar -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin-top: 0.65rem;">
+              <button class="btn btn-primary" style="font-size: 0.68rem; padding: 6px;" onclick="loadScenario('blackfriday')">
+                ⚡ Black Friday Surge (4)
+              </button>
+              <button class="btn" style="font-size: 0.68rem; padding: 6px;" onclick="spawnWarehouseExpressOrder()">
+                📦 Express Pallet (18kg)
+              </button>
+            </div>
+
+            <!-- Viva Defense Guide Box -->
+            <div class="viva-box" style="margin-top: 0.6rem;">
+              <div class="viva-title">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+                Faculty Viva Defense Guide
+              </div>
+              <div style="font-size: 0.62rem; line-height: 1.45;">
+                <strong>Mass-Augmented Kinematics:</strong> AGV propulsion power draw scales with cargo: <br>
+                <code>P_kin = P_moving × (1 + m_payload / 20.0kg)</code>.<br>
+                Our <strong>Predictive RUL Preemption</strong> prevents low-battery AGVs from accepting heavy cargo that would cause brownouts in warehouse aisles.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2043,9 +2184,15 @@
         return { totalPowerW: P_base, P_base, P_kin: 0, turnDragW: 0, detourDragW: 0 };
       }
 
-      const P_kin = POWER_MOVING_W * situationalDragCoeff;
+      let P_kin = POWER_MOVING_W * situationalDragCoeff;
+      if (bot.carryingPayloadKg && bot.carryingPayloadKg > 0) {
+        P_kin *= (1.0 + (bot.carryingPayloadKg / 20.0));
+      }
       const angDiff = Math.abs((bot.angle || 0) - (bot.prevAngle || 0));
-      const turnDragW = Math.min(6.5, (angDiff / Math.max(0.01, dt)) * 1.8);
+      let turnDragW = Math.min(6.5, (angDiff / Math.max(0.01, dt)) * 1.8);
+      if (bot.carryingPayloadKg && bot.carryingPayloadKg > 0) {
+        turnDragW *= (1.0 + (bot.carryingPayloadKg / 20.0) * 0.3);
+      }
       bot.prevAngle = bot.angle || 0;
 
       const hazardDensity = computeLocalHazardDensity(bot.x, bot.y);
@@ -2121,6 +2268,7 @@
     function soundSpawn() { playSynthBeep(880, 'sine', 0.12, 0.1); }
     function soundWin() { playSynthBeep(1200, 'triangle', 0.15, 0.12); setTimeout(() => playSynthBeep(1600, 'triangle', 0.2, 0.1), 80); }
     function soundAlert() { playSynthBeep(300, 'sawtooth', 0.25, 0.15); }
+    function soundLift() { playSynthBeep(520, 'sine', 0.1, 0.08); setTimeout(() => playSynthBeep(780, 'sine', 0.14, 0.08), 80); }
 
     function toggleAudio() {
       audioEnabled = !audioEnabled;
@@ -2173,34 +2321,123 @@
       logEvent(`[VIEWPORT] Holographic Isometric 3D Perspective Mode turned ${is3DModeEnabled ? 'ON' : 'OFF'}`, 'log-sys', 'sys');
     }
 
+    let isVirtualWallVisible = true;
+
+    function toggleVirtualWall() {
+      isVirtualWallVisible = !isVirtualWallVisible;
+      const btn = document.getElementById('btnToggleVirtualWall');
+      const txt = document.getElementById('btnVirtualWallText');
+      if (txt) {
+        txt.innerText = isVirtualWallVisible ? 'Shield: ON' : 'Shield: OFF';
+      } else if (btn) {
+        btn.innerText = isVirtualWallVisible ? 'Shield: ON' : 'Shield: OFF';
+      }
+      if (btn) {
+        btn.classList.toggle('btn-active', isVirtualWallVisible);
+      }
+      logEvent(`[VISUALIZATION] Virtual Protection Wall is now ${isVirtualWallVisible ? 'VISIBLE (ON)' : 'INVISIBLE (OFF)'}`, 'log-sys', 'sys');
+    }
+
+    let isWarehouseMode = false;
+    let warehouseOrdersFulfilled = 0;
+    let warehouseTotalKgMoved = 0;
+
+    function toggleWarehouseMode() {
+      if (isWarehouseMode) {
+        loadScenario('default');
+      } else {
+        loadScenario('warehouse');
+      }
+    }
+
+    function spawnWarehouseExpressOrder() {
+      if (!isWarehouseMode) {
+        loadScenario('warehouse');
+        return;
+      }
+      const xTargets = [3.0, 10.0, 17.0];
+      const yTargets = [7.0, 9.5, 12.0];
+      const rx = xTargets[Math.floor(Math.random() * xTargets.length)];
+      const ry = yTargets[Math.floor(Math.random() * yTargets.length)];
+      const skus = [
+        { sku: 'High-Density Server Modules', mass: 26.0 },
+        { sku: 'Industrial Servo Motors', mass: 22.0 },
+        { sku: 'Lithium Battery Modules', mass: 18.5 },
+        { sku: 'Consumer Electronics Tote', mass: 10.0 },
+        { sku: 'Robotics Tooling Crate', mass: 15.0 }
+      ];
+      const chosen = skus[Math.floor(Math.random() * skus.length)];
+      spawnTask(mToPxX(rx), mToPxY(ry), 'emergency', chosen);
+    }
+
     function loadScenario(preset) {
       clearCanvasItems();
-      if (preset === 'maze') {
-        obstacles.push({ x: 2.0, y: 5.0, width: 12.0, height: 0.8 });
-        obstacles.push({ x: 6.0, y: 11.0, width: 12.0, height: 0.8 });
-        obstacles.push({ x: 10.0, y: 1.0, width: 0.8, height: 8.0 });
-        
-        spawnTask(mToPxX(4.0), mToPxY(2.5), 'normal');
-        spawnTask(mToPxX(15.0), mToPxY(8.0), 'high');
-        spawnTask(mToPxX(3.0), mToPxY(16.0), 'emergency');
-        spawnTask(mToPxX(16.0), mToPxY(16.0), 'normal');
-        logEvent('[PRESET SCENARIO] Loaded Scenario: Maze Runner Challenge with 4 Corridor Tasks!', 'log-win', 'sys');
-      } else if (preset === 'overload') {
-        spawnTask(mToPxX(5.0), mToPxY(5.0), 'emergency');
-        spawnTask(mToPxX(15.0), mToPxY(5.0), 'high');
-        spawnTask(mToPxX(10.0), mToPxY(10.0), 'emergency');
-        spawnTask(mToPxX(5.0), mToPxY(15.0), 'high');
-        spawnTask(mToPxX(15.0), mToPxY(15.0), 'emergency');
-        logEvent('[PRESET SCENARIO] Loaded Scenario: Swarm Overload (5 Simultaneous High/Emergency Tasks)!', 'log-warn', 'sys');
-      } else if (preset === 'failover') {
-        bots[0].battery = 12.0; bots[0].status = 'CRITICAL';
-        bots[1].battery = 18.0; bots[1].status = 'CRITICAL';
-        bots[2].battery = 98.0; bots[2].status = 'IDLE';
-        electLeader();
-        spawnTask(mToPxX(12.0), mToPxY(8.0), 'emergency');
-        logEvent('[PRESET SCENARIO] Loaded Scenario: Low-Battery Crisis! B1 & B2 Critical (12%, 18%). Coordinator Failover to B3!', 'log-warn', 'warn');
+      const sel = document.getElementById('scenarioSelect');
+      if (sel) sel.value = preset;
+
+      const modeBtn = document.getElementById('btnToggleWarehouseMode');
+
+      if (preset === 'warehouse' || preset === 'blackfriday') {
+        isWarehouseMode = true;
+        if (modeBtn) modeBtn.innerText = '🏟️ Clean Arena';
+        switchInspectorTab('logistics');
+
+        // 2 sleek, high-visibility storage racks leaving massive 5-meter open expressways
+        obstacles.push({ x: 5.5, y: 5.5, width: 2.0, height: 9.0, type: 'rack', label: 'RACK A [ELECTRONICS]' });
+        obstacles.push({ x: 12.5, y: 5.5, width: 2.0, height: 9.0, type: 'rack', label: 'RACK B [APPAREL]' });
+
+        // Place bots in open positions where they have immediate line of sight
+        bots[0].x = 2.5; bots[0].y = 4.0; bots[0].status = 'IDLE'; bots[0].carryingPayloadKg = 0; bots[0].carryingSku = null; bots[0].suspendedTask = null;
+        bots[1].x = 10.0; bots[1].y = 3.5; bots[1].status = 'IDLE'; bots[1].carryingPayloadKg = 0; bots[1].carryingSku = null; bots[1].suspendedTask = null;
+        bots[2].x = 17.5; bots[2].y = 4.0; bots[2].status = 'IDLE'; bots[2].carryingPayloadKg = 0; bots[2].carryingSku = null; bots[2].suspendedTask = null;
+
+        if (preset === 'warehouse') {
+          spawnTask(mToPxX(3.0), mToPxY(8.0), 'normal', { sku: 'Consumer Electronics Tote', mass: 10.0 });
+          spawnTask(mToPxX(10.0), mToPxY(10.0), 'high', { sku: 'Industrial Servo Motors', mass: 22.0 });
+          spawnTask(mToPxX(17.0), mToPxY(8.0), 'emergency', { sku: 'Lithium Battery Modules', mass: 18.5 });
+          logEvent('[WAREHOUSE LOGISTICS] Activated Amazon Kiva AGV Hub with 2 Storage Racks & 3 Orders!', 'log-win', 'sys');
+        } else {
+          // Black Friday Surge (4 orders)
+          spawnTask(mToPxX(3.0), mToPxY(8.0), 'emergency', { sku: 'High-Density Server Racks', mass: 28.0 });
+          spawnTask(mToPxX(10.0), mToPxY(7.0), 'high', { sku: 'Industrial Servo Motors', mass: 24.0 });
+          spawnTask(mToPxX(10.0), mToPxY(13.0), 'emergency', { sku: 'Automotive Brake Assemblies', mass: 22.0 });
+          spawnTask(mToPxX(17.0), mToPxY(8.0), 'normal', { sku: 'Apparel & Footwear Crate', mass: 6.5 });
+          logEvent('[BLACK FRIDAY SURGE] Deployed Peak Logistics Surge with 4 High-Payload Orders!', 'log-warn', 'sys');
+        }
       } else {
-        logEvent('[PRESET SCENARIO] Reset to Clean Arena floor.', 'log-sys', 'sys');
+        isWarehouseMode = false;
+        if (modeBtn) modeBtn.innerText = '📦 Mode: Warehouse AGV';
+        bots.forEach(b => { b.carryingPayloadKg = 0; b.carryingSku = null; b.suspendedTask = null; });
+        if (preset === 'default') {
+          switchInspectorTab('telemetry');
+          logEvent('[PRESET SCENARIO] Reset to Clean Arena floor.', 'log-sys', 'sys');
+        } else if (preset === 'maze') {
+          obstacles.push({ x: 2.0, y: 5.0, width: 12.0, height: 0.8 });
+          obstacles.push({ x: 6.0, y: 11.0, width: 12.0, height: 0.8 });
+          obstacles.push({ x: 10.0, y: 1.0, width: 0.8, height: 8.0 });
+          
+          spawnTask(mToPxX(4.0), mToPxY(2.5), 'normal');
+          spawnTask(mToPxX(15.0), mToPxY(8.0), 'high');
+          spawnTask(mToPxX(3.0), mToPxY(16.0), 'emergency');
+          spawnTask(mToPxX(16.0), mToPxY(16.0), 'normal');
+          logEvent('[PRESET SCENARIO] Loaded Scenario: Maze Runner Challenge with 4 Corridor Tasks!', 'log-win', 'sys');
+        } else if (preset === 'overload') {
+          spawnTask(mToPxX(5.0), mToPxY(5.0), 'emergency');
+          spawnTask(mToPxX(15.0), mToPxY(5.0), 'high');
+          spawnTask(mToPxX(10.0), mToPxY(10.0), 'emergency');
+          spawnTask(mToPxX(5.0), mToPxY(15.0), 'high');
+          spawnTask(mToPxX(15.0), mToPxY(15.0), 'emergency');
+          logEvent('[PRESET SCENARIO] Loaded Scenario: Swarm Overload (5 Simultaneous High/Emergency Tasks)!', 'log-warn', 'sys');
+        } else if (preset === 'failover') {
+          bots[0].battery = 12.0; bots[0].status = 'CRITICAL';
+          bots[1].battery = 18.0; bots[1].status = 'CRITICAL';
+          bots[2].battery = 98.0; bots[2].status = 'IDLE';
+          electLeader();
+          spawnTask(mToPxX(12.0), mToPxY(8.0), 'emergency');
+          logEvent('[PRESET SCENARIO] Loaded Scenario: Low-Battery Crisis! B1 & B2 Critical (12%, 18%). Coordinator Failover to B3!', 'log-warn', 'warn');
+        } else {
+          logEvent('[PRESET SCENARIO] Reset to Clean Arena floor.', 'log-sys', 'sys');
+        }
       }
       updateDashboards();
     }
@@ -2238,9 +2475,9 @@
 
     /* Swarm Bots (Positions in Meters, Speed in m/s, Battery in Wh/%) */
     const bots = [
-      { id: 1, name: 'Bot 1', x: 3.5, y: 4.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#0284c7', glowColor: 'rgba(2, 132, 199, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 99.0, chargingWaypoints: null },
-      { id: 2, name: 'Bot 2', x: 3.5, y: 10.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#7c3aed', glowColor: 'rgba(124, 58, 237, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 97.0, chargingWaypoints: null },
-      { id: 3, name: 'Bot 3', x: 3.5, y: 16.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, taskQueue: [], color: '#d97706', glowColor: 'rgba(217, 119, 6, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 98.5, chargingWaypoints: null }
+      { id: 1, name: 'Bot 1', x: 3.5, y: 4.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, suspendedTask: null, taskQueue: [], color: '#0284c7', glowColor: 'rgba(2, 132, 199, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 99.0, chargingWaypoints: null, carryingPayloadKg: 0, carryingSku: null },
+      { id: 2, name: 'Bot 2', x: 3.5, y: 10.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, suspendedTask: null, taskQueue: [], color: '#7c3aed', glowColor: 'rgba(124, 58, 237, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 97.0, chargingWaypoints: null, carryingPayloadKg: 0, carryingSku: null },
+      { id: 3, name: 'Bot 3', x: 3.5, y: 16.0, vx: 0, vy: 0, angle: 0, speed: BOT_MAX_SPEED_MPS, battery: 100.0, status: 'IDLE', assignedTask: null, suspendedTask: null, taskQueue: [], color: '#d97706', glowColor: 'rgba(217, 119, 6, 0.2)', lastBidCost: null, qTable: {}, currentActionState: null, serviceTimer: 0, commReliability: 98.5, chargingWaypoints: null, carryingPayloadKg: 0, carryingSku: null }
     ];
 
     let cooperativeTasks = []; // Tracks co-op tasks needing 2 bots
@@ -2258,19 +2495,37 @@
       return (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1);
     }
 
+    function getDistToObstacle(px, py, obs) {
+      const cx = Math.max(obs.x, Math.min(px, obs.x + obs.width));
+      const cy = Math.max(obs.y, Math.min(py, obs.y + obs.height));
+      return Math.hypot(px - cx, py - cy);
+    }
+
+    function getMinDistToAllObstacles(px, py) {
+      let minD = Infinity;
+      for (const obs of obstacles) {
+        const d = getDistToObstacle(px, py, obs);
+        if (d < minD) minD = d;
+      }
+      return minD;
+    }
+
     function isPointInObstacle(px, py, buf = 0.0) {
       for (const obs of obstacles) {
-        if (px >= obs.x - buf && px <= obs.x + obs.width + buf &&
-            py >= obs.y - buf && py <= obs.y + obs.height + buf) {
+        if (px >= obs.x && px <= obs.x + obs.width &&
+            py >= obs.y && py <= obs.y + obs.height) {
+          return true;
+        }
+        if (buf > 0 && getDistToObstacle(px, py, obs) < buf) {
           return true;
         }
       }
       return false;
     }
 
-    function isPathBlocked(x1, y1, x2, y2, buf = 0.0) {
+    function isPathBlocked(x1, y1, x2, y2, buf = 0.35) {
       for (const obs of obstacles) {
-        // Test intersection against exact obstacle bounds
+        // Direct segment intersection check against obstacle bounding edges
         const left = obs.x, right = obs.x + obs.width;
         const top = obs.y, bottom = obs.y + obs.height;
         if (lineIntersectsLine(x1, y1, x2, y2, left, top, right, top) ||
@@ -2281,23 +2536,44 @@
         }
       }
 
-      // Intermediate segment sampling check
+      // Continuous spatial clearance testing along the trajectory
+      // (sample from t = 1/steps to 1 so starting node is not self-blocked)
       const dist = Math.hypot(x2 - x1, y2 - y1);
-      if (dist > 0.4) {
-        const steps = Math.ceil(dist / 0.3);
-        for (let i = 1; i < steps - 1; i++) {
-          const sampleX = x1 + (x2 - x1) * (i / steps);
-          const sampleY = y1 + (y2 - y1) * (i / steps);
-          if (isPointInObstacle(sampleX, sampleY, buf)) return true;
-        }
+      const steps = Math.max(3, Math.ceil(dist / 0.15));
+      for (let i = 1; i <= steps; i++) {
+        const t = i / steps;
+        const sampleX = x1 + (x2 - x1) * t;
+        const sampleY = y1 + (y2 - y1) * t;
+        if (isPointInObstacle(sampleX, sampleY, buf)) return true;
       }
       return false;
     }
 
-    // High-Resolution A* Grid Pathfinding with Raycast String-Pulling Path Smoothing
-    function findPathAStar(startX, startY, targetX, targetY) {
-      // Direct Unobstructed Line of Sight Check
-      if (!isPathBlocked(startX, startY, targetX, targetY, 0.0)) {
+    function findNearestSafePoint(targetX, targetY, safeMargin = 0.55) {
+      if (!isPointInObstacle(targetX, targetY, safeMargin)) {
+        return { x: targetX, y: targetY };
+      }
+      for (let r = 0.2; r <= 6.0; r += 0.2) {
+        for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 12) {
+          const testX = Math.min(Math.max(0.6, targetX + Math.cos(angle) * r), ARENA_WIDTH_M - 0.6);
+          const testY = Math.min(Math.max(0.6, targetY + Math.sin(angle) * r), ARENA_HEIGHT_M - 0.6);
+          if (!isPointInObstacle(testX, testY, safeMargin)) {
+            return { x: testX, y: testY };
+          }
+        }
+      }
+      return { x: targetX, y: targetY };
+    }
+
+    // High-Resolution A* Grid Pathfinding with Costmap Soft Inflation & Path Smoothing
+    function findPathAStar(startX, startY, rawTargetX, rawTargetY) {
+      // If the target is inside or near a wall, navigate to the safe perimeter point
+      const safeTarget = findNearestSafePoint(rawTargetX, rawTargetY, 0.55);
+      const targetX = safeTarget.x;
+      const targetY = safeTarget.y;
+
+      // Direct Unobstructed Line of Sight Check (with 0.45m clearance)
+      if (!isPathBlocked(startX, startY, targetX, targetY, 0.45)) {
         return [{ x: targetX, y: targetY }];
       }
 
@@ -2312,9 +2588,11 @@
 
       function isCellBlocked(c, r) {
         if (c === startCol && r === startRow) return false;
+        if (c === targetCol && r === targetRow) return false;
         const cx = (c + 0.5) * gridResM;
         const cy = (r + 0.5) * gridResM;
-        return isPointInObstacle(cx, cy, 0.0);
+        // Hard collision barrier: 0.35m (robot chassis physical radius limit)
+        return isPointInObstacle(cx, cy, 0.35);
       }
 
       const openSetMap = new Map();
@@ -2381,21 +2659,27 @@
             }
           }
           
-          // Ensure line between cell centers does not cross a thin wall
+          // Ensure line between cell centers maintains 0.35m clearance
           const currX = (current.col + 0.5) * gridResM;
           const currY = (current.row + 0.5) * gridResM;
           const nx = (nc + 0.5) * gridResM;
           const ny = (nr + 0.5) * gridResM;
-          if (isPathBlocked(currX, currY, nx, ny, 0.0)) {
+          if (isPathBlocked(currX, currY, nx, ny, 0.35)) {
             continue;
           }
 
           const nKey = `${nc},${nr}`;
           if (closedSet.has(nKey)) continue;
 
-          const tentativeG = (gScore.get(currentKey) || Infinity) + n.cost;
+          // Soft costmap inflation penalty: steers bots naturally away from walls into open corridors
+          const distToWall = getMinDistToAllObstacles(nx, ny);
+          const proximityPenalty = distToWall < 0.80 ? (0.80 - distToWall) * 4.0 : 0.0;
 
-          if (tentativeG < (gScore.get(nKey) || Infinity)) {
+          const currentG = gScore.has(currentKey) ? gScore.get(currentKey) : Infinity;
+          const tentativeG = currentG + n.cost + proximityPenalty;
+          const neighborG = gScore.has(nKey) ? gScore.get(nKey) : Infinity;
+
+          if (tentativeG < neighborG) {
             cameFrom.set(nKey, currentKey);
             gScore.set(nKey, tentativeG);
             const h = Math.hypot(nc - targetCol, nr - targetRow);
@@ -2422,7 +2706,7 @@
         rawPath.push({ x: targetX, y: targetY });
       }
 
-      // Raycast String-Pulling Path Smoothing
+      // Raycast String-Pulling Path Smoothing with 0.40m obstacle clearance
       const smoothedPath = [];
       let currentPos = { x: startX, y: startY };
       let rawIdx = 0;
@@ -2431,7 +2715,7 @@
         let furthestIdx = rawPath.length - 1;
         for (; furthestIdx > rawIdx; furthestIdx--) {
           const candidate = rawPath[furthestIdx];
-          if (!isPathBlocked(currentPos.x, currentPos.y, candidate.x, candidate.y, 0.25)) {
+          if (!isPathBlocked(currentPos.x, currentPos.y, candidate.x, candidate.y, 0.40)) {
             break;
           }
         }
@@ -2529,117 +2813,13 @@
       }
     }
 
-    function findNearestSafePoint(targetX, targetY) {
-      if (!isPointInObstacle(targetX, targetY, 0.0)) {
-        return { x: targetX, y: targetY };
-      }
-      for (let r = 0.3; r <= 4.0; r += 0.3) {
-        for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
-          const testX = Math.min(Math.max(0.5, targetX + Math.cos(angle) * r), ARENA_WIDTH_M - 0.5);
-          const testY = Math.min(Math.max(0.5, targetY + Math.sin(angle) * r), ARENA_HEIGHT_M - 0.5);
-          if (!isPointInObstacle(testX, testY, 0.0)) {
-            return { x: testX, y: testY };
-          }
-        }
-      }
-      return { x: targetX, y: targetY };
-    }
-
     /**
      * SMART GAP ROUTE FINDER
-     * When a task is unreachable directly (behind/inside a wall), this function
-     * intelligently identifies all obstacle corner points that could serve as
-     * "gap waypoints" to get around the wall, then evaluates each one and builds
-     * the best possible combined A* route that actually reaches the task.
-     * 
-     * Strategy:
-     *  1. Collect all 4 corners of every obstacle that blocks the direct path.
-     *  2. Extend each corner outward by a small buffer so the bot walks beside
-     *     the wall edge rather than clipping it.
-     *  3. For each candidate gap point, compute A* (bot → gap → task_safe_landing).
-     *  4. Pick the candidate that gives the shortest total route length.
-     *  5. Find the nearest safe landing point to the task and append it.
+     * Computes the collision-free detour path around walls to the nearest safe perimeter point.
      */
     function findSmartGapRoute(bot, task) {
-      const safeLanding = findNearestSafePoint(task.x, task.y);
-      const taskInsideWall = isPointInObstacle(task.x, task.y, 0.0);
-      // Target for routing: the safe landing. Bot services the task from there.
-      const routeTarget = safeLanding;
-
-      // --- Attempt 1: Direct A* to the safe landing point ---
-      const directPath = findPathAStar(bot.x, bot.y, routeTarget.x, routeTarget.y);
-      if (directPath && directPath.length > 0) {
-        const lastWp = directPath[directPath.length - 1];
-        const gapToTarget = Math.hypot(routeTarget.x - lastWp.x, routeTarget.y - lastWp.y);
-        if (gapToTarget <= 1.0) {
-          // A* found a clean path to or very close to the safe landing. Use it.
-          // Only append exact task position if it is NOT inside a wall.
-          if (!taskInsideWall && (task.x !== routeTarget.x || task.y !== routeTarget.y)) {
-            directPath.push({ x: task.x, y: task.y });
-          }
-          return directPath;
-        }
-      }
-
-      // --- Attempt 2: Gap-corner routing ---
-      // Collect all obstacle corner/edge midpoints as candidate "gap" waypoints.
-      const GAP_BUF = 0.5;
-      const candidates = [];
-      for (const obs of obstacles) {
-        const corners = [
-          { x: obs.x - GAP_BUF,             y: obs.y - GAP_BUF },
-          { x: obs.x + obs.width + GAP_BUF, y: obs.y - GAP_BUF },
-          { x: obs.x - GAP_BUF,             y: obs.y + obs.height + GAP_BUF },
-          { x: obs.x + obs.width + GAP_BUF, y: obs.y + obs.height + GAP_BUF },
-          { x: obs.x + obs.width / 2,       y: obs.y - GAP_BUF },
-          { x: obs.x + obs.width / 2,       y: obs.y + obs.height + GAP_BUF },
-          { x: obs.x - GAP_BUF,             y: obs.y + obs.height / 2 },
-          { x: obs.x + obs.width + GAP_BUF, y: obs.y + obs.height / 2 }
-        ];
-        for (const c of corners) {
-          const cx = Math.max(0.5, Math.min(ARENA_WIDTH_M - 0.5, c.x));
-          const cy = Math.max(0.5, Math.min(ARENA_HEIGHT_M - 0.5, c.y));
-          if (!isPointInObstacle(cx, cy, 0.0)) {
-            candidates.push({ x: cx, y: cy });
-          }
-        }
-      }
-
-      let bestRoute = null;
-      let bestCost = Infinity;
-
-      for (const gap of candidates) {
-        const seg1 = findPathAStar(bot.x, bot.y, gap.x, gap.y);
-        if (!seg1 || seg1.length === 0) continue;
-
-        const seg2 = findPathAStar(gap.x, gap.y, routeTarget.x, routeTarget.y);
-        if (!seg2 || seg2.length === 0) continue;
-
-        // Verify seg2 actually gets close enough to the route target
-        const lastPt = seg2[seg2.length - 1];
-        if (Math.hypot(routeTarget.x - lastPt.x, routeTarget.y - lastPt.y) > 2.0) continue;
-
-        let totalLen = 0;
-        let prevX = bot.x, prevY = bot.y;
-        for (const wp of seg1) { totalLen += Math.hypot(wp.x - prevX, wp.y - prevY); prevX = wp.x; prevY = wp.y; }
-        for (const wp of seg2) { totalLen += Math.hypot(wp.x - prevX, wp.y - prevY); prevX = wp.x; prevY = wp.y; }
-
-        if (totalLen < bestCost) {
-          bestCost = totalLen;
-          bestRoute = [...seg1, ...seg2];
-          // Only add exact task position when it's safe to reach
-          if (!taskInsideWall && (task.x !== routeTarget.x || task.y !== routeTarget.y)) {
-            bestRoute.push({ x: task.x, y: task.y });
-          }
-        }
-      }
-
-      if (bestRoute) return bestRoute;
-
-      // --- Fallback: best A* toward safe landing ---
-      const fallback = findPathAStar(bot.x, bot.y, routeTarget.x, routeTarget.y)
-                       || [{ x: routeTarget.x, y: routeTarget.y }];
-      return fallback;
+      const safeLanding = findNearestSafePoint(task.x, task.y, 0.55);
+      return findPathAStar(bot.x, bot.y, safeLanding.x, safeLanding.y);
     }
 
     function calculateBid(bot, task) {
@@ -2661,6 +2841,9 @@
       // Add penalty for any remaining unreachable gap (if task is behind wall)
       const lastWp = pathWaypoints[pathWaypoints.length - 1];
       const gapDistM = Math.hypot(task.x - lastWp.x, task.y - lastWp.y);
+      if (gapDistM > 2.5) {
+        return { cost: 999.0, stateKey: null, actionIdx: 0, isEnRoute: false };
+      }
       let isObstructed = false;
       if (gapDistM > 0.5) {
          totalPathDistM += (gapDistM * 2.5);
@@ -2697,6 +2880,10 @@
         }
       }
 
+      if (task.isWarehouseOrder && task.payloadKg) {
+        statusPenalty += (task.payloadKg / 40.0) * (1.0 - (bot.battery / 100.0));
+      }
+
       const normDistance = Math.min(effectiveDistM / maxDiagonalM, 1.0);
       const normBatteryPenalty = 1.0 - (bot.battery / 100.0);
 
@@ -2720,11 +2907,29 @@
 
       // ── 2. PREDICTIVE SITUATIONAL RUL & BROWNOUT HAZARD CHECK ────────────
       const estMissionDurationSec = (effectiveDistM / BOT_MAX_SPEED_MPS) + 4.0;
-      const currentRulSec = computeBotRUL(bot);
+      const estMassPowerScale = (task.isWarehouseOrder && task.payloadKg) ? (1.0 + task.payloadKg / 20.0) : 1.0;
+      const currentRulSec = computeBotRUL(bot) / estMassPowerScale;
       const isBrownoutRisk = (currentRulSec < estMissionDurationSec * 1.15);
 
       // AI Cost Fusion: Combines Neural Suitability, Risk & Situational Feasibility
       const neuralFusedCost = (1.0 - nnEval.suitability) * 0.65 + (nnEval.risk * 0.55) + (baseCost * 0.30);
+
+      if (task.isWarehouseOrder) {
+        const busyPenalty = (bot.assignedTask ? 3.0 : 0.0) + (bot.carryingPayloadKg > 0 ? 3.0 : 0.0);
+        let whCost = (normDistance * 2.0) + (normBatteryPenalty * 1.0) + busyPenalty;
+        if (isBrownoutRisk) whCost += 40.0;
+        return {
+          cost: Number(whCost.toFixed(4)),
+          stateKey: null,
+          actionIdx: 0,
+          distM: effectiveDistM,
+          isEnRoute: isEnRoute,
+          waypoints: pathWaypoints,
+          isObstructed: isObstructed,
+          isBrownoutRisk: isBrownoutRisk,
+          nnEval: nnEval
+        };
+      }
 
       if (!isQlearningEnabled) {
         let finalCost = neuralFusedCost;
@@ -2832,8 +3037,8 @@
       if (task.priority === 'cooperative') {
         const eligibleBids = [];
         bots.forEach(bot => {
-          if (bot.battery < LOW_BATTERY_THRESHOLD) {
-            bot.lastBidCost = 'LOW_BATT';
+          if (bot.battery < LOW_BATTERY_THRESHOLD || bot.status === 'CHARGING' || bot.suspendedTask || bot.carryingPayloadKg > 0) {
+            bot.lastBidCost = (bot.carryingPayloadKg > 0 || bot.suspendedTask) ? 'HOLDING_CARGO' : 'LOW_BATT';
             return;
           }
           const bidRes = calculateBid(bot, task);
@@ -2883,9 +3088,10 @@
       let bidSummary = [];
 
       bots.forEach(bot => {
-        if (bot.battery < LOW_BATTERY_THRESHOLD) {
-          bot.lastBidCost = 'LOW_BATT';
-          bidSummary.push(`${bot.name}: INELIGIBLE (<20%)`);
+        if (bot.battery < LOW_BATTERY_THRESHOLD || bot.status === 'CHARGING' || bot.suspendedTask || bot.carryingPayloadKg > 0) {
+          const reason = (bot.carryingPayloadKg > 0 || bot.suspendedTask) ? 'HOLDING CARGO' : (bot.status === 'CHARGING' ? 'CHARGING' : '<20%');
+          bot.lastBidCost = (bot.carryingPayloadKg > 0 || bot.suspendedTask) ? 'HOLDING_CARGO' : 'LOW_BATT';
+          bidSummary.push(`${bot.name}: INELIGIBLE (${reason})`);
           return;
         }
 
@@ -2988,6 +3194,17 @@
 
     function handleTaskDrop(bot) {
       if (!bot.assignedTask) return;
+
+      // Safety guard: If bot is holding cargo in warehouse mode, NEVER discard or abort the product!
+      if (bot.carryingPayloadKg > 0 || (bot.assignedTask && bot.assignedTask.isWarehouseOrder && bot.assignedTask.stage === 'DELIVERING')) {
+        bot.suspendedTask = bot.assignedTask;
+        bot.waypoints = [];
+        bot.status = 'CHARGING';
+        bot.chargingWaypoints = null;
+        logEvent(`[SAFETY LOCK] ${bot.name} holds ${bot.carryingSku || 'cargo'} (${bot.carryingPayloadKg}kg) — auto-docking to recharge rather than discarding inventory!`, 'log-warn', 'sys');
+        soundAlert();
+        return;
+      }
       
       const droppedTasks = [...(bot.taskQueue || [bot.assignedTask])];
       updateQTable(bot, 'ABANDONED', 0, 0);
@@ -2995,6 +3212,8 @@
       bot.taskQueue = [];
       bot.waypoints = [];
       bot.assignedTask = null;
+      bot.carryingPayloadKg = 0;
+      bot.carryingSku = null;
       bot.status = (bot.battery < LOW_BATTERY_THRESHOLD) ? 'CRITICAL' : 'IDLE';
 
       droppedTasks.forEach(droppedTask => {
@@ -3129,7 +3348,43 @@
         });
       }
 
+      // ── DYNAMIC PROTECTIVE VIRTUAL WALL TRACKER ─────────────────────────
+      // Automatically activates safety shields when bots approach or risk colliding near walls
+      obstacles.forEach(obs => {
+        let nearestBotDist = Infinity;
+        bots.forEach(b => {
+          const d = getDistToObstacle(b.x, b.y, obs);
+          if (d < nearestBotDist) nearestBotDist = d;
+        });
+
+        // Check if two bots might collide near this obstacle
+        let riskOfCollision = false;
+        const botsNearObs = bots.filter(b => getDistToObstacle(b.x, b.y, obs) < 2.0);
+        if (botsNearObs.length >= 2) {
+          for (let i = 0; i < botsNearObs.length; i++) {
+            for (let j = i + 1; j < botsNearObs.length; j++) {
+              if (Math.hypot(botsNearObs[i].x - botsNearObs[j].x, botsNearObs[i].y - botsNearObs[j].y) < 1.8) {
+                riskOfCollision = true;
+                break;
+              }
+            }
+            if (riskOfCollision) break;
+          }
+        }
+
+        const isTargeted = nearestBotDist < 1.4 || riskOfCollision;
+        obs.shieldActive = isTargeted;
+        obs.riskOfCollision = riskOfCollision;
+
+        if (isTargeted) {
+          obs.shieldIntensity = Math.min(1.0, (obs.shieldIntensity || 0) + dt * 5.0);
+        } else {
+          obs.shieldIntensity = Math.max(0.0, (obs.shieldIntensity || 0) - dt * 2.5);
+        }
+      });
+
       bots.forEach(bot => {
+        bot.isPinchHolding = false;
         let currentPowerW = POWER_IDLE_W;
 
         // ── CHARGING STATION AUTO-DOCK SYSTEM ────────────────────────────────
@@ -3148,8 +3403,9 @@
             const distWp = Math.hypot(dxC, dyC);
             bot.angle = Math.atan2(dyC, dxC);
             if (distWp > 0.25) {
-              bot.x += Math.cos(bot.angle) * bot.speed * dt * 3.2;
-              bot.y += Math.sin(bot.angle) * bot.speed * dt * 3.2;
+              const moveStepM = Math.min(distWp, bot.speed * dt * 3.2);
+              bot.x += Math.cos(bot.angle) * moveStepM;
+              bot.y += Math.sin(bot.angle) * moveStepM;
             } else {
               bot.chargingWaypoints.shift();
             }
@@ -3157,20 +3413,62 @@
             // At charger — recharge battery
             bot.battery = Math.min(CHARGE_TO_PCT, bot.battery + CHARGE_RATE_PCT_S * dt);
             if (bot.battery >= CHARGE_TO_PCT) {
-              bot.status = 'IDLE';
-              bot.chargingWaypoints = null;
-              logEvent(`[⚡ CHARGED] ${bot.name} fully recharged to ${bot.battery.toFixed(0)}% — returning to swarm.`, 'log-win', 'win');
-              soundWin();
-              processPendingQueue();
+              if (bot.suspendedTask || (bot.assignedTask && (bot.carryingPayloadKg > 0 || bot.assignedTask.isWarehouseOrder))) {
+                const resumedTask = bot.suspendedTask || bot.assignedTask;
+                bot.assignedTask = resumedTask;
+                bot.suspendedTask = null;
+                bot.chargingWaypoints = null;
+
+                const destX = (bot.carryingPayloadKg > 0 && resumedTask.dropX !== undefined) ? resumedTask.dropX : resumedTask.x;
+                const destY = (bot.carryingPayloadKg > 0 && resumedTask.dropY !== undefined) ? resumedTask.dropY : resumedTask.y;
+
+                bot.waypoints = findPathAStar(bot.x, bot.y, destX, destY) || [{ x: destX, y: destY }];
+                bot.status = 'MOVING';
+                bot.serviceTimer = 2.0;
+
+                const cargoDesc = bot.carryingPayloadKg > 0 ? `${bot.carryingSku || 'Cargo'} (${bot.carryingPayloadKg}kg)` : `Task #${resumedTask.id}`;
+                const destDesc = (bot.carryingPayloadKg > 0 && resumedTask.dropName) ? resumedTask.dropName : `Target`;
+
+                logEvent(`[⚡ MISSION RESUMED] ${bot.name} recharged to ${bot.battery.toFixed(0)}%! Retained ${cargoDesc} and resuming delivery to ${destDesc}...`, 'log-win', 'win');
+                soundWin();
+              } else {
+                bot.status = 'IDLE';
+                bot.chargingWaypoints = null;
+                logEvent(`[⚡ CHARGED] ${bot.name} fully recharged to ${bot.battery.toFixed(0)}% — returning to swarm.`, 'log-win', 'win');
+                soundWin();
+                processPendingQueue();
+              }
             }
           }
         } else if (bot.battery < LOW_BATTERY_THRESHOLD && bot.status !== 'CRITICAL') {
-          // Trigger auto-dock: drop current task, head to charger
-          if (bot.assignedTask) handleTaskDrop(bot);
-          bot.status = 'CHARGING';
-          bot.chargingWaypoints = null;
-          logEvent(`[⚡ LOW BATTERY] ${bot.name} battery at ${bot.battery.toFixed(0)}% — auto-docking to Charging Station!`, 'log-warn', 'warn');
-          soundAlert();
+          // Trigger auto-dock:
+          const isHoldingCargo = (bot.carryingPayloadKg > 0);
+          const hasWarehouseOrder = (bot.assignedTask && bot.assignedTask.isWarehouseOrder);
+
+          if (isHoldingCargo || hasWarehouseOrder) {
+            // E-COMMERCE AGV SAFETY: Keep product on chassis! Do NOT discard or abort!
+            if (!isHoldingCargo && bot.status === 'SERVICING' && bot.assignedTask.stage === 'PICK') {
+              bot.assignedTask.stage = 'DELIVERING';
+              bot.carryingPayloadKg = bot.assignedTask.payloadKg || 12.0;
+              bot.carryingSku = bot.assignedTask.sku || 'SKU-LOGISTICS';
+              bot.assignedTask.x = bot.assignedTask.dropX;
+              bot.assignedTask.y = bot.assignedTask.dropY;
+            }
+            bot.suspendedTask = bot.assignedTask;
+            bot.waypoints = [];
+            bot.status = 'CHARGING';
+            bot.chargingWaypoints = null;
+            const cargoInfo = bot.carryingPayloadKg > 0 ? `${bot.carryingSku} (${bot.carryingPayloadKg}kg)` : `Order #${bot.assignedTask.id}`;
+            logEvent(`[⚡ SMART DOCK] ${bot.name} battery at ${bot.battery.toFixed(0)}% — securely holding ${cargoInfo} on-board and docking to recharge!`, 'log-warn', 'sys');
+            soundAlert();
+          } else {
+            // Drop current task, head to charger
+            if (bot.assignedTask) handleTaskDrop(bot);
+            bot.status = 'CHARGING';
+            bot.chargingWaypoints = null;
+            logEvent(`[⚡ LOW BATTERY] ${bot.name} battery at ${bot.battery.toFixed(0)}% — auto-docking to Charging Station!`, 'log-warn', 'warn');
+            soundAlert();
+          }
         } else if (bot.assignedTask) {
           const task = bot.assignedTask;
           
@@ -3179,6 +3477,33 @@
             bot.serviceTimer -= dt;
 
             if (bot.serviceTimer <= 0) {
+              if (task.isWarehouseOrder && task.stage === 'PICK') {
+                task.stage = 'DELIVERING';
+                bot.carryingPayloadKg = task.payloadKg || 12.0;
+                bot.carryingSku = task.sku || 'SKU-LOGISTICS';
+                task.x = task.dropX;
+                task.y = task.dropY;
+                bot.waypoints = findPathAStar(bot.x, bot.y, task.dropX, task.dropY) || [{ x: task.dropX, y: task.dropY }];
+                bot.status = 'MOVING';
+                bot.serviceTimer = 2.0;
+                soundLift();
+                logEvent(`[AGV LATCH] 📦 ${bot.name} hitched ${task.sku} (${task.payloadKg}kg)! En route to ${task.dropName || 'Pack Station'}...`, 'log-win', 'sys');
+                return;
+              }
+
+              if (task.isWarehouseOrder && task.stage === 'DELIVERING') {
+                warehouseOrdersFulfilled++;
+                warehouseTotalKgMoved += (task.payloadKg || 0);
+                logEvent(`[FULFILLED] 🚀 ${bot.name} delivered ${task.sku} to ${task.dropName}! (Payload: ${task.payloadKg}kg)`, 'log-win', 'win');
+                bot.carryingPayloadKg = 0;
+                bot.carryingSku = null;
+                if (isWarehouseMode && tasks.length <= 1) {
+                  setTimeout(() => {
+                    if (isWarehouseMode && tasks.length < 2) spawnWarehouseExpressOrder();
+                  }, 3500);
+                }
+              }
+
               totalCompletedTasks++;
               const durationSec = (Date.now() / 1000) - (task.startTimeSec || Date.now() / 1000);
               const energyWh = Math.max(0.01, (task.startBattWh || bot.battery) - bot.battery);
@@ -3232,7 +3557,7 @@
                 ? bot.waypoints.length - 1  // skip final wall-target for obstructed tasks
                 : bot.waypoints.length;
               for (let i = 0; i < checkLen; i++) {
-                if (isPathBlocked(currX, currY, bot.waypoints[i].x, bot.waypoints[i].y)) {
+                if (isPathBlocked(currX, currY, bot.waypoints[i].x, bot.waypoints[i].y, 0.45)) {
                   isPathInvalid = true;
                   break;
                 }
@@ -3305,7 +3630,11 @@
               if (distM > 0.25) {
                 bot.status = 'MOVING';
                 currentPowerW = POWER_MOVING_W;
-                const moveStepM = bot.speed * dt * 3.2;
+                let moveStepM = Math.min(distM, bot.speed * dt * 3.2);
+                if (bot.isPinchHolding) {
+                  // Anti-pinch corridor hold: halt forward rush to let priority bot pass
+                  moveStepM = 0;
+                }
                 bot.x += Math.cos(bot.angle) * moveStepM;
                 bot.y += Math.sin(bot.angle) * moveStepM;
 
@@ -3323,34 +3652,94 @@
                 if (bot.waypoints.length === 0) {
                   // Check if we actually reached the task.
                   // Obstructed tasks use a larger service radius (bot works from wall edge).
-                  const serviceRadius = task.isObstructed ? 2.0 : 0.6;
+                  const serviceRadius = task.isObstructed ? 2.0 : 1.2;
                   const distToTask = Math.hypot(task.x - bot.x, task.y - bot.y);
-                  if (distToTask <= serviceRadius) {
+                  if (distToTask <= serviceRadius || distToTask <= 1.8) {
                     // Reached final task target — begin servicing
                     bot.status = 'SERVICING';
                     currentPowerW = POWER_SERVICE_W;
                     bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
                   } else {
-                    bot.status = 'WAITING';
+                    const nextRoute = findPathAStar(bot.x, bot.y, task.x, task.y);
+                    if (nextRoute && nextRoute.length > 0 && Math.hypot(nextRoute[nextRoute.length - 1].x - bot.x, nextRoute[nextRoute.length - 1].y - bot.y) > 0.3) {
+                      bot.waypoints = nextRoute;
+                      bot.status = 'MOVING';
+                    } else if (distToTask <= 2.2) {
+                      bot.status = 'SERVICING';
+                      currentPowerW = POWER_SERVICE_W;
+                      bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
+                    } else {
+                      bot.status = 'WAITING';
+                    }
                   }
                 }
               }
             } else if (bot.status === 'WAITING') {
               // While waiting, keep checking if we're now close enough to service
-              // (the task might have had its position resolved, or serviceRadius applies)
-              const serviceRadius = task.isObstructed ? 2.0 : 0.6;
+              const serviceRadius = task.isObstructed ? 2.0 : 1.2;
               const distToTask = Math.hypot(task.x - bot.x, task.y - bot.y);
-              if (distToTask <= serviceRadius) {
+              if (distToTask <= serviceRadius || distToTask <= 2.2) {
                 bot.waypoints = [];
                 bot.status = 'SERVICING';
                 currentPowerW = POWER_SERVICE_W;
                 bot.serviceTimer = Math.floor(Math.random() * 3) + 2;
               } else {
+                bot.recalcTimer = (bot.recalcTimer || 0) + dt;
+                if (bot.recalcTimer > 0.5) {
+                  bot.recalcTimer = 0;
+                  const repath = findPathAStar(bot.x, bot.y, task.x, task.y);
+                  if (repath && repath.length > 0) {
+                    bot.waypoints = repath;
+                    bot.status = 'MOVING';
+                  }
+                }
                 currentPowerW = POWER_IDLE_W;
               }
             }
           }
         }
+
+        // Obstacle & Wall Surface Clearance and Penetration Protection (Virtual Protective Wall)
+        obstacles.forEach(obs => {
+          const d = getDistToObstacle(bot.x, bot.y, obs);
+          const REQUIRED_CLEARANCE = 0.38; // Virtual protective wall: keeps bot ~0.06m clear of wall without oversized bulk
+          if (d < REQUIRED_CLEARANCE) {
+            const cx = Math.max(obs.x, Math.min(bot.x, obs.x + obs.width));
+            const cy = Math.max(obs.y, Math.min(bot.y, obs.y + obs.height));
+            let nx = bot.x - cx;
+            let ny = bot.y - cy;
+            let len = Math.hypot(nx, ny);
+            if (len < 0.001) {
+              const pushL = Math.abs(bot.x - obs.x);
+              const pushR = Math.abs(obs.x + obs.width - bot.x);
+              const pushT = Math.abs(bot.y - obs.y);
+              const pushB = Math.abs(obs.y + obs.height - bot.y);
+              const m = Math.min(pushL, pushR, pushT, pushB);
+              if (m === pushL) { nx = -1; ny = 0; }
+              else if (m === pushR) { nx = 1; ny = 0; }
+              else if (m === pushT) { nx = 0; ny = -1; }
+              else { nx = 0; ny = 1; }
+              bot.x = cx + nx * (REQUIRED_CLEARANCE + 0.01);
+              bot.y = cy + ny * (REQUIRED_CLEARANCE + 0.01);
+            } else {
+              nx /= len;
+              ny /= len;
+              bot.x = cx + nx * (REQUIRED_CLEARANCE + 0.01);
+              bot.y = cy + ny * (REQUIRED_CLEARANCE + 0.01);
+            }
+
+            // Deflect bot heading parallel to wall so bot never pushes into it
+            const headingX = Math.cos(bot.angle);
+            const headingY = Math.sin(bot.angle);
+            const dot = headingX * (-nx) + headingY * (-ny);
+            if (dot > 0) {
+              const perpX = -ny;
+              const perpY = nx;
+              const side = (headingX * perpX + headingY * perpY) >= 0 ? 1 : -1;
+              bot.angle = Math.atan2(perpY * side, perpX * side);
+            }
+          }
+        });
 
         // ── DYNAMIC SITUATIONAL KINEMATICS & POWER CONSUMPTION ──────────────
         const sitPowerData = computeSituationalPower(bot, dt);
@@ -3370,17 +3759,15 @@
           if (heatPoints.length > 400) heatPoints.splice(0, 40);
         }
 
-        // ── SMART PRIORITY COLLISION AVOIDANCE ──────────────────────────────
+        // ── SMART PRIORITY COLLISION AVOIDANCE & ANTI-PINCH FORCEFIELD ──────
         // Rule: Bot nearest its task target = highest priority → IMMUNE to repulsion.
-        // Yielding bots deflect PERPENDICULAR to the priority bot's heading,
-        // so neither bot loses forward progress toward its own target.
+        // Yielding bots detect if they are near a wall. If so, they engage ANTI-PINCH HOLD
+        // to avoid being squeezed into the hazard wall.
         if (bot.status === 'MOVING' || bot.status === 'SERVICING') {
-          // Compute this bot's proximity score (lower = closer to target = higher priority)
           const botDistToTarget = bot.assignedTask
             ? Math.hypot(bot.assignedTask.x - bot.x, bot.assignedTask.y - bot.y)
             : Infinity;
 
-          // Immunity zone: bot is very close to its task — NEVER get pushed off course
           const isImmune = botDistToTarget < 1.8 || bot.status === 'SERVICING';
 
           if (!isImmune) {
@@ -3389,35 +3776,58 @@
               const dxB = bot.x - other.x;
               const dyB = bot.y - other.y;
               const distB = Math.hypot(dxB, dyB);
-              if (distB >= 1.2 || distB < 0.01) return;
+              if (distB >= 1.5 || distB < 0.01) return;
 
-              // Priority comparison: does the other bot outrank this one?
               const otherDistToTarget = other.assignedTask
                 ? Math.hypot(other.assignedTask.x - other.x, other.assignedTask.y - other.y)
                 : Infinity;
               const otherIsHigherPriority = otherDistToTarget < botDistToTarget || other.status === 'SERVICING';
 
               if (otherIsHigherPriority) {
-                // This bot YIELDS — steer perpendicular to the other bot's heading
-                // so we arc around them instead of shoving them sideways
-                const otherAngle = other.angle || 0;
-                // Perpendicular direction (choose side that moves us away from the other bot)
-                const perpX = -Math.sin(otherAngle);
-                const perpY =  Math.cos(otherAngle);
-                const dot = perpX * dxB + perpY * dyB;
-                const sideSign = dot >= 0 ? 1 : -1;
-                const yieldStrength = (1.2 - distB) * 0.14;
-                bot.x += perpX * sideSign * yieldStrength;
-                bot.y += perpY * sideSign * yieldStrength;
+                const wallDist = getMinDistToAllObstacles(bot.x, bot.y);
+                if (wallDist < 1.1) {
+                  // Near a wall: ANTI-PINCH SAFETY PROTOCOL ENGAGED!
+                  // Do NOT deflect sideways into the wall; enter yield hold and gently back off
+                  bot.isPinchHolding = true;
+                  const backOff = (1.5 - distB) * 0.08;
+                  bot.x += (dxB / distB) * backOff;
+                  bot.y += (dyB / distB) * backOff;
+                } else {
+                  // Open floor: steer perpendicular to the other bot's heading
+                  const otherAngle = other.angle || 0;
+                  const perpX = -Math.sin(otherAngle);
+                  const perpY =  Math.cos(otherAngle);
+                  const dot = perpX * dxB + perpY * dyB;
+                  const sideSign = dot >= 0 ? 1 : -1;
+                  const yieldStrength = (1.5 - distB) * 0.14;
+                  bot.x += perpX * sideSign * yieldStrength;
+                  bot.y += perpY * sideSign * yieldStrength;
+                }
               } else {
-                // Equal or lower priority other bot — gentle symmetric nudge only
-                const repel = (1.2 - distB) * 0.06;
+                const repel = (1.5 - distB) * 0.06;
                 bot.x += (dxB / distB) * repel;
                 bot.y += (dyB / distB) * repel;
               }
             });
           }
         }
+
+        // Final Wall Surface Distance Clamp (Ensures bot-bot deflection never breaches virtual wall)
+        obstacles.forEach(obs => {
+          const d = getDistToObstacle(bot.x, bot.y, obs);
+          const MIN_CLEARANCE = 0.38;
+          if (d < MIN_CLEARANCE) {
+            const cx = Math.max(obs.x, Math.min(bot.x, obs.x + obs.width));
+            const cy = Math.max(obs.y, Math.min(bot.y, obs.y + obs.height));
+            let nx = bot.x - cx;
+            let ny = bot.y - cy;
+            let len = Math.hypot(nx, ny);
+            if (len < 0.001) { nx = 0; ny = -1; len = 1; }
+            else { nx /= len; ny /= len; }
+            bot.x = cx + nx * (MIN_CLEARANCE + 0.01);
+            bot.y = cy + ny * (MIN_CLEARANCE + 0.01);
+          }
+        });
       });
 
       updateDashboards();
@@ -3469,22 +3879,192 @@
       ctx.fill();
       ctx.restore();
 
-      // Obstacles (Hazard Walls)
+      // Obstacles (Hazard Walls & Warehouse High-Bay Storage Racks) & Dynamic Protective Virtual Walls
       obstacles.forEach(obs => {
         const px = mToPxX(obs.x), py = mToPxY(obs.y);
         const pw = mToPxX(obs.width), ph = mToPxY(obs.height);
+        const intensity = obs.shieldIntensity || 0;
+
+        // ── DYNAMIC VIRTUAL PROTECTIVE WALL (SAFETY CURTAIN FORCEFIELD) ──
+        // Engages automatically when bots approach or risk pinch collisions near walls
+        if (isVirtualWallVisible && intensity > 0.01) {
+          ctx.save();
+          const marginX = mToPxX(0.35);
+          const marginY = mToPxY(0.35);
+          const sx = px - marginX;
+          const sy = py - marginY;
+          const sw = pw + marginX * 2;
+          const sh = ph + marginY * 2;
+          const isAlert = obs.riskOfCollision;
+
+          // 1. Holographic Safety Forcefield Fill
+          if (isAlert) {
+            const pulse = 0.10 + Math.sin(Date.now() * 0.012) * 0.03;
+            ctx.fillStyle = `rgba(245, 158, 11, ${pulse * intensity})`;
+            ctx.fillRect(sx, sy, sw, sh);
+          } else {
+            const pulse = 0.06 + Math.sin(Date.now() * 0.006) * 0.02;
+            ctx.fillStyle = `rgba(2, 132, 199, ${pulse * intensity})`;
+            ctx.fillRect(sx, sy, sw, sh);
+          }
+
+          // 2. Animated Laser Perimeter Border (Sleeker, less thick)
+          const dashOffset = -(Date.now() * 0.04) % 24;
+          ctx.strokeStyle = isAlert
+            ? `rgba(245, 158, 11, ${0.85 * intensity})`
+            : `rgba(2, 132, 199, ${0.80 * intensity})`;
+          ctx.lineWidth = isAlert ? 1.6 : 1.1;
+          ctx.setLineDash([5, 3]);
+          ctx.lineDashOffset = dashOffset;
+          ctx.strokeRect(sx, sy, sw, sh);
+          ctx.setLineDash([]);
+
+          // 3. Compact Robotic Corner Brackets (Less long, less thick)
+          const bracketLen = Math.min(8, marginX * 0.45);
+          ctx.strokeStyle = isAlert ? '#f59e0b' : '#0284c7';
+          ctx.lineWidth = 1.8;
+          ctx.globalAlpha = intensity;
+
+          // Top-Left
+          ctx.beginPath();
+          ctx.moveTo(sx, sy + bracketLen); ctx.lineTo(sx, sy); ctx.lineTo(sx + bracketLen, sy);
+          ctx.stroke();
+
+          // Top-Right
+          ctx.beginPath();
+          ctx.moveTo(sx + sw - bracketLen, sy); ctx.lineTo(sx + sw, sy); ctx.lineTo(sx + sw, sy + bracketLen);
+          ctx.stroke();
+
+          // Bottom-Left
+          ctx.beginPath();
+          ctx.moveTo(sx, sy + sh - bracketLen); ctx.lineTo(sx, sy + sh); ctx.lineTo(sx + bracketLen, sy + sh);
+          ctx.stroke();
+
+          // Bottom-Right
+          ctx.beginPath();
+          ctx.moveTo(sx + sw - bracketLen, sy + sh); ctx.lineTo(sx + sw, sy + sh); ctx.lineTo(sx + sw, sy + sh - bracketLen);
+          ctx.stroke();
+
+          // 4. Floating Holographic HUD Shield Badge (Compact & Sleek)
+          const badgeText = isAlert
+            ? '⚡ ANTI-PINCH'
+            : '🛡️ VIRTUAL SHIELD';
+          ctx.font = '700 8px Plus Jakarta Sans, sans-serif';
+          const textW = (ctx.measureText ? ctx.measureText(badgeText).width : 90);
+          const badgeX = sx + sw / 2;
+          const badgeY = sy - 8;
+
+          ctx.fillStyle = isAlert ? 'rgba(245, 158, 11, 0.95)' : 'rgba(2, 132, 199, 0.95)';
+          const padX = 6, padY = 2;
+          const pillW = textW + padX * 2;
+          const pillH = 14;
+          const prx = badgeX - pillW / 2;
+          const pry = badgeY - pillH / 2;
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(prx, pry, pillW, pillH, 6);
+            ctx.fill();
+          } else {
+            ctx.fillRect(prx, pry, pillW, pillH);
+          }
+
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(badgeText, badgeX, badgeY);
+
+          ctx.restore();
+        }
+
         ctx.save();
-        ctx.fillStyle = 'rgba(254, 226, 226, 0.85)';
-        ctx.strokeStyle = '#dc2626';
-        ctx.lineWidth = 2;
-        ctx.fillRect(px, py, pw, ph);
-        ctx.strokeRect(px, py, pw, ph);
-        ctx.fillStyle = '#dc2626';
-        ctx.font = '700 10px Plus Jakarta Sans, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('HAZARD WALL', px + pw / 2, py + ph / 2 + 3);
+        if (obs.type === 'rack') {
+          ctx.fillStyle = 'rgba(241, 245, 249, 0.95)';
+          ctx.strokeStyle = '#475569';
+          ctx.lineWidth = 2.5;
+          ctx.fillRect(px, py, pw, ph);
+          ctx.strokeRect(px, py, pw, ph);
+
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 1;
+          const shelfCount = 4;
+          for (let s = 1; s < shelfCount; s++) {
+            const sy = py + (ph / shelfCount) * s;
+            ctx.beginPath();
+            ctx.moveTo(px, sy);
+            ctx.lineTo(px + pw, sy);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = '#1e293b';
+          ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(obs.label || 'STORAGE RACK', px + pw / 2, py + ph / 2);
+
+          ctx.fillStyle = '#64748b';
+          ctx.font = '700 8.5px Plus Jakarta Sans, sans-serif';
+          ctx.fillText('BAY CAP: 500 KG', px + pw / 2, py + ph / 2 + 13);
+        } else {
+          ctx.fillStyle = 'rgba(254, 226, 226, 0.85)';
+          ctx.strokeStyle = '#dc2626';
+          ctx.lineWidth = 2;
+          ctx.fillRect(px, py, pw, ph);
+          ctx.strokeRect(px, py, pw, ph);
+          ctx.fillStyle = '#dc2626';
+          ctx.font = '700 10px Plus Jakarta Sans, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('HAZARD WALL', px + pw / 2, py + ph / 2 + 3);
+        }
         ctx.restore();
       });
+
+      // ── DYNAMIC ANTI-COLLISION SAFETY BEAM BETWEEN APPROACHING BOTS NEAR WALLS ──
+      if (isVirtualWallVisible) {
+        for (let i = 0; i < bots.length; i++) {
+          for (let j = i + 1; j < bots.length; j++) {
+            const b1 = bots[i];
+            const b2 = bots[j];
+            const distB = Math.hypot(b1.x - b2.x, b1.y - b2.y);
+            if (distB < 1.8) {
+              const nearWall = obstacles.some(obs => getDistToObstacle(b1.x, b1.y, obs) < 1.1 || getDistToObstacle(b2.x, b2.y, obs) < 1.1);
+              if (nearWall) {
+                const p1x = mToPxX(b1.x), p1y = mToPxY(b1.y);
+                const p2x = mToPxX(b2.x), p2y = mToPxY(b2.y);
+                ctx.save();
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 4]);
+                ctx.lineDashOffset = -(Date.now() * 0.05) % 16;
+                ctx.beginPath();
+                ctx.moveTo(p1x, p1y);
+                ctx.lineTo(p2x, p2y);
+                ctx.stroke();
+
+                // Center Anti-Collision Warning Pill
+                const midX = (p1x + p2x) / 2;
+                const midY = (p1y + p2y) / 2;
+                const warnText = `⚡ PROXIMITY: ${distB.toFixed(2)}m (ANTI-PINCH)`;
+                ctx.font = '700 8px Plus Jakarta Sans, sans-serif';
+                const tw = (ctx.measureText ? ctx.measureText(warnText).width : 120);
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.9)';
+                const pillW = tw + 8, pillH = 13;
+                if (ctx.roundRect) {
+                  ctx.beginPath();
+                  ctx.roundRect(midX - pillW / 2, midY - pillH / 2, pillW, pillH, 6);
+                  ctx.fill();
+                } else {
+                  ctx.fillRect(midX - pillW / 2, midY - pillH / 2, pillW, pillH);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(warnText, midX, midY);
+                ctx.restore();
+              }
+            }
+          }
+        }
+      }
 
       // Charging Station Dock
       const dockPx = mToPxX(CHARGER_X_M), dockPy = mToPxY(CHARGER_Y_M);
@@ -3516,6 +4096,33 @@
       ctx.textAlign = 'center';
       ctx.fillText('⚡ CHARGE DOCK', dockPx, dockPy + 4);
       ctx.restore();
+
+      // Warehouse Outbound Packing Stations (active in warehouse mode)
+      if (isWarehouseMode) {
+        const packStations = [
+          { x: 3.5, y: 17.5, name: 'PACK STATION 1' },
+          { x: 8.5, y: 17.5, name: 'PACK STATION 2' },
+          { x: 13.5, y: 17.5, name: 'PACK STATION 3' }
+        ];
+        packStations.forEach(st => {
+          const spx = mToPxX(st.x), spy = mToPxY(st.y);
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(spx, spy, 22, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
+          ctx.fill();
+          ctx.strokeStyle = '#10b981';
+          ctx.lineWidth = 1.8;
+          ctx.setLineDash([4, 4]);
+          ctx.stroke();
+
+          ctx.fillStyle = '#065f46';
+          ctx.font = '800 9px Plus Jakarta Sans, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('📦 ' + st.name, spx, spy + 32);
+          ctx.restore();
+        });
+      }
 
       if (isDrawingObstacle && obstacleStart) {
         ctx.save();
@@ -3570,6 +4177,9 @@
         if (task.priority === 'high') taskColor = '#d97706';
         if (task.priority === 'emergency') taskColor = '#dc2626';
         if (task.priority === 'cooperative') taskColor = '#8b5cf6'; // Purple for Coop
+        if (task.isWarehouseOrder) {
+          taskColor = (task.stage === 'DELIVERING') ? '#059669' : '#d97706';
+        }
 
         const isPending = pendingQueue.some(pt => pt.id === task.id);
         
@@ -3591,8 +4201,13 @@
         ctx.fillStyle = '#0f172a';
         ctx.font = '800 11px Plus Jakarta Sans, sans-serif';
         ctx.textAlign = 'center';
-        const coopTag = task.priority === 'cooperative' ? ' 🤝 2-BOT' : '';
-        ctx.fillText(`T#${task.id}${coopTag} ${isPending ? '(QUEUED)' : `(${task.priority.toUpperCase()})`}`, px, py - 22);
+        if (task.isWarehouseOrder) {
+          const stageTag = task.stage === 'DELIVERING' ? '📦 DELIVER' : '📥 PICK';
+          ctx.fillText(`${stageTag}: ${task.sku || ('SKU #' + task.id)} (${task.payloadKg || 10}kg)`, px, py - 22);
+        } else {
+          const coopTag = task.priority === 'cooperative' ? ' 🤝 2-BOT' : '';
+          ctx.fillText(`T#${task.id}${coopTag} ${isPending ? '(QUEUED)' : `(${task.priority.toUpperCase()})`}`, px, py - 22);
+        }
         ctx.restore();
       });
 
@@ -3697,6 +4312,41 @@
         ctx.font = '800 11px Outfit, sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(`B${bot.id}`, 0, 0);
+
+        if (bot.carryingPayloadKg > 0) {
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+          ctx.fillRect(-28, -34, 56, 16);
+          ctx.strokeStyle = '#f59e0b';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(-28, -34, 56, 16);
+          ctx.fillStyle = '#fbbf24';
+          ctx.font = '800 9px Outfit, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          const chargeSuffix = (bot.status === 'CHARGING') ? ' ⚡' : '';
+          ctx.fillText(`📦 ${bot.carryingPayloadKg}kg${chargeSuffix}`, 0, -26);
+        }
+
+        if (isVirtualWallVisible && bot.isPinchHolding) {
+          ctx.save();
+          ctx.fillStyle = 'rgba(245, 158, 11, 0.95)';
+          const holdText = '🛡️ YIELD HOLD';
+          ctx.font = '800 8.5px Plus Jakarta Sans, sans-serif';
+          const htw = (ctx.measureText ? ctx.measureText(holdText).width : 70);
+          const pw = htw + 8, ph = 14;
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(-pw / 2, 20, pw, ph, 7);
+            ctx.fill();
+          } else {
+            ctx.fillRect(-pw / 2, 20, pw, ph);
+          }
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(holdText, 0, 27);
+          ctx.restore();
+        }
         ctx.restore();
       });
     }
@@ -3708,7 +4358,10 @@
 
     function setMode(mode) {
       currentTool = mode;
-      document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+      ['toolTask', 'toolObstacle', 'toolEraser'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.classList.remove('active');
+      });
       const hint = document.getElementById('arenaHintText');
       const container = document.getElementById('canvasContainer');
 
@@ -3727,7 +4380,7 @@
       }
     }
 
-    function spawnTask(pxX, pxY, priority) {
+    function spawnTask(pxX, pxY, priority, warehouseMeta) {
       const container = document.getElementById('canvasContainer');
       const targetPxX = pxX !== undefined ? pxX : Math.floor(Math.random() * (container.clientWidth - 120)) + 60;
       const targetPxY = pxY !== undefined ? pxY : Math.floor(Math.random() * (container.clientHeight - 120)) + 60;
@@ -3737,6 +4390,23 @@
       const mY = pxToMY(targetPxY);
 
       const newTask = { id: taskIdCounter++, x: mX, y: mY, priority: prio, assignedBotId: null };
+
+      if (warehouseMeta || isWarehouseMode) {
+        newTask.isWarehouseOrder = true;
+        newTask.sku = (warehouseMeta && warehouseMeta.sku) ? warehouseMeta.sku : ('SKU-' + (1000 + Math.floor(Math.random() * 9000)));
+        newTask.payloadKg = (warehouseMeta && warehouseMeta.mass) ? warehouseMeta.mass : (Math.floor(Math.random() * 18) + 6);
+        newTask.stage = 'PICK';
+        const dropStations = [
+          { x: 3.5, y: 17.5, name: 'Pack Station 1 (Express)' },
+          { x: 8.5, y: 17.5, name: 'Pack Station 2 (Standard)' },
+          { x: 13.5, y: 17.5, name: 'Pack Station 3 (Heavy Freight)' }
+        ];
+        const chosenDrop = dropStations[newTask.id % dropStations.length];
+        newTask.dropX = chosenDrop.x;
+        newTask.dropY = chosenDrop.y;
+        newTask.dropName = chosenDrop.name;
+      }
+
       tasks.push(newTask);
       runAuction(newTask);
     }
@@ -3800,18 +4470,40 @@
     });
 
     function clearCanvasItems() {
-      tasks = []; pendingQueue = []; obstacles = [];
-      bots.forEach(b => { b.assignedTask = null; if (b.status === 'MOVING') b.status = 'IDLE'; });
+      tasks = [];
+      pendingQueue = [];
+      obstacles = [];
+      bots.forEach(b => {
+        b.assignedTask = null;
+        b.suspendedTask = null;
+        b.taskQueue = [];
+        b.waypoints = [];
+        b.chargingWaypoints = null;
+        b.carryingPayloadKg = 0;
+        b.carryingSku = null;
+        b.status = 'IDLE';
+      });
       logEvent('[SYS] Cleared all arena tasks, queues, and obstacle walls.', 'log-sys', 'sys');
       updateDashboards();
     }
 
-    document.getElementById('btnSpawnTask').addEventListener('click', () => spawnTask());
+    document.getElementById('btnSpawnTask').addEventListener('click', () => {
+      if (isWarehouseMode) {
+        spawnWarehouseExpressOrder();
+      } else {
+        spawnTask();
+      }
+    });
+
     document.getElementById('btnEmergencyDispatch').addEventListener('click', () => {
-      const container = document.getElementById('canvasContainer');
-      logEvent('[EMERGENCY] OVERRIDE: Deploying Priority 1 Emergency Dispatch!', 'log-warn', 'warn');
-      soundAlert();
-      spawnTask(container.clientWidth / 2, container.clientHeight / 2, 'emergency');
+      if (isWarehouseMode) {
+        spawnWarehouseExpressOrder();
+      } else {
+        const container = document.getElementById('canvasContainer');
+        logEvent('[EMERGENCY] OVERRIDE: Deploying Priority 1 Emergency Dispatch!', 'log-warn', 'warn');
+        soundAlert();
+        spawnTask(container.clientWidth / 2, container.clientHeight / 2, 'emergency');
+      }
     });
 
     const btnAutoSpawn = document.getElementById('btnAutoSpawn');
@@ -3827,7 +4519,22 @@
     });
 
     document.getElementById('btnRechargeAll').addEventListener('click', () => {
-      bots.forEach(b => { b.battery = 100.0; if (b.status === 'CRITICAL') b.status = 'IDLE'; });
+      bots.forEach(b => {
+        b.battery = 100.0;
+        b.chargingWaypoints = null;
+        if (b.suspendedTask || (b.assignedTask && (b.carryingPayloadKg > 0 || b.assignedTask.isWarehouseOrder))) {
+          const resumedTask = b.suspendedTask || b.assignedTask;
+          b.assignedTask = resumedTask;
+          b.suspendedTask = null;
+          const destX = (b.carryingPayloadKg > 0 && resumedTask.dropX !== undefined) ? resumedTask.dropX : resumedTask.x;
+          const destY = (b.carryingPayloadKg > 0 && resumedTask.dropY !== undefined) ? resumedTask.dropY : resumedTask.y;
+          b.waypoints = findPathAStar(b.x, b.y, destX, destY) || [{ x: destX, y: destY }];
+          b.status = 'MOVING';
+          b.serviceTimer = 2.0;
+        } else if (b.status === 'CRITICAL' || b.status === 'CHARGING') {
+          b.status = 'IDLE';
+        }
+      });
       logEvent('[SYS] All swarm nodes fully recharged to 100 Wh (100%)', 'log-sys', 'sys');
       updateDashboards(); electLeader(); processPendingQueue();
     });
@@ -3837,9 +4544,9 @@
       totalFailedTasks = 0; totalEnergyConsumedWh = 0; totalCompletionTimeSec = 0;
       simStartTimeSec = Date.now() / 1000; completionTimeHistory = [];
 
-      bots[0].x = 3.5; bots[0].y = 4.0; bots[0].battery = 100.0; bots[0].status = 'IDLE'; bots[0].assignedTask = null; bots[0].taskQueue = [];
-      bots[1].x = 3.5; bots[1].y = 10.0; bots[1].battery = 100.0; bots[1].status = 'IDLE'; bots[1].assignedTask = null; bots[1].taskQueue = [];
-      bots[2].x = 3.5; bots[2].y = 16.0; bots[2].battery = 100.0; bots[2].status = 'IDLE'; bots[2].assignedTask = null; bots[2].taskQueue = [];
+      bots[0].x = 3.5; bots[0].y = 4.0; bots[0].battery = 100.0; bots[0].status = 'IDLE'; bots[0].assignedTask = null; bots[0].suspendedTask = null; bots[0].taskQueue = []; bots[0].carryingPayloadKg = 0; bots[0].carryingSku = null;
+      bots[1].x = 3.5; bots[1].y = 10.0; bots[1].battery = 100.0; bots[1].status = 'IDLE'; bots[1].assignedTask = null; bots[1].suspendedTask = null; bots[1].taskQueue = []; bots[1].carryingPayloadKg = 0; bots[1].carryingSku = null;
+      bots[2].x = 3.5; bots[2].y = 16.0; bots[2].battery = 100.0; bots[2].status = 'IDLE'; bots[2].assignedTask = null; bots[2].suspendedTask = null; bots[2].taskQueue = []; bots[2].carryingPayloadKg = 0; bots[2].carryingSku = null;
 
       logEvent('[RESET] Simulation state and SI metrics reset.', 'log-warn', 'sys');
       electLeader(); updateDashboards();
@@ -3872,10 +4579,20 @@
     function sendToDock(botId) {
       const bot = bots.find(b => b.id === botId);
       if (bot) {
-        if (bot.assignedTask) handleTaskDrop(bot);
-        bot.status = 'CHARGING';
-        bot.chargingWaypoints = null;
-        logEvent(`[⚡ MANUAL DOCK] ${bot.name} manually commanded to navigate to Charging Station!`, 'log-warn', 'warn');
+        const isHoldingCargo = (bot.carryingPayloadKg > 0);
+        const hasWarehouseOrder = (bot.assignedTask && bot.assignedTask.isWarehouseOrder);
+        if (isHoldingCargo || hasWarehouseOrder) {
+          bot.suspendedTask = bot.assignedTask;
+          bot.waypoints = [];
+          bot.status = 'CHARGING';
+          bot.chargingWaypoints = null;
+          logEvent(`[⚡ MANUAL DOCK] ${bot.name} docked to recharge while holding ${bot.carryingSku || 'cargo'} (${bot.carryingPayloadKg}kg). Will resume delivery after charge!`, 'log-warn', 'sys');
+        } else {
+          if (bot.assignedTask) handleTaskDrop(bot);
+          bot.status = 'CHARGING';
+          bot.chargingWaypoints = null;
+          logEvent(`[⚡ MANUAL DOCK] ${bot.name} manually commanded to navigate to Charging Station!`, 'log-warn', 'warn');
+        }
         soundAlert();
         if (botId === coordinatorId) electLeader();
         updateDashboards();
@@ -3886,10 +4603,20 @@
       const bot = bots.find(b => b.id === botId);
       if (bot) {
         bot.battery = 10.0;
-        if (bot.assignedTask) handleTaskDrop(bot);
-        bot.status = 'CHARGING';
-        bot.chargingWaypoints = null;
-        logEvent(`[⚡ MANUAL DRAIN] ${bot.name} battery forced to 10 Wh (10%) — Auto-docking to Charging Station!`, 'log-warn', 'warn');
+        const isHoldingCargo = (bot.carryingPayloadKg > 0);
+        const hasWarehouseOrder = (bot.assignedTask && bot.assignedTask.isWarehouseOrder);
+        if (isHoldingCargo || hasWarehouseOrder) {
+          bot.suspendedTask = bot.assignedTask;
+          bot.waypoints = [];
+          bot.status = 'CHARGING';
+          bot.chargingWaypoints = null;
+          logEvent(`[⚡ MANUAL DRAIN] ${bot.name} battery drained to 10% — holding ${bot.carryingSku || 'cargo'} (${bot.carryingPayloadKg}kg) & auto-docking to recharge!`, 'log-warn', 'sys');
+        } else {
+          if (bot.assignedTask) handleTaskDrop(bot);
+          bot.status = 'CHARGING';
+          bot.chargingWaypoints = null;
+          logEvent(`[⚡ MANUAL DRAIN] ${bot.name} battery forced to 10 Wh (10%) — Auto-docking to Charging Station!`, 'log-warn', 'warn');
+        }
         soundAlert();
         if (botId === coordinatorId) electLeader();
         updateDashboards();
@@ -3900,9 +4627,21 @@
       const bot = bots.find(b => b.id === botId);
       if (bot) {
         bot.battery = 100.0;
-        if (bot.status === 'CRITICAL' || bot.status === 'CHARGING') bot.status = 'IDLE';
         bot.chargingWaypoints = null;
-        logEvent(`[MANUAL RECHARGE] Bot ${botId} recharged to 100 Wh (100%)`, 'log-sys', 'sys');
+        if (bot.suspendedTask || (bot.assignedTask && (bot.carryingPayloadKg > 0 || bot.assignedTask.isWarehouseOrder))) {
+          const resumedTask = bot.suspendedTask || bot.assignedTask;
+          bot.assignedTask = resumedTask;
+          bot.suspendedTask = null;
+          const destX = (bot.carryingPayloadKg > 0 && resumedTask.dropX !== undefined) ? resumedTask.dropX : resumedTask.x;
+          const destY = (bot.carryingPayloadKg > 0 && resumedTask.dropY !== undefined) ? resumedTask.dropY : resumedTask.y;
+          bot.waypoints = findPathAStar(bot.x, bot.y, destX, destY) || [{ x: destX, y: destY }];
+          bot.status = 'MOVING';
+          bot.serviceTimer = 2.0;
+          logEvent(`[MANUAL RECHARGE] ${bot.name} recharged to 100%! Resuming delivery of ${bot.carryingSku || 'cargo'} (${bot.carryingPayloadKg}kg)...`, 'log-win', 'win');
+        } else {
+          if (bot.status === 'CRITICAL' || bot.status === 'CHARGING') bot.status = 'IDLE';
+          logEvent(`[MANUAL RECHARGE] Bot ${botId} recharged to 100 Wh (100%)`, 'log-sys', 'sys');
+        }
         electLeader(); updateDashboards(); processPendingQueue();
       }
     }
@@ -3951,7 +4690,15 @@
 
         if (posElem) posElem.innerText = `${bot.x.toFixed(1)}m, ${bot.y.toFixed(1)}m`;
         if (lastBid) lastBid.innerText = bot.lastBidCost !== null ? bot.lastBidCost : '--';
-        if (target) target.innerText = bot.assignedTask ? `T#${bot.assignedTask.id}` : 'None';
+        if (target) {
+          if (bot.carryingPayloadKg > 0) {
+            target.innerText = (bot.status === 'CHARGING') ? `HOLD ${bot.carryingPayloadKg}kg ⚡` : `📦 ${bot.carryingPayloadKg}kg`;
+          } else if (bot.assignedTask) {
+            target.innerText = `T#${bot.assignedTask.id}`;
+          } else {
+            target.innerText = 'None';
+          }
+        }
 
         const rulVal = Math.round(bot.predictedRUL || 240);
         if (rulElem) {
@@ -3998,6 +4745,81 @@
       updateNeuralTelemetryUI();
       drawNeuralCanvas();
       drawLossCanvas();
+
+      // Update Autonomous Warehouse AGV Logistics UI
+      updateLogisticsUI(elapsedSec);
+    }
+
+    function updateLogisticsUI(elapsedSec) {
+      const ordEl = document.getElementById('whStatOrders');
+      const tonEl = document.getElementById('whStatTonnage');
+      const uphEl = document.getElementById('whStatUPH');
+      const eCostEl = document.getElementById('whStatEnergyTonKm');
+
+      if (ordEl) ordEl.innerText = warehouseOrdersFulfilled;
+      if (tonEl) tonEl.innerText = `${warehouseTotalKgMoved.toFixed(1)} kg`;
+      
+      const uph = Math.round((warehouseOrdersFulfilled / Math.max(1, elapsedSec)) * 3600);
+      if (uphEl) uphEl.innerText = `${uph} UPH`;
+
+      const totalTonKm = (warehouseTotalKgMoved / 1000.0) * Math.max(0.01, (totalCompletedTasks * 0.015));
+      const fleetEnergyCost = totalTonKm > 0 ? (totalEnergyConsumedWh / (warehouseTotalKgMoved * 0.015)).toFixed(2) : '0.00';
+      if (eCostEl) eCostEl.innerText = `${fleetEnergyCost} Wh/kg·km`;
+
+      bots.forEach((bot, idx) => {
+        const id = idx + 1;
+        const badge = document.getElementById(`whB${id}Badge`);
+        const sku = document.getElementById(`whB${id}Sku`);
+        const pwr = document.getElementById(`whB${id}Power`);
+
+        if (badge) {
+          if (bot.carryingPayloadKg > 0) {
+            badge.className = 'rul-tag-warn';
+            badge.style.background = 'rgba(217, 119, 6, 0.15)';
+            badge.style.color = '#b45309';
+            badge.innerText = `LOADED (${bot.carryingPayloadKg} kg)`;
+          } else if (bot.status === 'MOVING' && bot.assignedTask) {
+            badge.className = 'rul-tag-safe';
+            badge.style.background = 'rgba(2, 132, 199, 0.12)';
+            badge.style.color = '#0284c7';
+            badge.innerText = 'DISPATCHED';
+          } else if (bot.status === 'CHARGING') {
+            if (bot.carryingPayloadKg > 0) {
+              badge.className = 'rul-tag-warn';
+              badge.style.background = 'rgba(217, 119, 6, 0.15)';
+              badge.style.color = '#b45309';
+              badge.innerText = `HOLDING (${bot.carryingPayloadKg} kg) ⚡`;
+            } else {
+              badge.className = 'rul-tag-safe';
+              badge.style.background = 'rgba(16, 185, 129, 0.15)';
+              badge.style.color = '#059669';
+              badge.innerText = 'RECHARGING ⚡';
+            }
+          } else {
+            badge.className = 'rul-tag-safe';
+            badge.style.background = 'rgba(100, 116, 139, 0.12)';
+            badge.style.color = '#64748b';
+            badge.innerText = 'IDLE (0 kg)';
+          }
+        }
+
+        if (sku) {
+          if (bot.carryingSku) {
+            sku.innerText = `📦 ${bot.carryingSku}`;
+            sku.style.color = '#0f172a';
+          } else if (bot.assignedTask && bot.assignedTask.isWarehouseOrder) {
+            sku.innerText = `En route: ${bot.assignedTask.sku || 'SKU'}`;
+            sku.style.color = '#64748b';
+          } else {
+            sku.innerText = 'Empty Standby';
+            sku.style.color = 'var(--text-muted)';
+          }
+        }
+
+        if (pwr && bot.situationalPower) {
+          pwr.innerText = `${bot.situationalPower.totalPowerW.toFixed(1)} W`;
+        }
+      });
     }
 
     /* =========================================================================
@@ -4027,6 +4849,11 @@
         const btn = document.getElementById('tabBtnBenchmark');
         if (btn) btn.classList.add('active');
         const p = document.getElementById('paneBenchmark');
+        if (p) p.style.display = 'flex';
+      } else if (tabId === 'logistics') {
+        const btn = document.getElementById('tabBtnLogistics');
+        if (btn) btn.classList.add('active');
+        const p = document.getElementById('paneLogistics');
         if (p) p.style.display = 'flex';
       }
     }
