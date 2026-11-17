@@ -24,7 +24,7 @@
 
 // =================================================================================
 // SHARED ALGORITHM PARAMETERS & CONSTANTS
-// (Must match JS simulation constants in swarm_simulation.html exactly)
+// (Must match JS simulation constants in index.html exactly)
 // =================================================================================
 const float WEIGHT_DISTANCE = 0.5f;   // Weight multiplier for distance metric
 const float WEIGHT_BATTERY  = 0.3f;   // Weight multiplier for battery loss metric
@@ -32,6 +32,12 @@ const float WEIGHT_STATUS   = 0.2f;   // Weight multiplier for busy status metri
 
 const float CRITICAL_BATTERY_THRESHOLD = 15.0f; // Battery % below which bot drops task
 const float MAX_ARENA_DIAGONAL = 900.0f;        // Max arena reference distance (mm / px)
+
+// Reinforcement Learning Action Profiles & Multipliers
+// Action 0: AGGRESSIVE   (Speed 1.15x, Bid Multiplier 0.90x)
+// Action 1: BALANCED     (Speed 1.00x, Bid Multiplier 1.00x)
+// Action 2: CONSERVATIVE (Speed 0.90x, Bid Multiplier 1.15x, Safe Clearance +0.20m)
+const float Q_ACTION_MULTIPLIERS[3] = {0.90f, 1.00f, 1.15f};
 
 // Node Operational States
 enum NodeStatus {
@@ -46,7 +52,7 @@ enum MessageType {
   MSG_TASK_ANNOUNCE = 1,  // Broadcast when a new task is spawned
   MSG_TASK_BID      = 2,  // Broadcast node's calculated cost for task
   MSG_WINNER_CLAIM  = 3,  // Broadcast by winning node to declare ownership
-  MSG_TASK_DROPPED  = 4   // Broadcast when node's battery drops below 15% mid-task
+  MSG_TASK_DROPPED  = 4   // Broadcast when node's battery drops below threshold mid-task
 };
 
 // Task Definition Structure (Augmented with Industrial Warehouse Intralogistics Parameters)
@@ -66,13 +72,15 @@ struct SwarmPacket {
   float bidCost;        // Calculated cost from calculateBid()
 };
 
-// Local Node State Data
+// Local Node State Data (Augmented with Autonomous Self-Correction Profiles)
 struct BotState {
   uint8_t id;
   float x;
   float y;
   float battery;          // Remaining battery percentage (0.0 to 100.0)
   float carryingPayloadKg;// Currently loaded payload mass (0.0 if empty)
+  float adaptiveMinBatt;  // Self-Correction floor (elevates to >= 32% upon brownout)
+  uint8_t selectedAction; // Active RL Action: 0=AGGRESSIVE, 1=BALANCED, 2=CONSERVATIVE
   NodeStatus status;
   int currentTaskId;
 } botState;
@@ -160,6 +168,9 @@ float calculateBid(BotState bot, TaskData task) {
                 (WEIGHT_BATTERY  * normBatteryPenalty * massMultiplier) +
                 (WEIGHT_STATUS   * statusPenalty));
 
+  // 5. Reinforcement Learning Action Multiplier (Aggressive: 0.90, Balanced: 1.00, Conservative: 1.15)
+  cost *= Q_ACTION_MULTIPLIERS[bot.selectedAction % 3];
+
   return cost;
 }
 
@@ -233,14 +244,15 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int 
       // Reset bid buffer
       memset(hasBid, 0, sizeof(hasBid));
 
-      // Calculate local bid if battery is above threshold
+      // Calculate local bid if battery is above adaptive self-correction threshold
       botState.battery = readBatteryPercentage();
-      if (botState.battery >= CRITICAL_BATTERY_THRESHOLD) {
+      float safeThreshold = (botState.adaptiveMinBatt > CRITICAL_BATTERY_THRESHOLD) ? botState.adaptiveMinBatt : CRITICAL_BATTERY_THRESHOLD;
+      if (botState.battery >= safeThreshold) {
         float myCost = calculateBid(botState, pkt.task);
         receivedBids[NODE_ID] = myCost;
         hasBid[NODE_ID] = true;
 
-        Serial.printf("Local Node %d calculated bid cost: %.4f\n", NODE_ID, myCost);
+        Serial.printf("Local Node %d calculated bid cost: %.4f (Action: %d)\n", NODE_ID, myCost, botState.selectedAction);
 
         // Broadcast bid to peers
         SwarmPacket bidPkt;
@@ -250,8 +262,8 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *incomingData, int 
         bidPkt.bidCost = myCost;
         broadcastPacket(bidPkt);
       } else {
-        Serial.printf("Local Node %d INELIGIBLE (Battery %.1f%% < %.1f%% threshold)\n", 
-                      NODE_ID, botState.battery, CRITICAL_BATTERY_THRESHOLD);
+        Serial.printf("Local Node %d INELIGIBLE (Battery %.1f%% < %.1f%% safe threshold)\n", 
+                      NODE_ID, botState.battery, safeThreshold);
       }
 
       // Wait 100ms for peer bids, then evaluate locally
@@ -292,6 +304,9 @@ void setup() {
   botState.x = 100.0f * NODE_ID;
   botState.y = 150.0f;
   botState.battery = 100.0f;
+  botState.carryingPayloadKg = 0.0f;
+  botState.adaptiveMinBatt = CRITICAL_BATTERY_THRESHOLD;
+  botState.selectedAction = 1; // BALANCED
   botState.status = STATUS_IDLE;
   botState.currentTaskId = 0;
 
@@ -336,6 +351,11 @@ void loop() {
     uint16_t droppedId = botState.currentTaskId;
     botState.status = STATUS_CRITICAL;
     botState.currentTaskId = 0;
+
+    // Autonomous Self-Correction: Elevate safe minimum battery threshold and switch to CONSERVATIVE action
+    botState.adaptiveMinBatt = 32.0f;
+    botState.selectedAction = 2; // Action 2: CONSERVATIVE (0.90x speed, safe clearance buffer)
+    Serial.println("[AUTONOMOUS SELF-CORRECTION] Node elevated safe floor to 32% and switched policy to CONSERVATIVE.");
 
     // Broadcast TASK_DROPPED to force peer re-auction
     SwarmPacket dropPkt;
